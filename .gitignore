@@ -56,3 +56,6 @@
 
 # CMake
 cmake-build-*/
+
+# MacOsX specific
+.DS_Store
