@@ -10,55 +10,6 @@
 namespace cppsolnp {
 
 
-    static const double sqrtEps = std::sqrt(std::numeric_limits<double>::epsilon());
-
-    dlib::matrix<double, 0, 1> solve(const dlib::matrix<double> &A,
-                                     dlib::matrix<double, 0, 1> b) {
-        double eps = dlib::max(dlib::abs(A)) * sqrtEps / 100;
-
-        if (A.nr() != A.nc()) {
-            dlib::qr_decomposition<dlib::matrix<double>> decomposition(A);
-            return decomposition.solve(b);
-        } else {
-            bool upper_triangular = true, lower_triangular = true, symmetric = true;
-            dlib::matrix<double, 0, 1> row_matrix;
-            dlib::matrix<double, 1, 0> col_matrix;
-
-            for (int i = 1; i < A.nr() - 1; ++i) {
-                // l t r b
-                col_matrix = dlib::subm(A, dlib::rectangle(i, 0, i, i - 1));
-                row_matrix = dlib::subm(A, dlib::rectangle(0, i, i - 1, i));
-                if (col_matrix > eps)
-                    upper_triangular = false;
-                if (row_matrix > eps)
-                    lower_triangular = false;
-                if (row_matrix - dlib::trans(col_matrix) > eps)
-                    symmetric = false;
-
-                if (upper_triangular &&
-                    lower_triangular &&
-                    symmetric)
-                    break;
-            }
-
-            if (upper_triangular) {
-                return dlib::inv_upper_triangular(A) * b;
-            }
-
-            if (lower_triangular) {
-                return dlib::inv_lower_triangular(A) * b;
-            }
-
-            if (symmetric) {
-                dlib::cholesky_decomposition<dlib::matrix<double>> decomposition(A);
-                return decomposition.solve(b);
-            } else {
-                dlib::lu_decomposition<dlib::matrix<double>> decomposition(A);
-                return decomposition.solve(b);
-            }
-        }
-    }
-
     /* Calculates the 2-norm conditional number using SVD.
        The 2-norm conditional number is defined as
         cons2(M) = euclidean_norm(M) * euclidean_norm(M^-1) = sigma_1/sigma_n

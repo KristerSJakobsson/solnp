@@ -1,5 +1,7 @@
 # C++ SOLNP
 
+WARNING: This source is in development and will not currently run properly.
+
 This is a C++ implementation of the SOLNP algorithm by Yinyu Ye (1989).
 The algorithm was originally implemented in Matlab, and have gained some fame through it's R implementation (RSOLNP).
 Various implementations of the algorithm exists already, however, this version utilizes the power of DLIB and C++11.
