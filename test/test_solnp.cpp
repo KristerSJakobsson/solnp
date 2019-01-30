@@ -1,7 +1,7 @@
-#include "stdafx.h"
+#include "../src/stdafx.h"
 #include <catch2/catch.hpp>
 
-#include "solnp.hpp"
+#include "../src/solnp.hpp"
 
 dlib::matrix<double, 8, 1> alkyla(const dlib::matrix<double, 10, 1> &m)
 /*

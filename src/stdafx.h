@@ -12,6 +12,6 @@
 #include <limits>
 
 #include "dlib/matrix.h"
-
+#include "utils.hpp"
 
 #endif //CPP_SOLNP_STDAFX_H
