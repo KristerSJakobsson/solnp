@@ -38,8 +38,7 @@ namespace cppsolnp {
                 // l t r b
                 col_below_diagonal = dlib::subm(A, dlib::rectangle(i-1, i, i-1, A.nr()-1));
                 row_right_of_diagonal = dlib::subm(A, dlib::rectangle(i, i-1, A.nc()-1, i-1));
-                std::cout << "Below diagonal: " << cppsolnp::to_string(col_below_diagonal);
-                std::cout << "Right of diagonal: " << cppsolnp::to_string(row_right_of_diagonal);
+
                 if (dlib::abs(col_below_diagonal) > eps)
                     upper_triangular = false;
                 if (dlib::abs(row_right_of_diagonal) > eps)
