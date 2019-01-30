@@ -13,7 +13,7 @@ namespace cppsolnp {
     namespace {
         static const double sqrtEps = std::sqrt(std::numeric_limits<double>::epsilon());
 
-        bool isSquareMatrix(const dlib::matrix<double>& A) {
+        bool isSquareMatrix(const dlib::matrix<double> &A) {
             return A.nr() == A.nc();
         }
     }
@@ -26,7 +26,10 @@ namespace cppsolnp {
 
         if (!isSquareMatrix(A)) {
             // Use QR Solver for non-square matrix A
-            return dlib::pinv(A)*b;
+            dlib::qr_decomposition<dlib::matrix<double>> decomposition(A);
+            if (decomposition.is_full_rank())
+                return decomposition.solve(b);
+            return dlib::pinv(A) * b;
         } else {
 
             bool upper_triangular = true, lower_triangular = true, symmetric = true;
@@ -36,14 +39,14 @@ namespace cppsolnp {
 
             for (int i = 1; i < A.nr() - 1; ++i) {
                 // l t r b
-                col_below_diagonal = dlib::subm(A, dlib::rectangle(i-1, i, i-1, A.nr()-1));
-                row_right_of_diagonal = dlib::subm(A, dlib::rectangle(i, i-1, A.nc()-1, i-1));
+                col_below_diagonal = dlib::subm(A, dlib::rectangle(i - 1, i, i - 1, A.nr() - 1));
+                row_right_of_diagonal = dlib::subm(A, dlib::rectangle(i, i - 1, A.nc() - 1, i - 1));
 
                 if (dlib::abs(col_below_diagonal) > eps)
                     upper_triangular = false;
                 if (dlib::abs(row_right_of_diagonal) > eps)
                     lower_triangular = false;
-                if (dlib::abs(col_below_diagonal - dlib::trans(row_right_of_diagonal)) > eps)
+                if (col_below_diagonal - dlib::trans(row_right_of_diagonal) > eps)
                     symmetric = false;
 
                 if (!upper_triangular &&
@@ -52,9 +55,9 @@ namespace cppsolnp {
                     break;
             }
 
-            if (symmetric) {
-                dlib::cholesky_decomposition<dlib::matrix<double>> decomposition(A);
-                return decomposition.solve(b);
+
+            if (upper_triangular && lower_triangular) {
+                return cppsolnp::pointwise_divide(b, dlib::diag(A));
             }
 
             if (upper_triangular) {
@@ -63,6 +66,12 @@ namespace cppsolnp {
 
             if (lower_triangular) {
                 return dlib::inv_lower_triangular(A) * b;
+            }
+
+            if (symmetric) {
+                dlib::cholesky_decomposition<dlib::matrix<double>> decomposition(A);
+                if (decomposition.is_spd())
+                    return decomposition.solve(b);
             }
 
             dlib::lu_decomposition<dlib::matrix<double>> decomposition(A);
