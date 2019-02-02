@@ -30,32 +30,6 @@ TEST_CASE("Determined system", "[solve]") {
 }
 
 TEST_CASE("Undetermined system", "[solve]") {
-    dlib::matrix<double, 3, 2> A;
-    A =
-            2.0, 1.0,
-            -3.0, 1.0,
-            -1.0, 1.0;
-
-    dlib::matrix<double, 3, 1> y;
-
-    y =
-            -1.0,
-            -2.0,
-            1.0;
-
-    dlib::matrix<double, 0, 1> x_answer;
-    x_answer =
-            cppsolnp::solve(A, y);
-
-    dlib::matrix<double, 0, 1> y_calculated = A * x_answer;
-
-    CHECK(y_calculated(0) == Approx(y(0)));
-    CHECK(y_calculated(1) == Approx(y(1)));
-    CHECK(y_calculated(2) == Approx(y(2)));
-
-}
-
-TEST_CASE("Overdetermined system", "[solve]") {
     dlib::matrix<double, 2, 3> A;
     A =
             1.0, 2.0, 0.0,

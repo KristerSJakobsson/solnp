@@ -78,6 +78,25 @@ TEST_CASE("Optimize the Alkyla function", "[alkyla]") {
 
     double calculate = cppsolnp::solnp(alkyla_functor(), parameter_data, ib, logger);
 
+    std::string test = cppsolnp::to_string(parameter_data);
+    std::string test2 = cppsolnp::to_string(ib);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    for (auto row = 0; row < parameter_data.nr(); ++row) {
+        CHECK(result(row) >= parameter_data(row, 1));
+        CHECK(result(row) <= parameter_data(row, 2));
+    }
+
+    dlib::matrix<double, 0, 1> constraints = alkyla(result);
+    for (auto row = 1; row < 4; ++row) {
+        CHECK(constraints(row) == Approx(0.0));
+    }
+    for (auto row = 0; row < ib.nr(); ++row) {
+        CHECK(constraints(4 + row) >= ib(row, 0));
+        CHECK(constraints(4 + row) <= ib(row, 1));
+    }
+
     REQUIRE(calculate <= -172.64179);
 
 }

@@ -9,6 +9,8 @@
 
 namespace cppsolnp {
 
+    typedef std::vector<std::string> log_list;
+    typedef std::unique_ptr<std::vector<std::string>> log_list_ptr;
 
     /* Calculates the 2-norm conditional number using SVD.
        The 2-norm conditional number is defined as
@@ -26,7 +28,6 @@ namespace cppsolnp {
         int dimmax = std::max(matrix.nc(), matrix.nr());
 
         dlib::matrix<double> singular_value_matrix;
-        std::string svd_singval_input = to_string(matrix);
 
         long result;
         dlib::matrix<double> dummymax(dimmax, dimmax);

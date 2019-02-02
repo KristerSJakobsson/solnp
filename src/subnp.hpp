@@ -20,7 +20,7 @@ namespace cppsolnp {
               int number_of_equality_constraints, // op(5)
               int number_of_inequality_constraints,
               const std::pair<bool, bool> &lagrangian_parameters_bounded,//op(6))
-              const log_list_ptr &event_log) :
+              const cppsolnp::log_list_ptr &event_log) :
                 objective_function_(objective_function),
                 number_of_parameters_(number_of_parameter_data), // op(7)
                 number_of_equality_constraints_(number_of_equality_constraints),
@@ -357,15 +357,14 @@ namespace cppsolnp {
                         // TODO: Ought to be better way than to use the Pseudo Inverse.
 
 
-#ifdef QR
                         dlib::qr_decomposition<dlib::matrix<double>> qr(dlib::trans(a * dlib::diagm(dx)));
-                            lagrangian_multipliers = qr.solve(dlib::pointwise_multiply(dx, dlib::trans(c)));
+                        lagrangian_multipliers = qr.solve(dlib::pointwise_multiply(dx, dlib::trans(c)));
 
-#endif
-
-#ifdef SVD
-                        lagrangian_multipliers = dlib::pinv(dlib::trans(a*dlib::diagm(dx)))*dlib::pointwise_multiply(dx, dlib::trans(c));
-#endif
+//#endif
+//
+//#ifdef SVD
+//                        lagrangian_multipliers = dlib::pinv(dlib::trans(a*dlib::diagm(dx)))*dlib::pointwise_multiply(dx, dlib::trans(c));
+//#endif
                         // Debug
                         debug_lagrangian_multipliers = to_string(lagrangian_multipliers);
 
@@ -657,18 +656,17 @@ namespace cppsolnp {
                     // Debug
                     debug_cholesky = to_string(cholesky);
 
-#ifdef CHOL_UPP
-                    cholesky = dlib::inv_upper_triangular(cholesky);
-#endif
-
-#ifdef CHOL_WHOLE
+//                    cholesky = dlib::inv_upper_triangular(cholesky);
+//#endif
+//
+//#ifdef CHOL_WHOLE
                     cholesky = dlib::inv(cholesky);
-#endif
-#ifdef CHOL_QR
-                    dlib::qr_decomposition<dlib::matrix<double>> chol_qr;
-
-                        cholesky = dlib::inv(cholesky);
-#endif
+//#endif
+//#ifdef CHOL_QR
+//                    dlib::qr_decomposition<dlib::matrix<double>> chol_qr;
+//
+//                        cholesky = dlib::inv(cholesky);
+//#endif
 
                     // Debug
                     debug_cholesky = to_string(cholesky);
@@ -686,14 +684,14 @@ namespace cppsolnp {
 
                     } else {
                         // We solve the equation system using QR factorization
-#ifdef QR
-                        dlib::qr_decomposition<dlib::matrix<double>> qr(trans(cholesky) * dlib::trans(a));
-                            lagrangian_multipliers = qr.solve(temporary_gradient);
-#endif
-
-#ifdef SVD
+//#ifdef QR
+//                        dlib::qr_decomposition<dlib::matrix<double>> qr(trans(cholesky) * dlib::trans(a));
+//                            lagrangian_multipliers = qr.solve(temporary_gradient);
+//#endif
+//
+//#ifdef SVD
                         lagrangian_multipliers = dlib::pinv(trans(cholesky)*dlib::trans(a))*temporary_gradient;
-#endif
+//#endif
 
 
                         u = -1 * cholesky *

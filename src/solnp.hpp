@@ -13,9 +13,6 @@
 /* This is an interior method QP solver. */
 namespace cppsolnp {
 
-    typedef std::vector<std::string> log_list;
-    typedef std::unique_ptr<std::vector<std::string>> log_list_ptr;
-
 
     template<
             typename functor_model,
@@ -25,7 +22,7 @@ namespace cppsolnp {
             functor_model functor,
             parameter_input &parameter_data,
             const inequality_constraint_vectors &inequality_constraint_data,
-            const log_list_ptr &event_log = nullptr,
+            const cppsolnp::log_list_ptr &event_log = nullptr,
             // Optional input
 /*		std::unique_ptr<dlib::matrix<double>> inequality_constraints = nullptr,
 		std::unique_ptr<dlib::matrix<double>> hessian_matrix = nullptr,
@@ -257,7 +254,7 @@ namespace cppsolnp {
             std::string hessian_debug = to_string(hessian_matrix);
 
 
-            subnp sub_problem(parameters,
+            sub_problem(parameters,
                         parameter_bounds,
                         lagrangian_multipliers,
                         cost_vector,
