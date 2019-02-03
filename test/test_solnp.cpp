@@ -85,8 +85,8 @@ TEST_CASE("Optimize the Alkyla function", "[alkyla]") {
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
     for (auto row = 0; row < parameter_data.nr(); ++row) {
-        CHECK(result(row) >= parameter_data(row, 1));
-        CHECK(result(row) <= parameter_data(row, 2));
+        CHECK(result(row) >= Approx(parameter_data(row, 1)));
+        CHECK(result(row) <= Approx(parameter_data(row, 2)));
     }
 
     dlib::matrix<double, 0, 1> constraints = alkyla(result);
@@ -94,8 +94,8 @@ TEST_CASE("Optimize the Alkyla function", "[alkyla]") {
         CHECK(constraints(row) == Approx(0.0));
     }
     for (auto row = 0; row < ib.nr(); ++row) {
-        CHECK(constraints(4 + row) >= ib(row, 0));
-        CHECK(constraints(4 + row) <= ib(row, 1));
+        CHECK(constraints(4 + row) >= Approx(ib(row, 0)));
+        CHECK(constraints(4 + row) <= Approx(ib(row, 1)));
     }
 
     REQUIRE(calculate <= -172.64179);

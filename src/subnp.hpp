@@ -335,7 +335,7 @@ namespace cppsolnp {
                         // Debug
                         debug_gap = to_string(gap);
 
-                        two_vector_sort(gap);
+                        gap = left_vector_min_right_vector_max(gap);
 
                         // Debug
                         debug_gap = to_string(gap);
@@ -609,7 +609,7 @@ namespace cppsolnp {
                     // Debug
                     debug_gap = to_string(gap);
 
-                    two_vector_sort(gap);
+                    gap = left_vector_min_right_vector_max(gap);
 
                     // Debug
                     debug_gap = to_string(gap);

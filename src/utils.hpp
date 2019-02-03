@@ -12,6 +12,20 @@ namespace cppsolnp {
     typedef std::vector<std::string> log_list;
     typedef std::unique_ptr<std::vector<std::string>> log_list_ptr;
 
+
+    namespace internal {
+        template<typename T>
+        dlib::matrix<T> apply_function_to_matrix_elements(dlib::matrix<T> matrix, std::function<T(T)> function) {
+            for (auto row = 0; row < matrix.nr(); ++row) {
+                for (auto col = 0; col < matrix.nc(); ++col) {
+                    matrix(row, col) = function(matrix(row,col));
+                }
+            }
+            return matrix;
+        }
+    }
+
+
     /* Calculates the 2-norm conditional number using SVD.
        The 2-norm conditional number is defined as
         cons2(M) = euclidean_norm(M) * euclidean_norm(M^-1) = sigma_1/sigma_n
@@ -90,55 +104,42 @@ namespace cppsolnp {
         return result;
     }
 
-    /* Max between each element in a vector and a scalar.*/
-    template<typename V>
-    V elementwise_max(V vector, const double &scalar) {
-        COMPILE_TIME_ASSERT(dlib::is_matrix<V>::value);
-        COMPILE_TIME_ASSERT(V::NC <= 1);
-        if (vector.nc() > 1 || vector.nr() == 0) {
-            throw std::runtime_error("Error: Please input a column vector.");
-        }
+    /* Max between each element in a matrix and a scalar.*/
+    dlib::matrix<double> elementwise_max(const dlib::matrix<double>& vector, const double &scalar) {
 
-        for (auto element : vector) {
-            element = std::max(element, scalar);
-        }
+        auto max_value = [&scalar](const double& element) -> double {
+            return std::max(scalar, element);
+        };
 
-        return vector;
+        return internal::apply_function_to_matrix_elements<double>(vector, max_value);
     }
 
-    /* Min between each element in a vector and a scalar.*/
-    template<typename V>
-    V elementwise_min(V vector, const double &scalar) {
-        COMPILE_TIME_ASSERT(dlib::is_matrix<V>::value);
-        COMPILE_TIME_ASSERT(V::NC <= 1);
-        if (vector.nc() > 1 || vector.nr() == 0) {
-            throw std::runtime_error("Error: Please input a column vector.");
-        }
+    /* Min between each element in a matrix and a scalar.*/
+    dlib::matrix<double> elementwise_min(const dlib::matrix<double>& vector, const double &scalar) {
 
-        for (auto element : vector) {
-            element = std::min(element, scalar);
-        }
-        return vector;
+        auto max_value = [&scalar](const double& element) -> double {
+            return std::min(scalar, element);
+        };
+
+        return internal::apply_function_to_matrix_elements<double>(vector, max_value);
     }
 
     /* Arranges two column vectors, inputed as a matrix,
     so that the left vector contains the min and
     the right vector contains the max.*/
-    template<typename M>
-    void two_vector_sort(M &matrix) {
-        COMPILE_TIME_ASSERT(dlib::is_matrix<M>::value);
-        COMPILE_TIME_ASSERT(M::NC == 2 || M::NC == 0);
-        if (matrix.nc() != 2 || matrix.nr() == 0) {
+    dlib::matrix<double> left_vector_min_right_vector_max(dlib::matrix<double> matrix) {
+        if (matrix.nc() != 2) {
             throw std::runtime_error("Error: Invalid input.");
         }
 
-        dlib::matrix<double, 1, 2> temp;
+        dlib::matrix<double, 1, 2> row_data;
+        dlib::matrix<double, 1, 2> new_data;
         for (int row = 0; row < matrix.nr(); ++row) {
-            temp(0) = dlib::min(dlib::rowm(matrix, row));
-            temp(1) = dlib::max(dlib::rowm(matrix, row));
-            dlib::set_rowm(matrix, row) = temp;
+            row_data = dlib::rowm(matrix, row);
+            new_data = dlib::min(row_data), dlib::max(row_data);
+            dlib::set_rowm(matrix, row) = new_data;
         }
-        return;
+        return matrix;
     }
 
     /* Returns the vector with the max of each row in a matrix.*/
