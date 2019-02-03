@@ -7,6 +7,7 @@
 
 
 #include "stdafx.h"
+#include "utils.hpp"
 
 namespace cppsolnp {
 

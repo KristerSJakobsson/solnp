@@ -1,8 +1,7 @@
 
-
-#include "../src/stdafx.h"
 #include <catch2/catch.hpp>
 
+#include "../src/stdafx.h"
 #include "../src/solve.hpp"
 
 TEST_CASE("Determined system", "[solve]") {

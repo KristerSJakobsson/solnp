@@ -22,21 +22,21 @@ namespace cppsolnp {
     double conditional_number(const M &matrix) {
         COMPILE_TIME_ASSERT(dlib::is_matrix<M>::value);
 
-        /* TODO: This function can be more optimized.*/
+        /* TODO: This function can be optimized.*/
 
-        int dimmin = std::min(matrix.nc(), matrix.nr());
-        int dimmax = std::max(matrix.nc(), matrix.nr());
+        int dim_min = std::min(matrix.nc(), matrix.nr());
+        int dim_max = std::max(matrix.nc(), matrix.nr());
 
         dlib::matrix<double> singular_value_matrix;
 
         long result;
-        dlib::matrix<double> dummymax(dimmax, dimmax);
-        dlib::matrix<double> dummymin(dimmin, dimmin);
+        dlib::matrix<double> dummy_max(dim_max, dim_max);
+        dlib::matrix<double> dummy_min(dim_min, dim_min);
 
         if (matrix.nr() >= matrix.nc()) {
-            result = dlib::svd2(false, false, matrix, dummymax, singular_value_matrix, dummymin);
+            result = dlib::svd2(false, false, matrix, dummy_max, singular_value_matrix, dummy_min);
         } else {
-            result = dlib::svd2(false, false, dlib::trans(matrix), dummymax, singular_value_matrix, dummymin);
+            result = dlib::svd2(false, false, dlib::trans(matrix), dummy_max, singular_value_matrix, dummy_min);
         }
         if (result != 0) {
             throw std::runtime_error("Error: Singular value decomposition failed.");

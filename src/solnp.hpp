@@ -155,7 +155,7 @@ namespace cppsolnp {
                                                                           number_of_inequality_constraints +
                                                                           number_of_parameters - 1)),
                                        true));
-        int cost_vector_length = cost_vector.nr(),
+        auto cost_vector_length = cost_vector.nr(),
                 cost_vector_width = cost_vector.nc();
         if (cost_vector_width != 1) {
             throw std::runtime_error("Error: sqp_min cost function must return only 1 column.");
@@ -165,8 +165,8 @@ namespace cppsolnp {
                     "Error: sqp_min the number of constraints in the cost function does not match the call to sqp_min.");
         }
 
-        int number_of_equality_constraints = cost_vector_length - 1 - number_of_inequality_constraints;
-        int number_of_constraints = cost_vector_length - 1;
+        auto number_of_equality_constraints = cost_vector_length - 1 - number_of_inequality_constraints;
+        auto number_of_constraints = cost_vector_length - 1;
 
 
         /*

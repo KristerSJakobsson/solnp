@@ -8,6 +8,7 @@
 #include "stdafx.h"
 
 #include "utils.hpp"
+#include "solve.hpp"
 
 namespace cppsolnp {
 
@@ -297,7 +298,7 @@ namespace cppsolnp {
                     positive_change_ = true;
                     if (lagrangian_parameters_bounded_.second == false) {
                         /*pseudo inverse?*/
-                        dlib::qr_decomposition <dlib::matrix<double>> qr_temp(a * trans(a));
+                        dlib::qr_decomposition<dlib::matrix<double>> qr_temp(a * trans(a));
 
                         parameter0 = parameter0 - trans(a) * (qr_temp.solve(constraints));
                         alpha_(0) = 1;
@@ -690,7 +691,7 @@ namespace cppsolnp {
 //#endif
 //
 //#ifdef SVD
-                        lagrangian_multipliers = dlib::pinv(trans(cholesky)*dlib::trans(a))*temporary_gradient;
+                        lagrangian_multipliers = dlib::pinv(trans(cholesky) * dlib::trans(a)) * temporary_gradient;
 //#endif
 
 
@@ -878,7 +879,7 @@ namespace cppsolnp {
                 debug_temporary_parameter = to_string(temporary_parameter);
                 debug_temporary_gradient = to_string(temporary_gradient);
 
-                if (object_function_value < obn) {
+                if (object_function_value <= obn) {
                     max_iterations = minor_iteration;
 
                     // Debug
@@ -890,6 +891,8 @@ namespace cppsolnp {
                     // Debug
 
                 }
+
+                /* Row 262 */
                 if (sob(0) < sob(1)) {
                     object_function_value = sob(0);
                     parameter = dlib::colm(pt, 0);
@@ -915,6 +918,11 @@ namespace cppsolnp {
                     debug_cost_vector = to_string(cost_vector);
                 }
             }
+
+
+            /*
+             * Unscale the parameter vector
+             * */
             parameter = dlib::pointwise_multiply(
                     parameter,
                     dlib::rowm(scale, dlib::range(number_of_equality_constraints_ + 1,
@@ -925,6 +933,9 @@ namespace cppsolnp {
 
 
             if (number_of_total_constraints_ != 0) {
+                /*
+                 * Unscale the lagrange multipliers
+                 * */
                 lagrangian_multipliers = scale(0) * pointwise_divide(lagrangian_multipliers,
                                                                      dlib::rowm(scale, dlib::range(1,
                                                                                                    number_of_total_constraints_)));
