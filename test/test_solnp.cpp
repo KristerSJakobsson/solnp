@@ -128,7 +128,7 @@ TEST_CASE("Optimize the Powell function", "[powell]") {
     // Check the equality constraints are all 0
     dlib::matrix<double, 0, 1> constraints = powell(result);
     for (auto row = 1; row < 3; ++row) {
-        CHECK(constraints(row) == Approx(0.0));
+        CHECK(constraints(row) == Approx(0.0).margin(0.0000001));
     }
 
     // Check the parameters
@@ -204,31 +204,31 @@ TEST_CASE("Optimize the Alkyla function", "[alkyla]") {
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
     for (auto row = 0; row < parameter_data.nr(); ++row) {
-        CHECK(result(row) >= Approx(parameter_data(row, 1)).epsilon(0.01));
-        CHECK(result(row) <= Approx(parameter_data(row, 2)).epsilon(0.01));
+        CHECK(result(row) >= Approx(parameter_data(row, 1)).margin(0.00001));
+        CHECK(result(row) <= Approx(parameter_data(row, 2)).margin(0.00001));
     }
 
     dlib::matrix<double, 0, 1> constraints = alkyla(result);
     for (auto row = 1; row < 4; ++row) {
-        CHECK(std::abs(constraints(row)) == Approx(0.0).epsilon(0.01));
+        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
     }
     for (auto row = 0; row < ib.nr(); ++row) {
-        CHECK(constraints(4 + row) >= Approx(ib(row, 0)).epsilon(0.01));
-        CHECK(constraints(4 + row) <= Approx(ib(row, 1)).epsilon(0.01));
+        CHECK(constraints(4 + row) >= Approx(ib(row, 0)).margin(0.00001));
+        CHECK(constraints(4 + row) <= Approx(ib(row, 1)).margin(0.00001));
     }
 
     // Validate values
-    CHECK(result(0) == Approx(16.996376587648808).epsilon(0.01));
-    CHECK(result(1) == Approx(15.999402679162111).epsilon(0.01));
-    CHECK(result(2) == Approx(57.688358424585260).epsilon(0.01));
-    CHECK(result(3) == Approx(30.324890354969355).epsilon(0.01));
-    CHECK(result(4) == Approx(19.999989645413820).epsilon(0.01));
-    CHECK(result(5) == Approx(90.565424808707550).epsilon(0.01));
-    CHECK(result(6) == Approx(94.999992714259020).epsilon(0.01));
-    CHECK(result(7) == Approx(10.590140523335723).epsilon(0.01));
-    CHECK(result(8) == Approx(1.561646284077410).epsilon(0.01));
-    CHECK(result(9) == Approx(1.535353201975077e+02).epsilon(0.01));
+    CHECK(result(0) == Approx(16.996376587648808).margin(0.00001));
+    CHECK(result(1) == Approx(15.999402679162111).margin(0.00001));
+    CHECK(result(2) == Approx(57.688358424585260).margin(0.00001));
+    CHECK(result(3) == Approx(30.324890354969355).margin(0.00001));
+    CHECK(result(4) == Approx(19.999989645413820).margin(0.00001));
+    CHECK(result(5) == Approx(90.565424808707550).margin(0.00001));
+    CHECK(result(6) == Approx(94.999992714259020).margin(0.00001));
+    CHECK(result(7) == Approx(10.590140523335723).margin(0.00001));
+    CHECK(result(8) == Approx(1.561646284077410).margin(0.00001));
+    CHECK(result(9) == Approx(1.535353201975077e+02).margin(0.00001));
 
-    REQUIRE(calculate <= -172.64179);
+    REQUIRE(calculate <= Approx(-172.6412486481025).margin(0.00000001));
 
 }

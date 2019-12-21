@@ -137,8 +137,8 @@ namespace cppsolnp {
             debug_parameter0 = to_string(parameter0);
 
             int mm;
-            if (lagrangian_parameters_bounded_.second == true) {
-                if (lagrangian_parameters_bounded_.first == false) {
+            if (lagrangian_parameters_bounded_.second) {
+                if (!lagrangian_parameters_bounded_.first) {
                     mm = number_of_inequality_constraints_;
                 } else {
                     mm = number_of_parameters_and_inequality_constraints_;
@@ -296,7 +296,7 @@ namespace cppsolnp {
 
                 if (alpha_(0) <= 0) {
                     positive_change_ = true;
-                    if (lagrangian_parameters_bounded_.second == false) {
+                    if (!lagrangian_parameters_bounded_.second) {
                         /*pseudo inverse?*/
                         dlib::qr_decomposition<dlib::matrix<double>> qr_temp(a * trans(a));
 
@@ -347,7 +347,7 @@ namespace cppsolnp {
                         // Debug
                         debug_dx = to_string(dx);
 
-                        if (lagrangian_parameters_bounded_.first == false) {
+                        if (!lagrangian_parameters_bounded_.first) {
                             dlib::set_rowm(dx, dlib::range(mm, number_of_parameters_and_inequality_constraints_ - 1)) =
                                     std::max(dlib::max(dlib::rowm(dx, dlib::range(0, mm - 1))), 100.0) *
                                     dlib::ones_matrix<double>(number_of_parameters_and_inequality_constraints_ - mm, 1);
@@ -441,7 +441,7 @@ namespace cppsolnp {
             debug_parameter = to_string(parameter);
             debug_lagrangian_multipliers = to_string(lagrangian_multipliers);
 
-            if (positive_change_ == true) {
+            if (positive_change_) {
                 cost_vector = pointwise_divide(
                         objective_function_(
                                 dlib::pointwise_multiply(
@@ -498,7 +498,7 @@ namespace cppsolnp {
             double reduction;
             while (minor_iteration < max_iterations) {
                 ++minor_iteration;
-                if (positive_change_ == true) {
+                if (positive_change_) {
 
                     // H�r �r n�got fel! Loopen �ndrar g konstigt
                     for (auto i = 0; i < number_of_parameters_; ++i) {
@@ -642,13 +642,13 @@ namespace cppsolnp {
                 dlib::matrix<double> cholesky;
                 while (go <= 0) {
 
-                    //if (chole.is_spd() == false)
-                    //{
-                    //	//throw std::runtime_error("Fail");
-                    //	event_log_->push_back("Warning: Cholesky decomposition failed. Return best found value.");
-                    //	//cholesky = cholesky_last;
-                    //	break;
-                    //}
+//                    if (cholesky.is_spd() == false)
+//                    {
+//                    	//throw std::runtime_error("Fail");
+//                    	event_log_->push_back("Warning: Cholesky decomposition failed. Return best found value.");
+//                    	//cholesky = cholesky_last;
+//                    	break;
+//                    }
 
                     cholesky = dlib::trans(dlib::chol(
                             dlib::make_symmetric(hessian) + mu * dlib::diagm(dlib::pointwise_multiply(dx, dx))));
@@ -657,11 +657,11 @@ namespace cppsolnp {
                     // Debug
                     debug_cholesky = to_string(cholesky);
 
-//                    cholesky = dlib::inv_upper_triangular(cholesky);
+                    cholesky = dlib::inv_upper_triangular(cholesky);
 //#endif
 //
 //#ifdef CHOL_WHOLE
-                    cholesky = dlib::inv(cholesky);
+//                    cholesky = dlib::inv(cholesky);
 //#endif
 //#ifdef CHOL_QR
 //                    dlib::qr_decomposition<dlib::matrix<double>> chol_qr;
@@ -686,12 +686,12 @@ namespace cppsolnp {
                     } else {
                         // We solve the equation system using QR factorization
 //#ifdef QR
-//                        dlib::qr_decomposition<dlib::matrix<double>> qr(trans(cholesky) * dlib::trans(a));
-//                            lagrangian_multipliers = qr.solve(temporary_gradient);
+                        dlib::qr_decomposition<dlib::matrix<double>> qr(trans(cholesky) * dlib::trans(a));
+                            lagrangian_multipliers = qr.solve(temporary_gradient);
 //#endif
 //
 //#ifdef SVD
-                        lagrangian_multipliers = dlib::pinv(trans(cholesky) * dlib::trans(a)) * temporary_gradient;
+//                        lagrangian_multipliers = dlib::pinv(trans(cholesky) * dlib::trans(a)) * temporary_gradient;
 //#endif
 
 
