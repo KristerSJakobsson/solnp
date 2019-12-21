@@ -173,9 +173,9 @@ namespace cppsolnp {
                     return_value += ";";
                 }
             }
-            if (row < matrix.nr() - 1 && flatten == false) {
+            if (row < matrix.nr() - 1 && !flatten) {
                 return_value += "\n";
-            } else if (row < matrix.nr() - 1 && flatten == true) {
+            } else if (row < matrix.nr() - 1 && flatten) {
                 return_value += " ";
             } else {
                 return_value += "]";

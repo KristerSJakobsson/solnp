@@ -598,7 +598,7 @@ namespace cppsolnp {
                 // Debug
                 debug_dx = to_string(dx);
 
-                if (lagrangian_parameters_bounded_.second == true) {
+                if (lagrangian_parameters_bounded_.second) {
                     gap = dlib::join_rows(
                             dlib::rowm(parameter, dlib::range(0, mm - 1)) -
                             dlib::colm(parameter_bounds, 0),
@@ -626,7 +626,7 @@ namespace cppsolnp {
                     // Debug
                     debug_dx = to_string(dx);
 
-                    if (lagrangian_parameters_bounded_.first == false) {
+                    if (!lagrangian_parameters_bounded_.first) {
                         dlib::set_rowm(dx, dlib::range(mm, number_of_parameters_and_inequality_constraints_ - 1)) =
                                 dlib::min(dlib::join_cols(dlib::rowm(dx, dlib::range(0, mm - 1)), dlib::mat(0.01))) *
                                 dlib::ones_matrix<double>(number_of_parameters_and_inequality_constraints_ - mm, 1);
