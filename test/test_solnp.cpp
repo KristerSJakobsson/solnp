@@ -4,143 +4,13 @@
 #include "../src/stdafx.h"
 #include "../src/solnp.hpp"
 
-dlib::matrix<double, 4, 1> powell(const dlib::matrix<double, 5, 1> &m)
-/*
-This function computes what the Powell function from the
-original documentaiton of SOLNP.
-*/
-{
-    /* 4 parameters*/
-    const double x1 = m(0);
-    const double x2 = m(1);
-    const double x3 = m(2);
-    const double x4 = m(3);
-    const double x5 = m(4);
-
-
-    // compute the alkyla function and return the result, equality constraint results and the inequality constraint results
-    dlib::matrix<double, 4, 1> return_values(4);
-    // Function value
-    return_values(0) = std::exp(x1 * x2 * x3 * x4 * x5);
-    // Equality constraints
-    return_values(1) = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4 + x5 * x5 - 10;
-    return_values(2) = x2 * x3 - 5 * x4 * x5;
-    return_values(3) = x1 * x1 * x1 + x2 * x2 * x2 + 1;
-    return return_values;
-}
-
-
-struct powell_functor {
-public:
-    powell_functor() {};
-
-    dlib::matrix<double, 4, 1> operator()(const dlib::matrix<double, 5, 1> &x) {
-        return powell(x);
-    }
-};
-
-dlib::matrix<double, 8, 1> alkyla(const dlib::matrix<double, 10, 1> &m)
-/*
-This function computes what the alkyla function from the
-original documentaiton of SOLNP.
-*/
-{
-    /* 10 parameters*/
-    const double x1 = m(0);
-    const double x2 = m(1);
-    const double x3 = m(2);
-    const double x4 = m(3);
-    const double x5 = m(4);
-    const double x6 = m(5);
-    const double x7 = m(6);
-    const double x8 = m(7);
-    const double x9 = m(8);
-    const double x10 = m(9);
-
-
-    // compute the alkyla function and return the result, equality constraint results and teh inequality constraint results
-    dlib::matrix<double, 8, 1> return_values(8);
-    // Function value
-    return_values(0) = -0.63 * x4 * x7 + 50.4 * x1 + 3.5 * x2 + x3 + 33.6 * x5;
-    // Equality constraints
-    return_values(1) = 98.0 * x3 - 0.1 * x4 * x6 * x9 - x3 * x6;
-    return_values(2) = 1000.0 * x2 + 100.0 * x5 - 100.0 * x1 * x8;
-    return_values(3) = 122.0 * x4 - 100.0 * x1 - 100.0 * x5;
-    // Inequality constraints
-    return_values(4) = (1.12 * x1 + 0.13167 * x1 * x8 - 0.00667 * x1 * x8 * x8) / x4;
-    return_values(5) = (1.098 * x8 - 0.038 * x8 * x8 + 0.325 * x6 + 57.25) / x7;
-    return_values(6) = (-0.222 * x10 + 35.82) / x9;
-    return_values(7) = (3.0 * x7 - 133.0) / x10;
-    return return_values;
-}
-
-
-struct alkyla_functor {
-public:
-    alkyla_functor() {};
-
-    dlib::matrix<double, 8, 1> operator()(const dlib::matrix<double, 10, 1> &x) {
-        return alkyla(x);
-    }
-};
-
-
-TEST_CASE("Calculate the Powell function", "[powell]") {
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data =
-            -2.0,
-            2.0,
-            2.0,
-            -1,
-            -1;
-
-    dlib::matrix<double, 4, 1> result = powell(parameter_data);
-
-    CHECK(result(0) == Approx(0.000335462627903));
-    CHECK(result(1) == Approx(4.0));
-    CHECK(result(2) == Approx(-1.0));
-    CHECK(result(3) == Approx(1.0));
-
-
-}
-
-
-TEST_CASE("Optimize the Powell function", "[powell]") {
-
-
-    /* x0 */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data =
-            -2.0,
-            2.0,
-            2.0,
-            -1,
-            -1;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    // Check the equality constraints are all 0
-    dlib::matrix<double, 0, 1> constraints = powell(result);
-    for (auto row = 1; row < 3; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.0000001));
-    }
-
-    // Check the parameters
-    CHECK(result(0) == Approx(-1.717142506313303));
-    CHECK(result(1) == Approx(1.595708459713134));
-    CHECK(result(2) == Approx(1.827247731350245));
-    CHECK(result(3) == Approx(-0.763643197991088));
-    CHECK(result(4) == Approx(-0.763643197980140));
-
-    REQUIRE(calculate <= 0.053949846871732);
-
-}
+// Benchmark functions
+#include "../src/benchmark/alkyla.hpp"
+#include "../src/benchmark/box.hpp"
+#include "../src/benchmark/entropy.hpp"
+#include "../src/benchmark/powell.hpp"
+#include "../src/benchmark/wright_four.hpp"
+#include "../src/benchmark/wright_nine.hpp"
 
 
 TEST_CASE("Calculate the Alkyla function", "[alkyla]") {
@@ -230,5 +100,147 @@ TEST_CASE("Optimize the Alkyla function", "[alkyla]") {
     CHECK(result(9) == Approx(1.535353201975077e+02).margin(0.00001));
 
     REQUIRE(calculate <= Approx(-172.6412486481025).margin(0.00000001));
+
+}
+
+
+TEST_CASE("Calculate the Box function", "[box]") {
+    dlib::matrix<double, 3, 1> parameter_data;
+    parameter_data =
+            1.1,
+            1.1,
+            9.0;
+
+    dlib::matrix<double, 2, 1> result = box(parameter_data);
+
+    CHECK(result(0) == Approx(-10.890000000000002));
+    CHECK(result(1) == Approx(-55.560000000000002));
+
+
+}
+
+TEST_CASE("Optimize the Box function (case a)", "[box]") {
+
+
+    /* x0 */
+    dlib::matrix<double, 3, 3> parameter_data;
+    parameter_data =
+            1.1, 1.0, 10.0,
+            1.1, 1.0, 10.0,
+            9.0, 1.0, 10.0;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(box_functor(), parameter_data, ib, logger);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Check the equality constraints are all 0
+    dlib::matrix<double, 0, 1> constraints = box(result);
+    CHECK(constraints(1) == Approx(0.0).margin(0.000001));
+
+    // Check the parameters
+    CHECK(result(0) == Approx(2.8867750701860793));
+    CHECK(result(1) == Approx(2.8867750712542191));
+    CHECK(result(2) == Approx(5.773407750260735));
+
+    REQUIRE(calculate <= -48.112522068150462);
+
+}
+
+
+TEST_CASE("Calculate the Powell function", "[powell]") {
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data =
+            -2.0,
+            2.0,
+            2.0,
+            -1,
+            -1;
+
+    dlib::matrix<double, 4, 1> result = powell(parameter_data);
+
+    CHECK(result(0) == Approx(0.000335462627903));
+    CHECK(result(1) == Approx(4.0));
+    CHECK(result(2) == Approx(-1.0));
+    CHECK(result(3) == Approx(1.0));
+
+
+}
+
+
+TEST_CASE("Optimize the Powell function (rho == 0)", "[powell]") {
+
+
+    /* x0 */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data =
+            -2.0,
+            2.0,
+            2.0,
+            -1,
+            -1;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, 0.0);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Check the equality constraints are all 0
+    dlib::matrix<double, 0, 1> constraints = powell(result);
+    for (auto row = 1; row < 3; ++row) {
+        CHECK(constraints(row) == Approx(0.0).margin(0.000001));
+    }
+
+    // Check the parameters
+    CHECK(result(0) == Approx(-1.717142506313303));
+    CHECK(result(1) == Approx(1.595708459713134));
+    CHECK(result(2) == Approx(1.827247731350245).margin(0.0001));
+    CHECK(result(3) == Approx(-0.763643197991088));
+    CHECK(result(4) == Approx(-0.763643197980140));
+
+    REQUIRE(calculate <= 0.053949846871732);
+
+}
+
+TEST_CASE("Optimize the Powell function (rho == 1)", "[powell]") {
+
+
+    /* x0 */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data =
+            -2.0,
+            2.0,
+            2.0,
+            -1,
+            -1;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, 1.0);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Check the equality constraints are all 0
+    dlib::matrix<double, 0, 1> constraints = powell(result);
+    for (auto row = 1; row < 3; ++row) {
+        CHECK(constraints(row) == Approx(0.0).margin(0.000001));
+    }
+
+    // Check the parameters
+    CHECK(result(0) == Approx(-1.717142506313303));
+    CHECK(result(1) == Approx(1.595708459713134));
+    CHECK(result(2) == Approx(1.827247731350245));
+    CHECK(result(3) == Approx(-0.763643197991088));
+    CHECK(result(4) == Approx(-0.763643197980140));
+
+    REQUIRE(calculate <= 0.053949846871732);
 
 }
