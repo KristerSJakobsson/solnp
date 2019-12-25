@@ -20,14 +20,14 @@ Entropy function from the original documentation of SOLNP:
     // Function value
     return_values(0) = vector_entropy(m);
     // Equality constraints
-    return_values(1) = dlib::sum(m) - m;
+    return_values(1) = dlib::sum(m) - m.nr();
     return return_values;
 }
 
 
 struct entropy_functor {
 public:
-    entropy_functor() = default;;
+    entropy_functor() = default;
 
     dlib::matrix<double, 2, 1> operator()(const dlib::matrix<double, 0, 1> &x) {
         return entropy(x);

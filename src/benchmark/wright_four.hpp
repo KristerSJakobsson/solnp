@@ -15,8 +15,11 @@ Wright4 function from the original documentation of SOLNP:
     // compute the wright_four function and return the result, equality constraint results and teh inequality constraint results
     dlib::matrix<double, 4, 1> return_values(4);
     // Function value
-    return_values(0) = (x1 - 1) * (x1 - 1) + (x1 - x2) * (x1 - x2) + (x2 - x3) * (x2 - x3) + (x3 - x4) * (x3 - x4) +
-                       (x4 - x5) * (x4 - x5);
+    return_values(0) = (x1 - 1) * (x1 - 1) +
+                       (x1 - x2) * (x1 - x2) +
+                       (x2 - x3) * (x2 - x3) * (x2 - x3) +
+                       (x3 - x4) * (x3 - x4) * (x3 - x4) * (x3 - x4) +
+                       (x4 - x5) * (x4 - x5) * (x4 - x5) * (x4 - x5);
     // Equality constraints
     return_values(1) = x1 + x2 * x2 + x3 * x3 * x3 - 2 - 3 * std::sqrt(2.0);
     return_values(2) = x2 - x3 * x3 + x4 + 2 - 2 * std::sqrt(2);
