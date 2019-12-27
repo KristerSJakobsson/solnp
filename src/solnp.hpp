@@ -49,8 +49,8 @@ namespace cppsolnp {
         dlib::matrix<double> parameter_bounds;
         dlib::matrix<double> objective_function_gradient;
 
-        int number_of_parameters = parameter_input::NR,
-                parameter_vector_width = parameter_input::NC;
+        auto number_of_parameters = parameter_data.nr(),
+                parameter_vector_width = parameter_data.nc();
 
         std::pair<bool, bool> lagrangian_parameters_bounded;
         lagrangian_parameters_bounded.first = true;
@@ -85,8 +85,8 @@ namespace cppsolnp {
         Lots of possibilities, little time.*/
 
 
-        int inequality_constraints_vector_length = inequality_constraint_vectors::NR,
-                inequality_constraints_vector_width = inequality_constraint_vectors::NC;
+        int inequality_constraints_vector_length = inequality_constraint_data.nr(),
+                inequality_constraints_vector_width = inequality_constraint_data.nc();
 
         int number_of_inequality_constraints;
 
@@ -124,7 +124,7 @@ namespace cppsolnp {
                 throw std::runtime_error("Error: Inequality constraints must have 2 or 3 columns.");
             }
             if (number_of_inequality_constraints > 0) {
-                if (lagrangian_parameters_bounded.first == true) {
+                if (lagrangian_parameters_bounded.first) {
                     // parameter_bounds = [parameter_bounds; temporary_inequality_constraints]
                     parameter_bounds = dlib::join_cols(temporary_inequality_constraints, parameter_bounds);
 
@@ -138,7 +138,7 @@ namespace cppsolnp {
 
         // Here we could release the temporary matrixes.
 
-        if (lagrangian_parameters_bounded.first == true || number_of_inequality_constraints > 0) {
+        if (lagrangian_parameters_bounded.first || number_of_inequality_constraints > 0) {
             lagrangian_parameters_bounded.second = true;
         }
         // opd=[1 10 10 1.0e-5 1.0e-4];  % default optimization parameters
@@ -195,7 +195,7 @@ namespace cppsolnp {
             constraints = dlib::rowm(cost_vector, dlib::range(1, number_of_constraints));
 
             if (number_of_inequality_constraints != 0) {
-
+                std::string parameter_debug = cppsolnp::to_string(parameters);
                 if (dlib::min(
                         dlib::rowm(constraints,
                                    dlib::range(number_of_equality_constraints, number_of_constraints - 1)) -
@@ -209,13 +209,13 @@ namespace cppsolnp {
                     ) > 0.0) {
                     dlib::set_rowm(parameters, dlib::range(0, number_of_inequality_constraints - 1)) =
                             dlib::rowm(constraints,
-                                       dlib::range(number_of_equality_constraints, number_of_constraints - 1)) -
-                            dlib::rowm(parameters, dlib::range(0, number_of_inequality_constraints - 1));
+                                       dlib::range(number_of_equality_constraints, number_of_constraints - 1));
                 }
                 dlib::set_rowm(constraints, dlib::range(number_of_equality_constraints, number_of_constraints - 1)) =
                         dlib::rowm(constraints,
                                    dlib::range(number_of_equality_constraints, number_of_constraints - 1)) -
                         dlib::rowm(parameters, dlib::range(0, number_of_inequality_constraints - 1));
+                parameter_debug = cppsolnp::to_string(parameters);
             }
 
             t(1) = euclidean_norm(constraints);

@@ -106,7 +106,7 @@ namespace cppsolnp {
             }
 
 
-            if (lagrangian_parameters_bounded_.second == false) {
+            if (!lagrangian_parameters_bounded_.second) {
                 scale = dlib::join_cols(scale, parameter0);
             } else {
                 scale = dlib::join_cols(scale, dlib::ones_matrix<double>(parameter0.nr(), parameter0.nc()));
@@ -708,7 +708,7 @@ namespace cppsolnp {
                     // Debug
                     debug_parameter0 = to_string(parameter0);
 
-                    if (lagrangian_parameters_bounded_.second == false) {
+                    if (!lagrangian_parameters_bounded_.second) {
                         go = 1.0;
                     } else {
                         go = dlib::min(
@@ -973,7 +973,6 @@ namespace cppsolnp {
             std::string debug_return4 = to_string(scale);
             std::string debug_return5 = std::to_string(mu);
 
-            return;
 
         }
 

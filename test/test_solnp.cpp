@@ -73,33 +73,19 @@ TEST_CASE("Optimize the Alkyla function", "[alkyla]") {
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
-    for (auto row = 0; row < parameter_data.nr(); ++row) {
-        CHECK(result(row) >= Approx(parameter_data(row, 1)).margin(0.00001));
-        CHECK(result(row) <= Approx(parameter_data(row, 2)).margin(0.00001));
-    }
-
-    dlib::matrix<double, 0, 1> constraints = alkyla(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
-    }
-    for (auto row = 0; row < ib.nr(); ++row) {
-        CHECK(constraints(4 + row) >= Approx(ib(row, 0)).margin(0.00001));
-        CHECK(constraints(4 + row) <= Approx(ib(row, 1)).margin(0.00001));
-    }
-
     // Validate values
-    CHECK(result(0) == Approx(16.996376587648808).margin(0.00001));
-    CHECK(result(1) == Approx(15.999402679162111).margin(0.00001));
-    CHECK(result(2) == Approx(57.688358424585260).margin(0.00001));
-    CHECK(result(3) == Approx(30.324890354969355).margin(0.00001));
-    CHECK(result(4) == Approx(19.999989645413820).margin(0.00001));
-    CHECK(result(5) == Approx(90.565424808707550).margin(0.00001));
-    CHECK(result(6) == Approx(94.999992714259020).margin(0.00001));
-    CHECK(result(7) == Approx(10.590140523335723).margin(0.00001));
-    CHECK(result(8) == Approx(1.561646284077410).margin(0.00001));
-    CHECK(result(9) == Approx(1.535353201975077e+02).margin(0.00001));
+    CHECK(result(0) == Approx(0.169963765876488e2));
+    CHECK(result(1) == Approx(0.159994026791621e2));
+    CHECK(result(2) == Approx(0.576883584245853e2));
+    CHECK(result(3) == Approx(0.303248903549694e2));
+    CHECK(result(4) == Approx(0.199999896454138e2));
+    CHECK(result(5) == Approx(0.905654248087076e2));
+    CHECK(result(6) == Approx(0.949999927142590e2));
+    CHECK(result(7) == Approx(0.105901405233357e2));
+    CHECK(result(8) == Approx(0.015616462840774e2));
+    CHECK(result(9) == Approx(1.535353201975077e2));
 
-    REQUIRE(calculate <= Approx(-172.6412486481025).margin(0.00000001));
+    REQUIRE(calculate <= Approx(-1.726412486481025e2));
 
 }
 
@@ -115,8 +101,6 @@ TEST_CASE("Calculate the Box function", "[box]") {
 
     CHECK(result(0) == Approx(-10.890000000000002));
     CHECK(result(1) == Approx(-55.560000000000002));
-
-
 }
 
 TEST_CASE("Optimize the Box function (case a)", "[box]") {
@@ -137,14 +121,10 @@ TEST_CASE("Optimize the Box function (case a)", "[box]") {
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
-    // Check the equality constraints are all 0
-    dlib::matrix<double, 0, 1> constraints = box(result);
-    CHECK(constraints(1) == Approx(0.0).margin(0.000001));
-
     // Check the parameters
-    CHECK(result(0) == Approx(2.8867750701860793));
-    CHECK(result(1) == Approx(2.8867750712542191));
-    CHECK(result(2) == Approx(5.773407750260735));
+    CHECK(result(0) == Approx(2.886775069536727));
+    CHECK(result(1) == Approx(2.886775072009683));
+    CHECK(result(2) == Approx(5.773407750048355));
 
     REQUIRE(calculate <= -48.112522068150462);
 
@@ -168,16 +148,12 @@ TEST_CASE("Optimize the Box function (case b)", "[box]") {
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
-    // Check the equality constraints are all 0
-    dlib::matrix<double, 0, 1> constraints = box(result);
-    CHECK(constraints(1) == Approx(0.0).margin(0.001));
-
     // Check the parameters
     CHECK(result(0) == Approx(2.888765743268910));
     CHECK(result(1) == Approx(2.888765747765645));
     CHECK(result(2) == Approx(5.765448483893261));
 
-    REQUIRE(calculate <= Approx(-48.1124804082406).margin(0.0000000001));
+    REQUIRE(calculate <= Approx(-48.112480408240664));
 
 }
 
@@ -215,426 +191,26 @@ TEST_CASE("Optimize the Entropy function", "[entropy]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(entropy_functor(), parameter_data, ib, logger, 0.0);
+    double calculate = cppsolnp::solnp(entropy_functor(), parameter_data, ib, logger);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
-    dlib::matrix<double, 0, 1> constraints = entropy(result);
-    for (auto row = 1; row < 1; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
-    }
-
     // Validate values
-    CHECK(result(0) == Approx(0.8577173734).margin(0.00001));
-    CHECK(result(1) == Approx(0.8576276304).margin(0.00001));
-    CHECK(result(2) == Approx(0.8587589126).margin(0.00001));
-    CHECK(result(3) == Approx(0.8576113775).margin(0.00001));
-    CHECK(result(4) == Approx(0.8574458518).margin(0.00001));
-    CHECK(result(5) == Approx(0.8579758857).margin(0.00001));
-    CHECK(result(6) == Approx(2.27990352).margin(0.00001));
-    CHECK(result(7) == Approx(0.8573287004).margin(0.00001));
-    CHECK(result(8) == Approx(0.8576081223).margin(0.00001));
-    CHECK(result(9) == Approx(0.8580226255).margin(0.00001));
+    CHECK(result(0) == Approx(0.857717373389226));
+    CHECK(result(1) == Approx(0.857627630428985));
+    CHECK(result(2) == Approx(0.858758912629577));
+    CHECK(result(3) == Approx(0.857611377467009));
+    CHECK(result(4) == Approx(0.857445851804114));
+    CHECK(result(5) == Approx(0.857975885723616));
+    CHECK(result(6) == Approx(2.279903520424556));
+    CHECK(result(7) == Approx(0.857328700404536));
+    CHECK(result(8) == Approx(0.857608122266489));
+    CHECK(result(9) == Approx(0.858022625546437));
 
-    REQUIRE(calculate <= Approx(0.185478885901993).margin(0.00000001));
-
-}
-
-TEST_CASE("Calculate the Wright4 function", "[wright4]") {
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = -1.0, 3.0, -0.5, -2.0, -3.0;
-
-    dlib::matrix<double, 4, 1> result = wright_four(parameter_data);
-
-
-    CHECK(result(0) == Approx(68.9375));
-    CHECK(result(1) == Approx(1.632359313));
-    CHECK(result(2) == Approx(-0.07842712475));
-    CHECK(result(3) == Approx(1.0));
+    REQUIRE(calculate <= Approx(0.185478885901993));
 
 }
 
-
-TEST_CASE("Optimize the Wright4 function (case a, rho==10)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = 1, 1, 1, 1, 1;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(1.116643803).margin(0.00001));
-    CHECK(result(1) == Approx(1.220453097).margin(0.00001));
-    CHECK(result(2) == Approx(1.53777989).margin(0.00001));
-    CHECK(result(3) == Approx(1.972741019).margin(0.00001));
-    CHECK(result(4) == Approx(1.791081456).margin(0.00001));
-
-    REQUIRE(calculate <= Approx(0.029310831).margin(0.00000001));
-
-}
-
-
-TEST_CASE("Optimize the Wright4 function (case a, rho==1)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = 1, 1, 1, 1, 1;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(1.116643803).margin(0.00001));
-    CHECK(result(1) == Approx(1.220453097).margin(0.00001));
-    CHECK(result(2) == Approx(1.53777989).margin(0.00001));
-    CHECK(result(3) == Approx(1.972741019).margin(0.00001));
-    CHECK(result(4) == Approx(1.791081456).margin(0.00001));
-
-    REQUIRE(calculate <= Approx(0.029310831).margin(0.00000001));
-
-}
-
-
-TEST_CASE("Optimize the Wright4 function (case a, rho==0)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = 1, 1, 1, 1, 1;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(1.116643803).margin(0.0001));
-    CHECK(result(1) == Approx(1.220453097).margin(0.00001));
-    CHECK(result(2) == Approx(1.53777989).margin(0.00001));
-    CHECK(result(3) == Approx(1.972741019).margin(0.0001));
-    CHECK(result(4) == Approx(1.791081456).margin(0.0001));
-
-    REQUIRE(calculate <= Approx(0.029310831).margin(0.00000001));
-
-}
-
-TEST_CASE("Optimize the Wright4 function (case b, rho==10)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = 2, 2, 2, 2, 2;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(1.116643803).margin(0.00001));
-    CHECK(result(1) == Approx(1.220453097).margin(0.00001));
-    CHECK(result(2) == Approx(1.53777989).margin(0.00001));
-    CHECK(result(3) == Approx(1.972741019).margin(0.00001));
-    CHECK(result(4) == Approx(1.791081456).margin(0.00001));
-
-    REQUIRE(calculate <= Approx(0.029310831).margin(0.00000001));
-
-}
-
-
-TEST_CASE("Optimize the Wright4 function (case b, rho==1)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = 2, 2, 2, 2, 2;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(1.116643803).margin(0.00001));
-    CHECK(result(1) == Approx(1.220453097).margin(0.00001));
-    CHECK(result(2) == Approx(1.53777989).margin(0.00001));
-    CHECK(result(3) == Approx(1.972741019).margin(0.0001));
-    CHECK(result(4) == Approx(1.791081456).margin(0.00001));
-
-    REQUIRE(calculate <= Approx(0.029310831).margin(0.00000001));
-
-}
-
-
-TEST_CASE("Optimize the Wright4 function (case b, rho==0)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = 2, 2, 2, 2, 2;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(1.116643803).margin(0.00001));
-    CHECK(result(1) == Approx(1.220453097).margin(0.00001));
-    CHECK(result(2) == Approx(1.53777989).margin(0.00001));
-    CHECK(result(3) == Approx(1.972741019).margin(0.0001));
-    CHECK(result(4) == Approx(1.791081456).margin(0.00001));
-
-    REQUIRE(calculate <= Approx(0.029310831).margin(0.00000001));
-
-}
-
-TEST_CASE("Optimize the Wright4 function (case c, rho==10)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = -1, 3, -0.5, -2, -3;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.0001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(-0.7030689338).margin(0.000001));
-    CHECK(result(1) == Approx(2.635653021).margin(0.00001));
-    CHECK(result(2) == Approx(-0.09908912946).margin(0.00001));
-    CHECK(result(3) == Approx(-1.797457648).margin(0.00001));
-    CHECK(result(4) == Approx(-2.844671274).margin(0.00001));
-
-    REQUIRE(calculate <= Approx(44.0228771451712).margin(0.000001));
-
-}
-
-
-TEST_CASE("Optimize the Wright4 function (case c, rho==1)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = -1, 3, -0.5, -2, -3;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.0001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(-0.7035235248).margin(0.0000001));
-    CHECK(result(1) == Approx(2.63572788).margin(0.000001));
-    CHECK(result(2) == Approx(-0.09645172688).margin(0.000001));
-    CHECK(result(3) == Approx(-1.797997955).margin(0.000001));
-    CHECK(result(4) == Approx(-2.842832966).margin(0.000001));
-
-    REQUIRE(calculate <= Approx(44.0220750611382).margin(0.00000001));
-
-}
-
-
-TEST_CASE("Optimize the Wright4 function (case c, rho==0)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = -1, 3, -0.5, -2, -3;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(-0.7035235248).margin(0.001));
-    CHECK(result(1) == Approx(2.63572788).margin(0.000001));
-    CHECK(result(2) == Approx(-0.09645172688).margin(0.001));
-    CHECK(result(3) == Approx(-1.797997955).margin(0.001));
-    CHECK(result(4) == Approx(-2.842832966).margin(0.001));
-
-    REQUIRE(calculate <= Approx(44.0220750611382).margin(0.00000001));
-
-}
-
-
-TEST_CASE("Optimize the Wright4 function (case d, rho==10)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = -1, 2, 1, -2, -2;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(-1.273052029).margin(0.0001));
-    CHECK(result(1) == Approx(2.41035387).margin(0.0001));
-    CHECK(result(2) == Approx(1.194859245).margin(0.0001));
-    CHECK(result(3) == Approx(-0.1542381307).margin(0.0001));
-    CHECK(result(4) == Approx(-1.571027699).margin(0.0001));
-
-    REQUIRE(calculate <= Approx(27.871905223431).margin(0.00000001));
-
-}
-
-
-TEST_CASE("Optimize the Wright4 function (case d, rho==1)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = -1, 2, 1, -2, -2;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.0001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(-1.273052029).margin(0.001));
-    CHECK(result(1) == Approx(2.41035387).margin(0.0001));
-    CHECK(result(2) == Approx(1.194859245).margin(0.0001));
-    CHECK(result(3) == Approx(-0.1542381307).margin(0.001));
-    CHECK(result(4) == Approx(-1.571027699).margin(0.001));
-
-    REQUIRE(calculate <= Approx(27.871905223431).margin(0.00000001));
-
-}
-
-
-TEST_CASE("Optimize the Wright4 function (case d, rho==0)", "[wright4]") {
-
-
-    /* x0, lower, upper */
-    dlib::matrix<double, 5, 1> parameter_data;
-    parameter_data = -1, 2, 1, -2, -2;
-
-    dlib::matrix<double, 0, 0> ib;
-
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
-
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
-
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
-
-    dlib::matrix<double, 0, 1> constraints = wright_four(result);
-    for (auto row = 1; row < 4; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.00001));
-    }
-
-    // Validate values
-    CHECK(result(0) == Approx(-1.273052029).margin(0.0001));
-    CHECK(result(1) == Approx(2.41035387).margin(0.0001));
-    CHECK(result(2) == Approx(1.194859245).margin(0.0001));
-    CHECK(result(3) == Approx(-0.1542381307).margin(0.0001));
-    CHECK(result(4) == Approx(-1.571027699).margin(0.0001));
-
-    REQUIRE(calculate <= Approx(27.871905223431).margin(0.00000001));
-
-}
 
 TEST_CASE("Calculate the Powell function", "[powell]") {
     dlib::matrix<double, 5, 1> parameter_data;
@@ -675,20 +251,14 @@ TEST_CASE("Optimize the Powell function (rho == 0)", "[powell]") {
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
-    // Check the equality constraints are all 0
-    dlib::matrix<double, 0, 1> constraints = powell(result);
-    for (auto row = 1; row < 3; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.000001));
-    }
-
     // Check the parameters
-    CHECK(result(0) == Approx(-1.717142506313303));
-    CHECK(result(1) == Approx(1.595708459713134));
-    CHECK(result(2) == Approx(1.827247731350245).margin(0.0001));
-    CHECK(result(3) == Approx(-0.763643197991088));
-    CHECK(result(4) == Approx(-0.763643197980140));
+    CHECK(result(0) == Approx(-1.717126203723513));
+    CHECK(result(1) == Approx(1.595689596511580));
+    CHECK(result(2) == Approx(1.827278075550860));
+    CHECK(result(3) == Approx(-0.763645042210886));
+    CHECK(result(4) == Approx(-0.763645042234952));
 
-    REQUIRE(calculate <= 0.053949846871732);
+    REQUIRE(calculate <= 0.053949827793391);
 
 }
 
@@ -712,12 +282,6 @@ TEST_CASE("Optimize the Powell function (rho == 1)", "[powell]") {
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
-    // Check the equality constraints are all 0
-    dlib::matrix<double, 0, 1> constraints = powell(result);
-    for (auto row = 1; row < 3; ++row) {
-        CHECK(constraints(row) == Approx(0.0).margin(0.000001));
-    }
-
     // Check the parameters
     CHECK(result(0) == Approx(-1.717142506313303));
     CHECK(result(1) == Approx(1.595708459713134));
@@ -726,5 +290,474 @@ TEST_CASE("Optimize the Powell function (rho == 1)", "[powell]") {
     CHECK(result(4) == Approx(-0.763643197980140));
 
     REQUIRE(calculate <= 0.053949846871732);
+
+}
+
+
+TEST_CASE("Calculate the Wright4 function", "[wright4]") {
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = -1.0, 3.0, -0.5, -2.0, -3.0;
+
+    dlib::matrix<double, 4, 1> result = wright_four(parameter_data);
+
+
+    CHECK(result(0) == Approx(68.9375));
+    CHECK(result(1) == Approx(1.632359313));
+    CHECK(result(2) == Approx(-0.07842712475));
+    CHECK(result(3) == Approx(1.0));
+
+}
+
+
+TEST_CASE("Optimize the Wright4 function (case a, rho==10)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = 1, 1, 1, 1, 1;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(1.116639595144975));
+    CHECK(result(1) == Approx(1.220448420527845));
+    CHECK(result(2) == Approx(1.537782093973876));
+    CHECK(result(3) == Approx(1.972752470314671));
+    CHECK(result(4) == Approx(1.791088179957703));
+
+    REQUIRE(calculate <= Approx(0.029310831271171));
+
+}
+
+
+TEST_CASE("Optimize the Wright4 function (case a, rho==1)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = 1, 1, 1, 1, 1;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(1.116643803185402));
+    CHECK(result(1) == Approx(1.220453096801827));
+    CHECK(result(2) == Approx(1.537779890421572));
+    CHECK(result(3) == Approx(1.972741018934506));
+    CHECK(result(4) == Approx(1.791081456246007));
+
+    REQUIRE(calculate <= Approx(0.029310831002758));
+
+}
+
+
+TEST_CASE("Optimize the Wright4 function (case a, rho==0)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = 1, 1, 1, 1, 1;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(1.116609971954848));
+    CHECK(result(1) == Approx(1.220440489315363));
+    CHECK(result(2) == Approx(1.537788998574534));
+    CHECK(result(3) == Approx(1.972781636643539));
+    CHECK(result(4) == Approx(1.791135716667731));
+
+    REQUIRE(calculate <= Approx(0.029310831942731));
+
+}
+
+TEST_CASE("Optimize the Wright4 function (case b, rho==10)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = 2, 2, 2, 2, 2;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(1.116634078024861));
+    CHECK(result(1) == Approx(1.220444234062229));
+    CHECK(result(2) == Approx(1.537784320405761));
+    CHECK(result(3) == Approx(1.972763493598540));
+    CHECK(result(4) == Approx(1.791097035073237));
+
+    REQUIRE(calculate <= Approx(0.029310831022048));
+
+}
+
+
+TEST_CASE("Optimize the Wright4 function (case b, rho==1)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = 2, 2, 2, 2, 2;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(1.116634870722612));
+    CHECK(result(1) == Approx(1.220440576122608));
+    CHECK(result(2) == Approx(1.537785458091246));
+    CHECK(result(3) == Approx(1.972770662225987));
+    CHECK(result(4) == Approx(1.791095775742904));
+
+    REQUIRE(calculate <= Approx(0.029310830648204));
+
+}
+
+
+TEST_CASE("Optimize the Wright4 function (case b, rho==0)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = 2, 2, 2, 2, 2;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(1.116636615308806));
+    CHECK(result(1) == Approx(1.220440910051733));
+    CHECK(result(2) == Approx(1.537785097114965));
+    CHECK(result(3) == Approx(1.972769218398222));
+    CHECK(result(4) == Approx(1.791092977407627));
+
+    REQUIRE(calculate <= Approx(0.029310830686406));
+
+}
+
+TEST_CASE("Optimize the Wright4 function (case c, rho==10)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = -1, 3, -0.5, -2, -3;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(-0.703068933803915));
+    CHECK(result(1) == Approx(2.635653020521741));
+    CHECK(result(2) == Approx(-0.099089129462807));
+    CHECK(result(3) == Approx(-1.797457648464959));
+    CHECK(result(4) == Approx(-2.844671274183172));
+
+    REQUIRE(calculate <= Approx(44.022877145171257));
+
+}
+
+
+TEST_CASE("Optimize the Wright4 function (case c, rho==1)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = -1, 3, -0.5, -2, -3;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(-0.703523524834065));
+    CHECK(result(1) == Approx(2.635727880354312));
+    CHECK(result(2) == Approx(-0.096451726879527));
+    CHECK(result(3) == Approx(-1.797997954636873));
+    CHECK(result(4) == Approx(-2.842832966138447));
+
+    REQUIRE(calculate <= Approx(44.022075061138295));
+
+}
+
+
+TEST_CASE("Optimize the Wright4 function (case c, rho==0)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = -1, 3, -0.5, -2, -3;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(-0.703376376169597));
+    CHECK(result(1) == Approx(2.635700821034921));
+    CHECK(result(2) == Approx(-0.096657075140750));
+    CHECK(result(3) == Approx(-1.797935433028946));
+    CHECK(result(4) == Approx(-2.843427812167240));
+
+    REQUIRE(calculate <= Approx(44.022128023467303));
+
+}
+
+
+TEST_CASE("Optimize the Wright4 function (case d, rho==10)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = -1, 2, 1, -2, -2;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(-1.273052029422237));
+    CHECK(result(1) == Approx(2.410353869751445));
+    CHECK(result(2) == Approx(1.194859244564641));
+    CHECK(result(3) == Approx(-0.154238130707192));
+    CHECK(result(4) == Approx(-1.571027698602370));
+
+    REQUIRE(calculate <= Approx(27.871905223431018));
+
+}
+
+
+TEST_CASE("Optimize the Wright4 function (case d, rho==1)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = -1, 2, 1, -2, -2;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(-1.272710813834789));
+    CHECK(result(1) == Approx(2.410353128557497));
+    CHECK(result(2) == Approx(1.194780438668736));
+    CHECK(result(3) == Approx(-0.154425728750688));
+    CHECK(result(4) == Approx(-1.571448524460437));
+
+    REQUIRE(calculate <= Approx(27.871903584038883));
+
+}
+
+
+TEST_CASE("Optimize the Wright4 function (case d, rho==0)", "[wright4]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data = -1, 2, 1, -2, -2;
+
+    dlib::matrix<double, 0, 0> ib;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(-1.273023411221166));
+    CHECK(result(1) == Approx(2.410362154910699));
+    CHECK(result(2) == Approx(1.194843255003828));
+    CHECK(result(3) == Approx(-0.154284646055543));
+    CHECK(result(4) == Approx(-1.571062971404984));
+
+    REQUIRE(calculate <= Approx(27.871904866028800));
+
+}
+
+
+
+TEST_CASE("Calculate the Wright9 function", "[wright9]") {
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data =
+            1.091,
+            -3.174,
+            1.214,
+            -1.614,
+            2.134;
+
+    dlib::matrix<double, 4, 1> result = wright_nine(parameter_data);
+
+    CHECK(result(0) == Approx(-1.815401107e+3));
+    CHECK(result(1) == Approx(0.019897305e+3));
+    CHECK(result(2) == Approx(-0.001999274866e+3));
+    CHECK(result(3) == Approx(0.007022058536e+3));
+
+
+}
+
+
+TEST_CASE("Optimize the Wright9 function (case a, rho==1)", "[wright9]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data =
+            1,
+            1,
+            1,
+            1,
+            1;
+
+    /* Inequality function constraints.*/
+    dlib::matrix<double, 3, 2> ib;
+    ib =
+            -100, 20,
+            -2, 100,
+            5, 100;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 1.0);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(-0.082010879422399));
+    CHECK(result(1) == Approx(3.692422439415791));
+    CHECK(result(2) == Approx(2.487343192052682));
+    CHECK(result(3) == Approx(0.377176847262690));
+    CHECK(result(4) == Approx(0.173650632156765));
+
+    REQUIRE(calculate <= Approx(-2.104078394423900e2));
+
+}
+
+
+TEST_CASE("Optimize the Wright9 function (case a, rho==100)", "[wright9]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data =
+            1,
+            1,
+            1,
+            1,
+            1;
+
+    /* Inequality function constraints.*/
+    dlib::matrix<double, 3, 2> ib;
+    ib =
+            -100, 20,
+            -2, 100,
+            5, 100;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 100.0);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(-0.081246392868120));
+    CHECK(result(1) == Approx(3.689847468079701));
+    CHECK(result(2) == Approx(2.491144012826899));
+    CHECK(result(3) == Approx(0.377589784583978));
+    CHECK(result(4) == Approx(0.173399403653944));
+
+    REQUIRE(calculate <= Approx(-2.104073432066561e2));
+
+}
+
+
+TEST_CASE("Optimize the Wright9 function (case b, rho==100)", "[wright9]") {
+
+
+    /* x0, lower, upper */
+    dlib::matrix<double, 5, 1> parameter_data;
+    parameter_data =
+            1.091,
+            -3.174,
+            1.214,
+            -1.614,
+            2.134;
+
+    /* Inequality function constraints.*/
+    dlib::matrix<double, 3, 2> ib;
+    ib =
+            -100, 20,
+            -2, 100,
+            5, 100;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 100.0);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(1.479634676414054));
+    CHECK(result(1) == Approx(-2.636607129671721));
+    CHECK(result(2) == Approx(1.054666762278611));
+    CHECK(result(3) == Approx(-1.611508943269783));
+    CHECK(result(4) == Approx(2.673892424752704));
+
+    REQUIRE(calculate <= Approx(-2.500584227790517e3));
 
 }
