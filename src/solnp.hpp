@@ -7,9 +7,6 @@
 #include "utils.hpp"
 #include "subnp.hpp"
 
-#define CHOL_WHOLE
-#define QR
-
 /* This is an interior method QP solver. */
 namespace cppsolnp {
 
@@ -195,7 +192,6 @@ namespace cppsolnp {
             constraints = dlib::rowm(cost_vector, dlib::range(1, number_of_constraints));
 
             if (number_of_inequality_constraints != 0) {
-                std::string parameter_debug = cppsolnp::to_string(parameters);
                 if (dlib::min(
                         dlib::rowm(constraints,
                                    dlib::range(number_of_equality_constraints, number_of_constraints - 1)) -
@@ -215,7 +211,6 @@ namespace cppsolnp {
                         dlib::rowm(constraints,
                                    dlib::range(number_of_equality_constraints, number_of_constraints - 1)) -
                         dlib::rowm(parameters, dlib::range(0, number_of_inequality_constraints - 1));
-                parameter_debug = cppsolnp::to_string(parameters);
             }
 
             t(1) = euclidean_norm(constraints);
@@ -247,12 +242,6 @@ namespace cppsolnp {
             // [p,l,h,mu] subnp(p,op,l,ob,pb,h,mu)
             /* Assume hessian matrix h not supplied*/
 
-            std::string param_debug = to_string(parameters);
-            std::string param_bound_debug = to_string(parameter_bounds);
-            std::string lagr_debug = to_string(lagrangian_multipliers);
-            std::string cost_debug = to_string(cost_vector);
-            std::string hessian_debug = to_string(hessian_matrix);
-
 
             sub_problem(parameters,
                         parameter_bounds,
@@ -265,11 +254,6 @@ namespace cppsolnp {
                         delta,
                         tolerance);
 
-            param_debug = to_string(parameters);
-            param_bound_debug = to_string(parameter_bounds);
-            lagr_debug = to_string(lagrangian_multipliers);
-            cost_debug = to_string(cost_vector);
-            hessian_debug = to_string(hessian_matrix);
 
 
             event_log->push_back("Updated parameters: " +
@@ -283,13 +267,9 @@ namespace cppsolnp {
 
             t(0) = (objective_function_value - cost_vector(0)) / (std::max(std::abs(cost_vector(0)), 1.0));
             objective_function_value = cost_vector(0);
-            std::string debug_constraints = to_string(constraints);
-            std::string debug_parameters = to_string(parameters);
 
             if (number_of_constraints != 0) {
                 constraints = dlib::rowm(cost_vector, dlib::range(1, number_of_constraints));
-                debug_constraints = to_string(constraints);
-                debug_parameters = to_string(parameters);
 
                 if (number_of_inequality_constraints != 0) {
 
@@ -313,8 +293,6 @@ namespace cppsolnp {
                             dlib::rowm(constraints,
                                        dlib::range(number_of_equality_constraints, number_of_constraints - 1)) -
                             dlib::rowm(parameters, dlib::range(0, number_of_inequality_constraints - 1));
-                    debug_constraints = to_string(constraints);
-                    debug_parameters = to_string(parameters);
                 }
                 t(2) = euclidean_norm(constraints);
 
@@ -362,7 +340,6 @@ namespace cppsolnp {
         }
 
 
-        std::string result_parameters = to_string(parameters);
         return objective_function_value;
     }
 

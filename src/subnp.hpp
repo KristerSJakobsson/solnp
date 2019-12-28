@@ -17,9 +17,9 @@ namespace cppsolnp {
     struct subnp {
     public:
         subnp(functor_model &objective_function,
-              int number_of_parameter_data, // op(7)
-              int number_of_equality_constraints, // op(5)
-              int number_of_inequality_constraints,
+              long number_of_parameter_data, // op(7)
+              long number_of_equality_constraints, // op(5)
+              long number_of_inequality_constraints,
               const std::pair<bool, bool> &lagrangian_parameters_bounded,//op(6))
               const cppsolnp::log_list_ptr &event_log) :
                 objective_function_(objective_function),
@@ -29,7 +29,8 @@ namespace cppsolnp {
                 number_of_total_constraints_(number_of_inequality_constraints + number_of_equality_constraints),
                 number_of_parameters_and_inequality_constraints_(
                         number_of_parameter_data + number_of_inequality_constraints),
-                event_log_(event_log), lagrangian_parameters_bounded_(lagrangian_parameters_bounded) {
+                event_log_(event_log),
+                lagrangian_parameters_bounded_(lagrangian_parameters_bounded){
             /* Here we put subnp initialization data, like function declarations or constant parameter_data. */
         }
 
@@ -48,7 +49,7 @@ namespace cppsolnp {
 
             /* Here we put the subnp contents.*/
             alpha_ = dlib::zeros_matrix<double>(3, 1);
-            positive_change_ = true;
+            bool positive_change = true;
 
             dlib::matrix<double> parameter0 = parameter;
             dlib::matrix<double> lagrangian_multipliers0 = lagrangian_multipliers;
@@ -91,7 +92,7 @@ namespace cppsolnp {
                                                                         number_of_total_constraints_ +
                                                                         number_of_parameters_)));
 
-            int mm = 0;
+            long mm = 0;
             if (lagrangian_parameters_bounded_.second) {
                 if (!lagrangian_parameters_bounded_.first) {
                     mm = number_of_inequality_constraints_;
@@ -155,7 +156,7 @@ namespace cppsolnp {
             if (number_of_total_constraints_ != 0) {
                 constraints = dlib::rowm(cost_vector, dlib::range(1, number_of_total_constraints_));
 
-                for (int i = 0; i < number_of_parameters_; ++i) {
+                for (auto i = 0; i < number_of_parameters_; ++i) {
                     parameter0(number_of_inequality_constraints_ + i) =
                             parameter0(number_of_inequality_constraints_ + i) + delta;
                     cost_vector =
@@ -210,15 +211,15 @@ namespace cppsolnp {
             dlib::matrix<double> c(1, number_of_parameters_and_inequality_constraints_ + 1);
             dlib::matrix<double> dx(number_of_parameters_and_inequality_constraints_ + 1, 1);
             double go;
-            int minor_iteration;
-            int major_iteration;
+            int minor_iteration = 0;
+            int major_iteration = 0;
             dlib::matrix<double> gap(parameter_bounds.nr(), 2);
             if (number_of_total_constraints_ != 0) {
-                positive_change_ = false; // ch = -1
+                positive_change = false; // ch = -1
                 alpha_(0) = tolerance - dlib::max(dlib::abs(constraints));
 
                 if (alpha_(0) <= 0) {
-                    positive_change_ = true;
+                    positive_change = true;
                     if (!lagrangian_parameters_bounded_.second) {
                         dlib::qr_decomposition<dlib::matrix<double>> qr_temp(a * trans(a));
 
@@ -276,7 +277,7 @@ namespace cppsolnp {
                                                       temporary_vector(
                                                               number_of_parameters_and_inequality_constraints_);
 
-                            for (int k = 0; k < mm; k++) {
+                            for (auto k = 0; k < mm; k++) {
                                 if (temporary_vector(k) < 0) {
                                     temporary_scalar = std::min(temporary_scalar,
                                                                 -1 * (parameter_bounds(k, 1) - parameter0(k)) /
@@ -319,7 +320,7 @@ namespace cppsolnp {
             parameter = dlib::rowm(parameter0, dlib::range(0, number_of_parameters_and_inequality_constraints_ - 1));
             lagrangian_multipliers = 0;
 
-            if (positive_change_) {
+            if (positive_change) {
                 cost_vector = pointwise_divide(
                         objective_function_(
                                 dlib::pointwise_multiply(
@@ -369,7 +370,7 @@ namespace cppsolnp {
             double reduction = 0.0;
             while (minor_iteration < max_iterations) {
                 ++minor_iteration;
-                if (positive_change_) {
+                if (positive_change) {
 
                     // H�r �r n�got fel! Loopen �ndrar g konstigt
                     for (auto i = 0; i < number_of_parameters_; ++i) {
@@ -620,7 +621,7 @@ namespace cppsolnp {
 
                 temporary_parameter = parameter;
                 temporary_gradient = gradient;
-                positive_change_ = true;
+                positive_change = true;
                 obn = dlib::min(sob);
 
                 if (object_function_value <= obn) {
@@ -697,16 +698,15 @@ namespace cppsolnp {
     private:
         // Constructor variables
         functor_model &objective_function_;
-        const int number_of_parameters_;
-        const int number_of_equality_constraints_;
-        const int number_of_inequality_constraints_;
-        const int number_of_total_constraints_;
-        const int number_of_parameters_and_inequality_constraints_;
+        const long number_of_parameters_;
+        const long number_of_equality_constraints_;
+        const long number_of_inequality_constraints_;
+        const long number_of_total_constraints_;
+        const long number_of_parameters_and_inequality_constraints_;
         const std::pair<bool, bool> &lagrangian_parameters_bounded_;
         const log_list_ptr &event_log_;
 
         // Internal variables
-        bool positive_change_; // if true, there have been positive change
         dlib::matrix<double, 3, 1> alpha_;
     };
 
