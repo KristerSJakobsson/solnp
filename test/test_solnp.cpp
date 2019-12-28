@@ -9,6 +9,7 @@
 #include "../src/benchmark/box.hpp"
 #include "../src/benchmark/entropy.hpp"
 #include "../src/benchmark/powell.hpp"
+#include "../src/benchmark/rosen_suzuki.hpp"
 #include "../src/benchmark/wright_four.hpp"
 #include "../src/benchmark/wright_nine.hpp"
 
@@ -631,7 +632,6 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==0)", "[wright4]") {
 }
 
 
-
 TEST_CASE("Calculate the Wright9 function", "[wright9]") {
     dlib::matrix<double, 5, 1> parameter_data;
     parameter_data =
@@ -759,5 +759,50 @@ TEST_CASE("Optimize the Wright9 function (case b, rho==100)", "[wright9]") {
     CHECK(result(4) == Approx(2.673892424752704));
 
     REQUIRE(calculate <= Approx(-2.500584227790517e3));
+
+}
+
+
+TEST_CASE("Calculate the Rosen-Suzuki function", "[rosen_suzuki]") {
+    dlib::matrix<double, 4, 1> parameter_data;
+    parameter_data = 1, 1, 1, 1;
+
+    dlib::matrix<double, 4, 1> result = rosen_suzuki(parameter_data);
+
+    CHECK(result(0) == Approx(-19.0));
+    CHECK(result(1) == Approx(4.0));
+    CHECK(result(2) == Approx(6.0));
+    CHECK(result(3) == Approx(1.0));
+
+
+}
+
+TEST_CASE("Optimize the Rosen-Suzuki function", "[rosen_suzuki]") {
+
+
+    /* x0 */
+    dlib::matrix<double, 4, 1> parameter_data;
+    parameter_data = 1, 1, 1, 1;
+
+    /* Inequality function constraints.*/
+    dlib::matrix<double, 3, 2> ib;
+    ib =
+            0, 1000,
+            0, 1000,
+            0, 1000;
+
+    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+
+    double calculate = cppsolnp::solnp(rosen_suzuki_functor(), parameter_data, ib, logger);
+
+    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+
+    // Validate values
+    CHECK(result(0) == Approx(0.000230374253029));
+    CHECK(result(1) == Approx(0.998564179709879));
+    CHECK(result(2) == Approx(2.000278419459943));
+    CHECK(result(3) == Approx(-0.999859532645383));
+
+    REQUIRE(calculate <= Approx(-43.999759237182886));
 
 }
