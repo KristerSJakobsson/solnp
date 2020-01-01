@@ -1,7 +1,3 @@
-//
-// Created by krister on 2019/01/20.
-//
-
 #ifndef CPP_SOLNP_UTILS_HPP
 #define CPP_SOLNP_UTILS_HPP
 
@@ -10,7 +6,7 @@
 namespace cppsolnp {
 
     typedef std::vector<std::string> log_list;
-    typedef std::unique_ptr<std::vector<std::string>> log_list_ptr;
+    typedef std::shared_ptr<std::vector<std::string>> log_list_ptr;
 
 
     namespace internal {

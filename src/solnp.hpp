@@ -19,17 +19,14 @@ namespace cppsolnp {
             functor_model functor,
             parameter_input &parameter_data,
             const inequality_constraint_vectors &inequality_constraint_data,
-            const cppsolnp::log_list_ptr &event_log = nullptr,
+            const cppsolnp::log_list_ptr event_log,
             // Optional input
-/*		std::unique_ptr<dlib::matrix<double>> inequality_constraints = nullptr,
-		std::unique_ptr<dlib::matrix<double>> hessian_matrix = nullptr,
-		*/
-            // Below are control variables.
-            double rho = 1.0, //penalty parameter
-            int maximum_major_iterations = 10,
-            int maximum_minor_iterations = 10,
-            const double &delta = 1e-5, // Step size in forward difference evaluation
-            const double &tolerance = 1e-4
+            std::shared_ptr<dlib::matrix<double>> hessian_matrix_override,
+            double rho, //penalty parameter
+            int maximum_major_iterations,
+            int maximum_minor_iterations,
+            const double &delta, // Step size in forward difference evaluation
+            const double &tolerance
     ) {
         COMPILE_TIME_ASSERT(dlib::is_matrix<parameter_input>::value);
         COMPILE_TIME_ASSERT(dlib::is_matrix<inequality_constraint_vectors>::value);
@@ -37,7 +34,7 @@ namespace cppsolnp {
         COMPILE_TIME_ASSERT(inequality_constraint_vectors::NC <= 3);
 
         if (!isfinite(tolerance * tolerance)) {
-            throw std::runtime_error("Tolerance set too low.");
+            throw std::invalid_argument("Tolerance set too low.");
         }
 
         /* Split the parameter from the
@@ -103,13 +100,13 @@ namespace cppsolnp {
 
                 if (dlib::min(temporary_inequality_guess - dlib::colm(temporary_inequality_constraints, 0)) <= 0 ||
                     dlib::min(dlib::colm(temporary_inequality_constraints, 1) - temporary_inequality_guess) <= 0) {
-                    throw std::runtime_error("Error: Initial inequalities must be within bounds.");
+                    throw std::invalid_argument("Error: Initial inequalities must be within bounds.");
                 }
 
             } else if (inequality_constraints_vector_width == 2) {
                 if (dlib::min(dlib::colm(inequality_constraint_data, 1) - dlib::colm(inequality_constraint_data, 0)) <=
                     0) {
-                    throw std::runtime_error(
+                    throw std::invalid_argument(
                             "Error: The lower bounds of the inequality constraints must be strictly less than the upper bounds.");
                 }
                 temporary_inequality_guess =
@@ -118,7 +115,7 @@ namespace cppsolnp {
             } else if (inequality_constraints_vector_width == 1) {
                 number_of_inequality_constraints = 0;
             } else {
-                throw std::runtime_error("Error: Inequality constraints must have 2 or 3 columns.");
+                throw std::invalid_argument("Error: Inequality constraints must have 2 or 3 columns.");
             }
             if (number_of_inequality_constraints > 0) {
                 if (lagrangian_parameters_bounded.first) {
@@ -155,10 +152,10 @@ namespace cppsolnp {
         auto cost_vector_length = cost_vector.nr(),
                 cost_vector_width = cost_vector.nc();
         if (cost_vector_width != 1) {
-            throw std::runtime_error("Error: sqp_min cost function must return only 1 column.");
+            throw std::invalid_argument("Error: sqp_min cost function must return only 1 column.");
         }
         if (cost_vector_length < number_of_inequality_constraints + 1) {
-            throw std::runtime_error(
+            throw std::invalid_argument(
                     "Error: sqp_min the number of constraints in the cost function does not match the call to sqp_min.");
         }
 
@@ -226,7 +223,17 @@ namespace cppsolnp {
         double mu = number_of_parameters;
         int iteration = 0;
         dlib::matrix<double> hessian_matrix;
-        hessian_matrix = dlib::identity_matrix<double>(number_of_parameters + number_of_inequality_constraints);
+        if (hessian_matrix_override == nullptr){
+            hessian_matrix = dlib::identity_matrix<double>(number_of_parameters + number_of_inequality_constraints);
+        }
+        else {
+            hessian_matrix = *hessian_matrix_override;
+            if(hessian_matrix.nr() != number_of_parameters + number_of_inequality_constraints ||
+                hessian_matrix.nc() != number_of_parameters + number_of_inequality_constraints) {
+                throw std::invalid_argument("Error: The provided hessian matrix override was of invalid dimension.");
+            }
+
+        }
 
         subnp<functor_model> sub_problem(
                 functor,

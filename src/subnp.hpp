@@ -1,14 +1,9 @@
-//
-// Created by krister on 2019/01/20.
-//
-
 #ifndef CPP_SOLNP_SUBNP_HPP
 #define CPP_SOLNP_SUBNP_HPP
 
 #include "stdafx.h"
 
 #include "utils.hpp"
-#include "solve.hpp"
 
 namespace cppsolnp {
 
