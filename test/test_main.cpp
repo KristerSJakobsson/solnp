@@ -6,5 +6,5 @@
 #undef DLIB_USE_LAPACK
 
 #include "test_utils.cpp"
-#include "test_solve_simple.cpp"
-//#include "test_solve_complex.cpp"
+#include "test_pysolnp.cpp"
+#include "test_solve_complex.cpp"

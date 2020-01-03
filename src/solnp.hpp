@@ -62,16 +62,16 @@ namespace cppsolnp {
             parameter_bounds = dlib::colm(parameter_data, dlib::range(1, 2));
 
         } else {
-            throw std::invalid_argument("Error: Parameter array must have three columns or less.");
+            throw std::invalid_argument("Parameter array must have three columns or less.");
         }
 
         if (lagrangian_parameters_bounded.first) {
             if (dlib::min(dlib::colm(parameter_data, 2) - dlib::colm(parameter_data, 1)) <= 0) {
                 throw std::invalid_argument(
-                        "Error: The lower bounds of the parameter constraints must be strictly less than the upper bounds.");
+                        "The lower bounds of the parameter constraints must be strictly less than the upper bounds.");
             } else if (dlib::min(parameters - dlib::colm(parameter_data, 1)) <= 0 ||
                        dlib::min(dlib::colm(parameter_data, 2) - parameters) <= 0) {
-                throw std::invalid_argument("Error: Initial parameter values must be within the bounds.");
+                throw std::invalid_argument("Initial parameter values must be within the bounds.");
             }
         }
         /* Assume inequality constraints exist for now.
@@ -100,14 +100,14 @@ namespace cppsolnp {
 
                 if (dlib::min(temporary_inequality_guess - dlib::colm(temporary_inequality_constraints, 0)) <= 0 ||
                     dlib::min(dlib::colm(temporary_inequality_constraints, 1) - temporary_inequality_guess) <= 0) {
-                    throw std::invalid_argument("Error: Initial inequalities must be within bounds.");
+                    throw std::invalid_argument("Initial inequalities must be within bounds.");
                 }
 
             } else if (inequality_constraints_vector_width == 2) {
                 if (dlib::min(dlib::colm(inequality_constraint_data, 1) - dlib::colm(inequality_constraint_data, 0)) <=
                     0) {
                     throw std::invalid_argument(
-                            "Error: The lower bounds of the inequality constraints must be strictly less than the upper bounds.");
+                            "The lower bounds of the inequality constraints must be strictly less than the upper bounds.");
                 }
                 temporary_inequality_guess =
                         0.5 * (dlib::colm(inequality_constraint_data, 0) + dlib::colm(inequality_constraint_data, 1));
@@ -115,7 +115,7 @@ namespace cppsolnp {
             } else if (inequality_constraints_vector_width == 1) {
                 number_of_inequality_constraints = 0;
             } else {
-                throw std::invalid_argument("Error: Inequality constraints must have 2 or 3 columns.");
+                throw std::invalid_argument("Inequality constraints must have 2 or 3 columns.");
             }
             if (number_of_inequality_constraints > 0) {
                 if (lagrangian_parameters_bounded.first) {
@@ -152,11 +152,11 @@ namespace cppsolnp {
         auto cost_vector_length = cost_vector.nr(),
                 cost_vector_width = cost_vector.nc();
         if (cost_vector_width != 1) {
-            throw std::invalid_argument("Error: sqp_min cost function must return only 1 column.");
+            throw std::invalid_argument("sqp_min cost function must return only 1 column.");
         }
         if (cost_vector_length < number_of_inequality_constraints + 1) {
             throw std::invalid_argument(
-                    "Error: sqp_min the number of constraints in the cost function does not match the call to sqp_min.");
+                    "sqp_min the number of constraints in the cost function does not match the call to sqp_min.");
         }
 
         auto number_of_equality_constraints = cost_vector_length - 1 - number_of_inequality_constraints;
@@ -231,7 +231,7 @@ namespace cppsolnp {
             hessian_matrix = *hessian_matrix_override;
             if(hessian_matrix.nr() != number_of_parameters + number_of_inequality_constraints ||
                 hessian_matrix.nc() != number_of_parameters + number_of_inequality_constraints) {
-                throw std::invalid_argument("Error: The provided hessian matrix override was of invalid dimension.");
+                throw std::invalid_argument("The provided hessian matrix override was of invalid dimension.");
             }
 
         }

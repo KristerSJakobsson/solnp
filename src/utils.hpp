@@ -12,8 +12,8 @@ namespace cppsolnp {
     namespace internal {
         template<typename T>
         dlib::matrix<T> apply_function_to_matrix_elements(dlib::matrix<T> matrix, std::function<T(T)> function) {
-            for (auto row = 0; row < matrix.nr(); ++row) {
-                for (auto col = 0; col < matrix.nc(); ++col) {
+            for (auto row = 0L; row < matrix.nr(); ++row) {
+                for (auto col = 0L; col < matrix.nc(); ++col) {
                     matrix(row, col) = function(matrix(row,col));
                 }
             }
@@ -49,7 +49,7 @@ namespace cppsolnp {
             result = dlib::svd2(false, false, dlib::trans(matrix), dummy_max, singular_value_matrix, dummy_min);
         }
         if (result != 0) {
-            throw std::runtime_error("Error: Singular value decomposition failed.");
+            throw std::runtime_error("Singular value decomposition failed.");
             // Alternative: Use the "svd" algorithm.
 
         }
@@ -79,7 +79,7 @@ namespace cppsolnp {
         COMPILE_TIME_ASSERT(dlib::is_matrix<M1>::value);
         COMPILE_TIME_ASSERT(dlib::is_matrix<M2>::value);
         if (numerator_matrix.nc() != denominator_matrix.nc() || numerator_matrix.nr() != denominator_matrix.nr()) {
-            throw std::runtime_error("Error: Tried to divide two matrixes of different size.");
+            throw std::runtime_error("Tried to divide two matrixes of different size.");
         }
         int max_col = numerator_matrix.nc(), max_row = numerator_matrix.nr();
         dlib::matrix<double> result(max_row, max_col);
@@ -125,12 +125,12 @@ namespace cppsolnp {
     the right vector contains the max.*/
     dlib::matrix<double> left_vector_min_right_vector_max(dlib::matrix<double> matrix) {
         if (matrix.nc() != 2) {
-            throw std::runtime_error("Error: Invalid input.");
+            throw std::runtime_error("Invalid input.");
         }
 
         dlib::matrix<double, 1, 2> row_data;
         dlib::matrix<double, 1, 2> new_data;
-        for (int row = 0; row < matrix.nr(); ++row) {
+        for (auto row = 0L; row < matrix.nr(); ++row) {
             row_data = dlib::rowm(matrix, row);
             new_data = dlib::min(row_data), dlib::max(row_data);
             dlib::set_rowm(matrix, row) = new_data;
@@ -144,7 +144,7 @@ namespace cppsolnp {
         COMPILE_TIME_ASSERT(dlib::is_matrix<M>::value);
 
         if (matrix.nr() == 0 || matrix.nc() == 0) {
-            throw std::runtime_error("Error: Invalid input.");
+            throw std::runtime_error("Invalid input.");
         }
 
         dlib::matrix<double, 0, 1> return_vector(matrix.nr());
@@ -160,8 +160,8 @@ namespace cppsolnp {
     std::string to_string(M matrix, bool flatten = false) {
         COMPILE_TIME_ASSERT(dlib::is_matrix<M>::value);
         std::string return_value = "[";
-        for (int row = 0; row < matrix.nr(); ++row) {
-            for (int col = 0; col < matrix.nc(); ++col) {
+        for (auto row = 0L; row < matrix.nr(); ++row) {
+            for (auto col = 0L; col < matrix.nc(); ++col) {
                 return_value += std::to_string(matrix(row, col)) + " ";
                 if (col < matrix.nc() - 1 && row < matrix.nr() - 1) {
                     return_value += " ";

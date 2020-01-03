@@ -65,7 +65,7 @@ This version utilizes the power of C++11 and provides a light Python wrapper for
 """
 
 setup(name='pysolnp',
-      version='0.0.1',
+      version='0.0.y',
       description='This provides the SOLNP optimizaiton Algorithm.',
       author='Krister Sune Jakobsson',
       author_email='krister.s.jakobsson@gmail.com',

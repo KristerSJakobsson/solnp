@@ -20,7 +20,7 @@ namespace cppsolnp {
         cppsolnp::log_list log;
         int callbacks;
 
-        SolverResult(double solve_value, dlib::matrix<double, 0, 1> optim, int function_calls, const log_list_ptr &log_list) :
+        SolverResult(double solve_value, dlib::matrix<double, 0, 1> optim, int function_calls, const cppsolnp::log_list_ptr &log_list) :
                 solve_value(solve_value), optimum(std::move(optim)), callbacks(function_calls), log(*log_list)  {}
     };
 
@@ -75,12 +75,12 @@ namespace cppsolnp {
 
             if (equality_function_value.nr() != eq_values.nr()) {
                 throw std::invalid_argument(
-                        "Error: Equality function evaluated to a different length than the equality values.");
+                        "Equality function evaluated to a different length than the equality values.");
             }
 
             if (inequality_function_value.nr() != inequality_constraint_data.nr()) {
                 throw std::invalid_argument(
-                        "Error: Inequality function evaluated to a different length than the inequality bounds.");
+                        "Inequality function evaluated to a different length than the inequality bounds.");
             }
 
             result(0) = optimal_function_value;
