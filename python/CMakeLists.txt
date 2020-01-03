@@ -1,3 +1,7 @@
+cmake_minimum_required(VERSION 3.14)
+
+set(CMAKE_CXX_STANDARD 11)
+
 project(pysolnp)
 include(FetchContent)
 
@@ -11,4 +15,7 @@ FetchContent_Declare(pybind11
         GIT_TAG v2.4.3)
 FetchContent_MakeAvailable(pybind11)
 
-pybind11_add_module(pysolnp pysolnp.cpp)
+add_subdirectory(../src cppsolnp)
+
+pybind11_add_module(pysolnp src/pysolnp.cpp ./../src/solver.hpp)
+target_link_libraries(pysolnp PRIVATE dlib::dlib)

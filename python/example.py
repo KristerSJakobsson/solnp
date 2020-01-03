@@ -41,7 +41,7 @@ inequality_lower_bounds = [0, 0, 0, 0]
 inequality_upper_bounds = [100, 100, 100, 100]
 
 if __name__ == "__main__":
-    val_optim, x_optim, debug = pysolnp.solve(x0=start_point,
+    val_optim, x_optim, debug = pysolnp.solve(start_point=start_point,
                                               obj_func=alkyla_objective_function,
                                               eq_func=alkyla_equality_function,
                                               eq_values=equality_values,

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 import re
 import sys
@@ -67,6 +69,8 @@ setup(name='pysolnp',
       description='This provides the SOLNP optimizaiton Algorithm.',
       author='Krister Sune Jakobsson',
       author_email='krister.s.jakobsson@gmail.com',
+      url='https://github.com/KristerSJakobsson/cpp-solnp',
+      license='Boost Software License',
       long_description=long_description,
       ext_modules=[CMakeExtension('pysolnp')],
       cmdclass=dict(build_ext=CMakeBuild),

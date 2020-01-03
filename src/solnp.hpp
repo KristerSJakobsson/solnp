@@ -62,16 +62,16 @@ namespace cppsolnp {
             parameter_bounds = dlib::colm(parameter_data, dlib::range(1, 2));
 
         } else {
-            throw std::runtime_error("Error: Parameter array must have three columns or less.");
+            throw std::invalid_argument("Error: Parameter array must have three columns or less.");
         }
 
         if (lagrangian_parameters_bounded.first) {
             if (dlib::min(dlib::colm(parameter_data, 2) - dlib::colm(parameter_data, 1)) <= 0) {
-                throw std::runtime_error(
+                throw std::invalid_argument(
                         "Error: The lower bounds of the parameter constraints must be strictly less than the upper bounds.");
             } else if (dlib::min(parameters - dlib::colm(parameter_data, 1)) <= 0 ||
                        dlib::min(dlib::colm(parameter_data, 2) - parameters) <= 0) {
-                throw std::runtime_error("Error: Initial parameter values must be within the bounds.");
+                throw std::invalid_argument("Error: Initial parameter values must be within the bounds.");
             }
         }
         /* Assume inequality constraints exist for now.
@@ -227,6 +227,7 @@ namespace cppsolnp {
             hessian_matrix = dlib::identity_matrix<double>(number_of_parameters + number_of_inequality_constraints);
         }
         else {
+            // TODO: Save hessian matrix for output
             hessian_matrix = *hessian_matrix_override;
             if(hessian_matrix.nr() != number_of_parameters + number_of_inequality_constraints ||
                 hessian_matrix.nc() != number_of_parameters + number_of_inequality_constraints) {
