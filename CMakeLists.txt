@@ -15,5 +15,6 @@ FetchContent_Declare(pybind11
         GIT_TAG v2.4.3)
 FetchContent_MakeAvailable(pybind11)
 
-pybind11_add_module(pysolnp src/pysolnp.cpp)
+pybind11_add_module(pysolnp src/pysolver.cpp)
 target_link_libraries(pysolnp PRIVATE dlib::dlib)
+target_link_libraries(pysolnp PRIVATE pybind11::pybind11)

@@ -19,18 +19,18 @@ namespace cppsolnp {
             functor_model functor,
             parameter_input &parameter_data,
             const inequality_constraint_vectors &inequality_constraint_data,
-            const cppsolnp::log_list_ptr event_log,
+            const cppsolnp::log_list_ptr event_log = nullptr,
             // Optional input
-            std::shared_ptr<dlib::matrix<double>> hessian_matrix_override,
-            double rho, //penalty parameter
-            int maximum_major_iterations,
-            int maximum_minor_iterations,
-            const double &delta, // Step size in forward difference evaluation
-            const double &tolerance
+            std::shared_ptr<dlib::matrix<double>> hessian_matrix_override = nullptr,
+            double rho = 1.0, //penalty parameter
+            int maximum_major_iterations = 10,
+            int maximum_minor_iterations = 10,
+            const double &delta = 1e-5, // Step size in forward difference evaluation
+            const double &tolerance = 1e-4
     ) {
         COMPILE_TIME_ASSERT(dlib::is_matrix<parameter_input>::value);
         COMPILE_TIME_ASSERT(dlib::is_matrix<inequality_constraint_vectors>::value);
-        COMPILE_TIME_ASSERT(parameter_input::NC <= 3 && parameter_input::NC > 0);
+        COMPILE_TIME_ASSERT(parameter_input::NC <= 3 && parameter_input::NC >= 0);
         COMPILE_TIME_ASSERT(inequality_constraint_vectors::NC <= 3);
 
         if (!isfinite(tolerance * tolerance)) {
@@ -144,11 +144,13 @@ namespace cppsolnp {
         cost_vector = functor(dlib::rowm(parameters, dlib::range(number_of_inequality_constraints,
                                                                  number_of_inequality_constraints +
                                                                  number_of_parameters - 1))); // ob
-        event_log->push_back("Updated parameters: " +
-                             to_string(dlib::rowm(parameters, dlib::range(number_of_inequality_constraints,
-                                                                          number_of_inequality_constraints +
-                                                                          number_of_parameters - 1)),
-                                       true));
+
+        if (event_log)
+            event_log->push_back("Updated parameters: " +
+                                 to_string(dlib::rowm(parameters, dlib::range(number_of_inequality_constraints,
+                                                                              number_of_inequality_constraints +
+                                                                              number_of_parameters - 1)),
+                                           true));
         auto cost_vector_length = cost_vector.nr(),
                 cost_vector_width = cost_vector.nc();
         if (cost_vector_width != 1) {
@@ -223,17 +225,15 @@ namespace cppsolnp {
         double mu = number_of_parameters;
         int iteration = 0;
         dlib::matrix<double> hessian_matrix;
-        if (hessian_matrix_override == nullptr){
-            hessian_matrix = dlib::identity_matrix<double>(number_of_parameters + number_of_inequality_constraints);
-        }
-        else {
-            // TODO: Save hessian matrix for output
+        // TODO: Save Hessian Matrix in output
+        if (hessian_matrix_override) {
             hessian_matrix = *hessian_matrix_override;
-            if(hessian_matrix.nr() != number_of_parameters + number_of_inequality_constraints ||
+            if (hessian_matrix.nr() != number_of_parameters + number_of_inequality_constraints ||
                 hessian_matrix.nc() != number_of_parameters + number_of_inequality_constraints) {
                 throw std::invalid_argument("The provided hessian matrix override was of invalid dimension.");
             }
-
+        } else {
+            hessian_matrix = dlib::identity_matrix<double>(number_of_parameters + number_of_inequality_constraints);
         }
 
         subnp<functor_model> sub_problem(
@@ -263,12 +263,12 @@ namespace cppsolnp {
                         tolerance);
 
 
-
-            event_log->push_back("Updated parameters: " +
-                                 to_string(dlib::rowm(parameters, dlib::range(number_of_inequality_constraints,
-                                                                              number_of_inequality_constraints +
-                                                                              number_of_parameters - 1)),
-                                           true));
+            if (event_log)
+                event_log->push_back("Updated parameters: " +
+                                     to_string(dlib::rowm(parameters, dlib::range(number_of_inequality_constraints,
+                                                                                  number_of_inequality_constraints +
+                                                                                  number_of_parameters - 1)),
+                                               true));
             cost_vector = functor(dlib::rowm(parameters, dlib::range(number_of_inequality_constraints,
                                                                      number_of_inequality_constraints +
                                                                      number_of_parameters - 1))); // ob
@@ -340,13 +340,15 @@ namespace cppsolnp {
                         number_of_inequality_constraints,
                         number_of_inequality_constraints + number_of_parameters - 1)
                 );
-        if (std::hypot(t(0), t(1)) <= tolerance) {
-            // Reached tolerance
-            event_log->push_back("Reached requested tolerance in " + std::to_string(iteration) + " iterations.");
-        } else {
-            event_log->push_back("Exiting after maximum number of iterations. Tolerance not reached.");
-        }
 
+        if (event_log) {
+            if (std::hypot(t(0), t(1)) <= tolerance) {
+                // Reached tolerance
+                event_log->push_back("Reached requested tolerance in " + std::to_string(iteration) + " iterations.");
+            } else {
+                event_log->push_back("Exiting after maximum number of iterations. Tolerance not reached.");
+            }
+        }
 
         return objective_function_value;
     }

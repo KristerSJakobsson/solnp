@@ -191,13 +191,12 @@ namespace cppsolnp {
                             dlib::rowm(parameter0, dlib::range(0, number_of_inequality_constraints_ - 1));
 
                 }
-                if (conditional_number(a) > 1 / std::numeric_limits<double>::epsilon()) {
+
+                if (event_log_ && conditional_number(a) > 1 / std::numeric_limits<double>::epsilon()) {
                     event_log_->push_back(
                             "Warning: Redundant constraints were detected. Poor intermediate results may result.");
-
-
                 }
-                double cond_numb = conditional_number(a);
+
                 b = a * parameter0 - constraints;
 
             }
@@ -301,7 +300,7 @@ namespace cppsolnp {
                             minor_iteration = 10;
                         }
                     }
-                    if (minor_iteration >= 10) {
+                    if (event_log_ && minor_iteration >= 10) {
                         event_log_->push_back(
                                 "Warning: The linearized prblem has no feasible solution. The problem may not be feasible.");
                     }
@@ -682,10 +681,9 @@ namespace cppsolnp {
             // Guarantee that the hessian matrix is symmetric (in theory, it should already be)
             hessian = dlib::make_symmetric(hessian);
 
-            if (reduction > tolerance) {
-                if (event_log_ != nullptr)
-                    event_log_->push_back(
-                            "Warning: Minor optimization routine did not converge. You may need to increase the number of minor iterations.");
+            if (event_log_ && reduction > tolerance) {
+                event_log_->push_back(
+                        "Warning: Minor optimization routine did not converge. You may need to increase the number of minor iterations.");
             }
 
         }

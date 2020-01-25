@@ -58,21 +58,25 @@ class CMakeBuild(build_ext):
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=self.build_temp)
 
 
-long_description = """
-This is a Python library for the SOLNP algorithm by Yinyu Ye (1989).
-The algorithm was originally implemented in Matlab, and have gained some fame through it's R implementation (RSOLNP).
-This version utilizes the power of C++11 and provides a light Python wrapper for ease of use.
-"""
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup(name='pysolnp',
-      version='0.0.y',
-      description='This provides the SOLNP optimizaiton Algorithm.',
+      version='0.0.2',
       author='Krister Sune Jakobsson',
       author_email='krister.s.jakobsson@gmail.com',
+      description='This provides the SOLNP optimizaiton Algorithm.',
+      long_description=long_description,
+      long_description_content_type="text/markdown",
       url='https://github.com/KristerSJakobsson/cpp-solnp',
       license='Boost Software License',
-      long_description=long_description,
       ext_modules=[CMakeExtension('pysolnp')],
       cmdclass=dict(build_ext=CMakeBuild),
       zip_safe=False,
+      classifiers=[
+          "Programming Language :: Python",
+          "Programming Language :: C++",
+          "License :: OSI Approved :: Boost Software License 1.0 (BSL-1.0)",
+          "Operating System :: OS Independent",
+      ]
       )
