@@ -10,7 +10,19 @@ FetchContent_Declare(dlib
         GIT_TAG v19.18)
 
 FetchContent_MakeAvailable(dlib)
-find_package(Catch2 REQUIRED)
+
+FetchContent_Declare(
+        catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2
+        GIT_TAG v2.11.1)
+
+FetchContent_GetProperties(catch2)
+if (NOT catch2_POPULATED)
+    FetchContent_Populate(catch2)
+    add_subdirectory(${catch2_SOURCE_DIR} ${catch2_BINARY_DIR})
+    list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/contrib)
+    include(Catch)
+endif()
 
 add_executable(solnp_test test_main.cpp)
 
