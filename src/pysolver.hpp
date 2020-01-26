@@ -18,6 +18,7 @@
 namespace py = pybind11;
 
 namespace pysolver {
+
     template<typename T>
     inline
     std::vector <T> py_list_to_std_vector(const py::list &list) {
@@ -106,11 +107,6 @@ namespace pysolver {
         return list;
     }
 
-//
-//    cppsolnp::MatrixFunction<double> objective_mapping_function(const py::function &f);
-//
-//    cppsolnp::MatrixFunction<dlib::matrix < double, 0, 1>> constraint_mapping_function(const py::function &f);
-
     struct Result {
         double solve_value;
         py::object optimum;
@@ -118,9 +114,6 @@ namespace pysolver {
 
         Result(double solve_value, py::object optimum, int callbacks) :
                 solve_value(solve_value), optimum(optimum), callbacks(callbacks) {
-            std::cout << "Solve Value: " << solve_value << std::endl;
-            std::cout << "Optimum: " << optimum << std::endl;
-            std::cout << "Callbacks: " << callbacks << std::endl;
         }
 
     };
@@ -143,23 +136,6 @@ namespace pysolver {
             double tolerance,
             bool debug
     );
-
-//py::arg("obj_func"),
-//py::arg("par_start_value"),
-//py::arg("par_lower_limit") = py::cast<py::list>(Py_None),
-//        py::arg("par_upper_limit") = py::cast<py::list>(Py_None),
-//        py::arg("eq_func") = py::cast<py::function>(Py_None),
-//        py::arg("eq_values") = py::cast<py::list>(Py_None),
-//        py::arg("ineq_func") = py::cast<py::function>(Py_None),
-//        py::arg("ineq_lower_bounds") = py::cast<py::list>(Py_None),
-//        py::arg("ineq_upper_bounds") = py::cast<py::list>(Py_None),
-//        py::arg("rho") = double(1.0)
-//py::arg("max_major_iter") = int(10),
-//py::arg("max_minor_iter") = int(10),
-//py::arg("delta") = double(1e-5),
-//py::arg("tolerance") = double(1e-4),
-//py::arg("debug") = bool(false));
-
 
 }
 

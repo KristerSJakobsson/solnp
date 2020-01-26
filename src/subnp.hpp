@@ -42,7 +42,6 @@ namespace cppsolnp {
         ) {
 
 
-            /* Here we put the subnp contents.*/
             alpha_ = dlib::zeros_matrix<double>(3, 1);
             bool positive_change = true;
 
@@ -209,7 +208,7 @@ namespace cppsolnp {
             int major_iteration = 0;
             dlib::matrix<double> gap(parameter_bounds.nr(), 2);
             if (number_of_total_constraints_ != 0) {
-                positive_change = false; // ch = -1
+                positive_change = false;
                 alpha_(0) = tolerance - dlib::max(dlib::abs(constraints));
 
                 if (alpha_(0) <= 0) {
@@ -271,7 +270,7 @@ namespace cppsolnp {
                                                       temporary_vector(
                                                               number_of_parameters_and_inequality_constraints_);
 
-                            for (auto k = 0; k < mm; k++) {
+                            for (auto k = 0L; k < mm; k++) {
                                 if (temporary_vector(k) < 0) {
                                     temporary_scalar = std::min(temporary_scalar,
                                                                 -1 * (parameter_bounds(k, 1) - parameter0(k)) /
@@ -366,7 +365,6 @@ namespace cppsolnp {
                 ++minor_iteration;
                 if (positive_change) {
 
-                    // H�r �r n�got fel! Loopen �ndrar g konstigt
                     for (auto i = 0; i < number_of_parameters_; ++i) {
                         parameter(number_of_inequality_constraints_ + i) =
                                 parameter(number_of_inequality_constraints_ + i) + delta;

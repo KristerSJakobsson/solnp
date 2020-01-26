@@ -151,8 +151,6 @@ namespace cppsolnp {
                 delta,
                 tolerance);
 
-        std::cout << "Result: " << result << std::endl;
-
         dlib::matrix<double, 0, 1> final_vector = dlib::colm(parameter_data, 0);
 
         SolverResult final_result(result, final_vector, function_calls, logger);
@@ -169,18 +167,24 @@ namespace pysolver {
         return [python_function](const dlib::matrix<double, 0, 1> &param) {
             const py::list &list_param = dlib_matrix_to_py_list<double>(param);
             double result = py::float_(python_function(list_param));
-            std::cout << result << std::endl;
             return result;
         };
     }
 
-    cppsolnp::MatrixFunction<dlib::matrix < double, 0, 1>> constraint_mapping_function(const py::function &f) {
+    cppsolnp::MatrixFunction<dlib::matrix<double, 0, 1>>
+    constraint_mapping_function(const py::function &f, const dlib::matrix<double> &val, const std::string &name) {
         auto python_function = f.cast<py::function>();
-        return [python_function](const dlib::matrix<double, 0, 1> &param) {
+        return [python_function, val, name](const dlib::matrix<double, 0, 1> &param) {
             const py::list &list_param = dlib_matrix_to_py_list<double>(param);
             const py::list &result = python_function(list_param);
+            if (result.size() != val.nr()) {
+                std::string expected_size = std::to_string(val.nr());
+                std::string actual_size = std::to_string(result.size());
+                throw std::invalid_argument(
+                        "The " + name + " callback function returned a value of length " + actual_size +
+                        " but comparison values are of length " + expected_size);
+            }
             const dlib::matrix<double, 0, 1> &result_matrix = py_list_to_dlib_matrix<double>(result);
-            std::cout << cppsolnp::to_string(result_matrix) << std::endl;
             return result_matrix;
         };
     }
@@ -207,22 +211,21 @@ namespace pysolver {
         if (!par_lower_limit.is_none() && !par_upper_limit.is_none()) {
             parameter_data = dlib::join_rows(pysolver::py_list_to_dlib_matrix<double>(par_start_value),
                                              dlib::join_rows(pysolver::py_list_to_dlib_matrix<double>(par_lower_limit),
-                                                             pysolver::py_list_to_dlib_matrix<double>(par_upper_limit)));
+                                                             pysolver::py_list_to_dlib_matrix<double>(
+                                                                     par_upper_limit)));
         } else if (par_lower_limit.is_none() && par_upper_limit.is_none()) {
             parameter_data = pysolver::py_list_to_dlib_matrix<double>(par_start_value);
         } else {
             throw std::invalid_argument(
                     "Bad input: Can not only provide equality or inequaltiy constraints, please provide both.");
         }
-        std::cout << cppsolnp::to_string(parameter_data) << std::endl;
 
-        cppsolnp::MatrixFunction<dlib::matrix < double, 0, 1>> equality_function(nullptr);
-        std::shared_ptr <dlib::matrix<double, 0, 1>> equality_function_values(nullptr);
+        cppsolnp::MatrixFunction<dlib::matrix<double, 0, 1>> equality_function(nullptr);
+        std::shared_ptr<dlib::matrix<double, 0, 1>> equality_function_values(nullptr);
         if (!eq_func.is_none() && !eq_values.is_none()) {
-            equality_function = constraint_mapping_function(eq_func);
-            equality_function_values = std::make_shared < dlib::matrix < double, 0, 1
-                    >> (pysolver::py_list_to_dlib_matrix<double>(eq_values));
-            std::cout << cppsolnp::to_string(*equality_function_values) << std::endl;
+            equality_function_values = std::make_shared<dlib::matrix<double, 0, 1
+            >>(pysolver::py_list_to_dlib_matrix<double>(eq_values));
+            equality_function = constraint_mapping_function(eq_func, *equality_function_values, "equality");
         } else if (eq_func.is_none() && eq_values.is_none()) {
             // Do nothing
         } else {
@@ -230,34 +233,19 @@ namespace pysolver {
                     "Bad input: Must provide equality function together with equality values or not provide one at all.");
         }
 
-        cppsolnp::MatrixFunction<dlib::matrix < double, 0, 1>> inequality_function(nullptr);
-        std::shared_ptr <dlib::matrix<double, 0, 2>> inequality_function_data(nullptr);
+        cppsolnp::MatrixFunction<dlib::matrix<double, 0, 1>> inequality_function(nullptr);
+        std::shared_ptr<dlib::matrix<double, 0, 2>> inequality_function_data(nullptr);
         if (!ineq_func.is_none() && !ineq_lower_bounds.is_none() && !ineq_upper_bounds.is_none()) {
-            inequality_function = constraint_mapping_function(ineq_func);
-            inequality_function_data = std::make_shared < dlib::matrix < double, 0, 2 >> (
+            inequality_function_data = std::make_shared<dlib::matrix<double, 0, 2 >>(
                     dlib::join_rows(pysolver::py_list_to_dlib_matrix<double>(ineq_lower_bounds),
                                     pysolver::py_list_to_dlib_matrix<double>(ineq_upper_bounds)));
-            std::cout << cppsolnp::to_string(*inequality_function_data) << std::endl;
+            inequality_function = constraint_mapping_function(ineq_func, *inequality_function_data, "inequality");
         } else if (ineq_func.is_none() && ineq_lower_bounds.is_none() && ineq_upper_bounds.is_none()) {
             // Do nothing
         } else {
             throw std::invalid_argument(
                     "Bad input: Must provide inequality function together with upper and lower bounds or not provide one at all.");
         }
-
-
-    //    SolverResult solve_simple(const MatrixFunction<double> &obj_func,
-    //                              dlib::matrix<double, 0, 0> &parameter_data,
-    //                              const MatrixFunction<dlib::matrix<double, 0, 1>> &eq_func,
-    //                              const std::shared_ptr<dlib::matrix<double, 0, 1>> &eq_values,
-    //                              const MatrixFunction<dlib::matrix<double, 0, 1>> &ineq_func,
-    //                              const std::shared_ptr<dlib::matrix<double, 0, 2>> &ineq_data,
-    //                              bool debug,
-    //                              double rho = 1.0, //penalty parameter
-    //                              int maximum_major_iterations = 10,
-    //                              int maximum_minor_iterations = 10,
-    //                              const double &delta = 1e-5, // Step size in forward difference evaluation
-    //                              const double &tolerance = 1e-4) {
 
         cppsolnp::SolverResult result = cppsolnp::solve_simple(
                 objective_mapping_function(obj_func),
@@ -273,14 +261,13 @@ namespace pysolver {
                 delta,
                 tolerance);
 
-        std::cout << "Optimum:" << cppsolnp::to_string(result.optimum) << std::endl;
+        if (result.log) {
+            for (const auto& val : *result.log) {
+                std::cout << val << std::endl;
+            }
+        }
 
         const py::object &return_optimum = pysolver::dlib_matrix_to_py_list<double>(result.optimum);
-
-        std::cout << "Optimum:" << return_optimum << std::endl;
-
-        // TODO: Fix this
-        // Log stuff
 
         pysolver::Result return_value(result.solve_value, return_optimum, result.callbacks);
         return return_value;

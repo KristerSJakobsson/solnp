@@ -125,7 +125,6 @@ namespace cppsolnp {
                     parameter_bounds = temporary_inequality_constraints;
                 }
                 parameters = dlib::join_cols(temporary_inequality_guess, parameters);
-                //stack_matrix_on_bottom(temporary_inequality_guess, parameters);
             }
         }
 
@@ -138,10 +137,6 @@ namespace cppsolnp {
         if (lagrangian_parameters_bounded.first || number_of_inequality_constraints > 0) {
             lagrangian_parameters_bounded.second = true;
         }
-        // opd=[1 10 10 1.0e-5 1.0e-4];  % default optimization parameters
-
-        // Cost function, note that
-        // parameters = [inequality_guess;parameters]
 
         dlib::matrix<double> cost_vector;
         cost_vector = functor(dlib::rowm(parameters, dlib::range(number_of_inequality_constraints,
@@ -167,13 +162,6 @@ namespace cppsolnp {
 
         auto number_of_equality_constraints = cost_vector_length - 1 - number_of_inequality_constraints;
         auto number_of_constraints = cost_vector_length - 1;
-
-
-        /*
-        From here we assume that no approximate Hessian or
-        Lagrangian Multipliers were supplied.
-        TODO: Add support for them.
-        */
 
         double objective_function_value = cost_vector(0);
         std::vector<double> objective_function_value_history;
@@ -239,10 +227,6 @@ namespace cppsolnp {
 
         while (iteration < maximum_major_iterations) {
             ++iteration;
-            // op = [rho, minit, delta,tol,nec,nic,lagrangian_parameters_bounded]
-            // [p,l,h,mu] subnp(p,op,l,ob,pb,h,mu)
-            /* Assume hessian matrix h not supplied*/
-
 
             sub_problem(parameters,
                         parameter_bounds,
@@ -323,10 +307,7 @@ namespace cppsolnp {
             objective_function_value_history.push_back(objective_function_value);
 
         }
-        if (number_of_inequality_constraints != 0) {
-            //		inequality_constraints = dlib::rowm(parameters, dlib::range(0,number_of_inequality_constraints-1));
-            // TODO: Output the above inequality constraints
-        }
+
         // Save result to original parameter data matrix.
         dlib::set_colm(parameter_data, 0) =
                 dlib::rowm(parameters, dlib::range(
