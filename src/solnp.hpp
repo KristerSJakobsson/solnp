@@ -22,10 +22,10 @@ namespace cppsolnp {
             // Optional input
             const cppsolnp::log_list_ptr &event_log = nullptr,
             double rho = 1.0, //penalty parameter
-            int maximum_major_iterations = 10,
-            int maximum_minor_iterations = 10,
-            const double &delta = 1e-5, // Step size in forward difference evaluation
-            const double &tolerance = 1e-4
+            int maximum_major_iterations = 400,
+            int maximum_minor_iterations = 800,
+            const double &delta = 1e-7, // Step size in forward difference evaluation
+            const double &tolerance = 1e-8
     ) {
         COMPILE_TIME_ASSERT(dlib::is_matrix<parameter_input>::value);
         COMPILE_TIME_ASSERT(dlib::is_matrix<inequality_constraint_vectors>::value);
@@ -339,10 +339,10 @@ namespace cppsolnp {
             // Optional input
             const cppsolnp::log_list_ptr &event_log = nullptr,
             double rho = 1.0, //penalty parameter
-            int maximum_major_iterations = 10,
-            int maximum_minor_iterations = 10,
-            const double &delta = 1e-5, // Step size in forward difference evaluation
-            const double &tolerance = 1e-4
+            int maximum_major_iterations = 400,
+            int maximum_minor_iterations = 800,
+            const double &delta = 1e-7, // Step size in forward difference evaluation
+            const double &tolerance = 1e-8
     ) {
         COMPILE_TIME_ASSERT(dlib::is_matrix<parameter_input>::value);
         COMPILE_TIME_ASSERT(dlib::is_matrix<inequality_constraint_vectors>::value);

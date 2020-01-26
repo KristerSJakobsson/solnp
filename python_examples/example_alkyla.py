@@ -7,8 +7,6 @@ To test this algorithm, then:
 import pysolnp
 
 
-# Alkyla function from the original documentation of SOLNP
-# This problem has both equality and inequality constraints, as well as the parameter bounds.
 def alkyla_objective_function(x):
     result = -0.63 * x[3] * x[6] + 50.4 * x[0] + 3.5 * x[1] + x[2] + 33.6 * x[4]
     return result

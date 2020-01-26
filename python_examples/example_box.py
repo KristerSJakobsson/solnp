@@ -6,8 +6,7 @@ To test this algorithm, then:
 
 import pysolnp
 
-# Alkyla function from the original documentation of SOLNP
-# This problem has both equality and inequality constraints, as well as the parameter bounds.
+
 def box_objective_function(x):
     result = -1 * x[0] * x[1] * x[2]
     return result

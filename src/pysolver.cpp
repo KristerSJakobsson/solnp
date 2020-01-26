@@ -33,10 +33,10 @@ PYBIND11_MODULE(pysolnp, m
           "ineq_lower_bounds"_a = py::cast<py::object>(Py_None),
           "ineq_upper_bounds"_a = py::cast<py::object>(Py_None),
           "rho"_a = 1.0,
-          "max_major_iter"_a = 10,
-          "max_minor_iter"_a = 10,
-          "delta"_a = 1e-5,
-          "tolerance"_a = 1e-4,
+          "max_major_iter"_a = 400,
+          "max_minor_iter"_a = 800,
+          "delta"_a = 1e-7,
+          "tolerance"_a = 1e-8,
           "debug"_a = false);
 
 #ifdef VERSION_INFO

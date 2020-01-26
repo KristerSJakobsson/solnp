@@ -6,8 +6,7 @@ To test this algorithm, then:
 
 import pysolnp
 
-# Alkyla function from the original documentation of SOLNP
-# This problem has both equality and inequality constraints, as well as the parameter bounds.
+
 def rosen_suzuki_objective_function(x):
     result = x[0] * x[0] + x[1] * x[1] + 2 * x[2] * x[2] + x[3] * x[3] - 5 * x[0] - 5 * x[1] - 21 * x[2] + 7 * x[3]
     return result

@@ -58,11 +58,11 @@ class CMakeBuild(build_ext):
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=self.build_temp)
 
 
-with open("README.md", "r") as fh:
+with open("python_examples/README.md", "r") as fh:
     long_description = fh.read()
 
 setup(name='pysolnp',
-      version='0.0.2',
+      version='0.1a2',
       author='Krister Sune Jakobsson',
       author_email='krister.s.jakobsson@gmail.com',
       description='This provides the SOLNP optimizaiton Algorithm.',
@@ -77,6 +77,8 @@ setup(name='pysolnp',
           "Programming Language :: Python",
           "Programming Language :: C++",
           "License :: OSI Approved :: Boost Software License 1.0 (BSL-1.0)",
-          "Operating System :: OS Independent",
+          "Operating System :: MacOS :: MacOS X",
+          "Operating System :: Microsoft :: Windows",
+          "Operating System :: POSIX :: Linux",
       ]
       )
