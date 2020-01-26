@@ -1,6 +1,6 @@
 """
 To test this algorithm, then:
-1) Install this package, for example through pip or by running "pip install ./pysolnp" from the cpp_solnp folder.
+1) Install this package, for example through pip or by running "pip install ." from the cpp_solnp folder.
 2) Run this file with Python
 """
 

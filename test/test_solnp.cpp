@@ -43,7 +43,7 @@ TEST_CASE("Calculate the Alkyla function", "[alkyla]") {
 }
 
 
-TEST_CASE("Optimize the Alkyla function", "[alkyla]") {
+TEST_CASE("Optimize the Alkyla function manual hessian", "[alkyla]") {
 
 
     /* x0, lower, upper */
@@ -68,9 +68,12 @@ TEST_CASE("Optimize the Alkyla function", "[alkyla]") {
             .9, 10.0 / 9.0,
             .99, 100.0 / 99.0;
 
+    dlib::matrix<double> hessian_matrix;
+    hessian_matrix = dlib::identity_matrix<double>(parameter_data.nr() + ib.nr());
+
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(alkyla_functor(), parameter_data, ib, logger, nullptr, 0.0);
+    double calculate = cppsolnp::solnp(alkyla_functor(), parameter_data, ib, hessian_matrix, logger, 0.0);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -248,7 +251,7 @@ TEST_CASE("Optimize the Powell function (rho == 0)", "[powell]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, nullptr, 0.0);
+    double calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, 0.0);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -279,7 +282,7 @@ TEST_CASE("Optimize the Powell function (rho == 1)", "[powell]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, nullptr, 1.0);
+    double calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, 1.0);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -321,7 +324,7 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==10)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 10);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -348,7 +351,7 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==1)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 1);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -375,7 +378,7 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==0)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 0);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -401,7 +404,7 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==10)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 10);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -428,7 +431,7 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==1)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 1);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -455,7 +458,7 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==0)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 0);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -481,7 +484,7 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==10)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 10);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -508,7 +511,7 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==1)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 1);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -535,7 +538,7 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==0)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 0);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -562,7 +565,7 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==10)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 10);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -589,7 +592,7 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==1)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 1);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -616,7 +619,7 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==0)", "[wright4]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, nullptr, 0);
+    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -673,7 +676,7 @@ TEST_CASE("Optimize the Wright9 function (case a, rho==1)", "[wright9]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, nullptr, 1.0);
+    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 1.0);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -710,7 +713,7 @@ TEST_CASE("Optimize the Wright9 function (case a, rho==100)", "[wright9]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, nullptr, 100.0);
+    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 100.0);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -747,7 +750,7 @@ TEST_CASE("Optimize the Wright9 function (case b, rho==100)", "[wright9]") {
 
     cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
 
-    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, nullptr, 100.0);
+    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 100.0);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 

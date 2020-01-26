@@ -1,0 +1,59 @@
+"""
+To test this algorithm, then:
+1) Install this package, for example through pip or by running "pip install ." from the cpp_solnp folder.
+2) Run this file with Python
+"""
+
+import pysolnp
+
+# Alkyla function from the original documentation of SOLNP
+# This problem has both equality and inequality constraints, as well as the parameter bounds.
+def box_objective_function(x):
+    result = -1 * x[0] * x[1] * x[2]
+    return result
+
+
+def box_equality_function(x):
+    result = [
+        4 * x[0] * x[1] + 2 * x[1] * x[2] + 2 * x[2] * x[0]
+    ]
+    return result
+
+
+starting_point = [1.1,
+                  1.1,
+                  9.0]
+lower_bound = [1.0,
+               1.0,
+               1.0]
+upper_bound = [10.0,
+               10.0,
+               10.0]
+
+equality_values = [100]
+
+if __name__ == "__main__":
+
+    result = pysolnp.solve(
+        obj_func=box_objective_function,
+        par_start_value=starting_point,
+        par_lower_limit=lower_bound,
+        par_upper_limit=upper_bound,
+        eq_func=box_equality_function,
+        eq_values=equality_values)
+
+    final_parameters = result.optimum
+    print(final_parameters)
+    print(result.solve_value)
+    print(result.callbacks)
+
+    print(box_equality_function(final_parameters))
+
+    final_objective_value = box_objective_function(final_parameters)
+
+    equality_constaints = box_equality_function(final_parameters)
+
+    for index, value in enumerate(final_parameters):
+        distance_to_lower = value - lower_bound[index]
+        distance_to_over = upper_bound[index] - value
+        print(f"Distance for index {index}: lower {distance_to_lower} upper {distance_to_over}")

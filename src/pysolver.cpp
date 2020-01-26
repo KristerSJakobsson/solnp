@@ -51,10 +51,10 @@ namespace cppsolnp {
 
     SolverResult solve_simple(const cppsolnp::MatrixFunction<double> &obj_func,
                               dlib::matrix<double, 0, 0> &parameter_data,
-                              const cppsolnp::MatrixFunction<dlib::matrix<double, 0, 1>> &eq_func,
-                              const std::shared_ptr<dlib::matrix<double, 0, 1>> &eq_values,
-                              const cppsolnp::MatrixFunction<dlib::matrix<double, 0, 1>> &ineq_func,
-                              const std::shared_ptr<dlib::matrix<double, 0, 2>> &ineq_data,
+                              cppsolnp::MatrixFunction<dlib::matrix<double, 0, 1>> eq_func,
+                              std::shared_ptr<dlib::matrix<double, 0, 1>> eq_values,
+                              cppsolnp::MatrixFunction<dlib::matrix<double, 0, 1>> ineq_func,
+                              std::shared_ptr<dlib::matrix<double, 0, 2>> ineq_data,
                               bool debug,
                               double rho, //penalty parameter
                               int maximum_major_iterations,
@@ -78,7 +78,7 @@ namespace cppsolnp {
                 number_of_parameters += (*eq_values).nr();
             }
 
-            if (ineq_data && eq_values) {
+            if (ineq_func && ineq_data) {
                 number_of_parameters += (*ineq_data).nr();
             }
 
@@ -106,7 +106,7 @@ namespace cppsolnp {
 
             }
 
-            if (ineq_data && eq_values) {
+            if (ineq_func && ineq_data) {
                 dlib::matrix<double, 0, 1> inequality_function_value = ineq_func(point);
 
                 if (inequality_function_value.nr() != (*ineq_data).nr()) {
@@ -135,12 +135,16 @@ namespace cppsolnp {
          * No Hessian Matrix provided means it assumes the unit matrix
          */
 
+        dlib::matrix<double, 0, 0> inequality_limits;
+        if (ineq_data) {
+            inequality_limits = *ineq_data;
+        }
+
         double result = cppsolnp::solnp(
                 objective_function,
                 parameter_data,
-                *ineq_data,
+                inequality_limits,
                 logger,
-                nullptr,
                 rho,
                 maximum_major_iterations,
                 maximum_minor_iterations,

@@ -10,7 +10,6 @@
 /* This is an interior method QP solver. */
 namespace cppsolnp {
 
-
     template<
             typename functor_model,
             typename parameter_input,
@@ -19,9 +18,9 @@ namespace cppsolnp {
             functor_model functor,
             parameter_input &parameter_data,
             const inequality_constraint_vectors &inequality_constraint_data,
-            const cppsolnp::log_list_ptr event_log = nullptr,
+            dlib::matrix<double> &hessian_matrix,
             // Optional input
-            std::shared_ptr<dlib::matrix<double>> hessian_matrix_override = nullptr,
+            const cppsolnp::log_list_ptr &event_log = nullptr,
             double rho = 1.0, //penalty parameter
             int maximum_major_iterations = 10,
             int maximum_minor_iterations = 10,
@@ -131,6 +130,10 @@ namespace cppsolnp {
         }
 
         // Here we could release the temporary matrixes.
+        if (hessian_matrix.nr() != number_of_parameters + number_of_inequality_constraints ||
+            hessian_matrix.nc() != number_of_parameters + number_of_inequality_constraints) {
+            throw std::invalid_argument("The provided hessian matrix override was of invalid dimension.");
+        }
 
         if (lagrangian_parameters_bounded.first || number_of_inequality_constraints > 0) {
             lagrangian_parameters_bounded.second = true;
@@ -151,6 +154,7 @@ namespace cppsolnp {
                                                                               number_of_inequality_constraints +
                                                                               number_of_parameters - 1)),
                                            true));
+
         auto cost_vector_length = cost_vector.nr(),
                 cost_vector_width = cost_vector.nc();
         if (cost_vector_width != 1) {
@@ -224,17 +228,6 @@ namespace cppsolnp {
 
         double mu = number_of_parameters;
         int iteration = 0;
-        dlib::matrix<double> hessian_matrix;
-        // TODO: Save Hessian Matrix in output
-        if (hessian_matrix_override) {
-            hessian_matrix = *hessian_matrix_override;
-            if (hessian_matrix.nr() != number_of_parameters + number_of_inequality_constraints ||
-                hessian_matrix.nc() != number_of_parameters + number_of_inequality_constraints) {
-                throw std::invalid_argument("The provided hessian matrix override was of invalid dimension.");
-            }
-        } else {
-            hessian_matrix = dlib::identity_matrix<double>(number_of_parameters + number_of_inequality_constraints);
-        }
 
         subnp<functor_model> sub_problem(
                 functor,
@@ -353,6 +346,33 @@ namespace cppsolnp {
         return objective_function_value;
     }
 
+
+    template<
+            typename functor_model,
+            typename parameter_input,
+            typename inequality_constraint_vectors>
+    double solnp(
+            functor_model functor,
+            parameter_input &parameter_data,
+            const inequality_constraint_vectors &inequality_constraint_data,
+            // Optional input
+            const cppsolnp::log_list_ptr &event_log = nullptr,
+            double rho = 1.0, //penalty parameter
+            int maximum_major_iterations = 10,
+            int maximum_minor_iterations = 10,
+            const double &delta = 1e-5, // Step size in forward difference evaluation
+            const double &tolerance = 1e-4
+    ) {
+        COMPILE_TIME_ASSERT(dlib::is_matrix<parameter_input>::value);
+        COMPILE_TIME_ASSERT(dlib::is_matrix<inequality_constraint_vectors>::value);
+        COMPILE_TIME_ASSERT(parameter_input::NC <= 3 && parameter_input::NC >= 0);
+        COMPILE_TIME_ASSERT(inequality_constraint_vectors::NC <= 3);
+
+        dlib::matrix<double> hessian_matrix = dlib::identity_matrix<double>(
+                parameter_data.nr() + inequality_constraint_data.nr());
+        return solnp(functor, parameter_data, inequality_constraint_data, hessian_matrix, event_log, rho,
+                     maximum_major_iterations, maximum_minor_iterations, delta, tolerance);
+    }
 
 }; //namespace dccgarch
 
