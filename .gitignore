@@ -61,3 +61,8 @@ cmake-build-*/
 
 # MacOsX specific
 .DS_Store
+
+# Compiled files
+dist
+build
+pysolnp.egg-info

@@ -11,8 +11,15 @@ SOLNP solves the general nonlinear optimization problem on the form:
 ```
 where f(x), g(x) and h(x) are smooth functions.
 
-## Installation
+## Compatability
+Precompiled libraries for:
+- Windows: Python 3.5+
+- Linux: Python 2.7+
+- Mac OS X: Python 2.7+
 
+For other systems, or to have BLAS and LAPACK support, please build the wheels manually.
+
+## Installation
 Simply install the package:
 `pip install pysolnp`
 
