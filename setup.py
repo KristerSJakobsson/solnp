@@ -48,7 +48,7 @@ class CMakeBuild(build_ext):
             build_args += ['--', '/m']
         else:
             cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
-            build_args += []
+            build_args += ['--', '-j2']
 
         env = os.environ.copy()
         env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(env.get('CXXFLAGS', ''),
@@ -80,6 +80,6 @@ setup(name='pysolnp',
           "License :: OSI Approved :: Boost Software License 1.0 (BSL-1.0)",
           "Operating System :: MacOS :: MacOS X",
           "Operating System :: Microsoft :: Windows",
-          "Operating System :: POSIX :: Linux",
+          "Operating System :: POSIX :: Linux"
       ]
       )
