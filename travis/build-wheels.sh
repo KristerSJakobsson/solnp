@@ -3,7 +3,7 @@ set -e -x
 
 # Install a system package required by our library
 yum install -y atlas-devel
-yum install cmake
+yum remove cmake -y # Remove cmake 2.8.1 (CentOS default) and let pip install the most recent version
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
