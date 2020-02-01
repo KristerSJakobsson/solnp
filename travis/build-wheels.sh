@@ -20,4 +20,3 @@ done
 #    "${PYBIN}/pip" install python-manylinux-demo --no-index -f /io/wheelhouse
 #    (cd "$HOME"; "${PYBIN}/nosetests" pymanylinuxdemo)
 #done
-#
