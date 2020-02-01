@@ -3,16 +3,11 @@ set -e -x
 
 # Install a system package required by our library
 yum install -y atlas-devel
-wget https://cmake.org/files/v3.14/cmake-3.14.1.tar.gz
-tar zxvf cmake-3.*
-cd cmake-3.*
-./bootstrap --prefix=/usr/local
-make -j$(nproc)
-make install
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install -r /io/dev-requirements.txt
+    cmake --version
     "${PYBIN}/pip" wheel /io/ -w wheelhouse/
 done
 
