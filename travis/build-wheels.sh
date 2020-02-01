@@ -3,11 +3,11 @@ set -e -x
 
 # Install a system package required by our library
 yum install -y atlas-devel
+yum install -y cmake
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install -r /io/dev-requirements.txt
-    cmake --version
     "${PYBIN}/pip" wheel /io/ -w wheelhouse/
 done
 
