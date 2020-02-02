@@ -85,10 +85,6 @@ class BuildExt(build_ext):
         opts = self.c_opts.get(ct, [])
         link_opts = self.l_opts.get(ct, [])
         if ct == 'unix':
-            if platform.architecture()[0] == "64bit":
-                opts.append('-m64')
-            elif platform.architecture()[0] == "32bit":
-                opts.append('-m32')
             opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
             opts.append(cpp_flag(self.compiler))
             if has_flag(self.compiler, '-fvisibility=hidden'):
