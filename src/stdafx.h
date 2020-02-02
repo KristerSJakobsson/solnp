@@ -8,11 +8,11 @@
 
 #define ENABLE_ASSERTS
 
-#ifndef USE_PRECOMPILED_DLIB
+//#ifndef USE_PRECOMPILED_DLIB
     #define DLIB_NO_GUI_SUPPORT
     #include "../library/dlib/matrix.h"
-#else
-    #include "dlib/matrix.h"
-#endif
+//#else
+//    #include "dlib/matrix.h"
+//#endif
 
 #endif //CPP_SOLNP_STDAFX_H

@@ -42,8 +42,15 @@ Run the tests `solnp_test` using CMake.
 
 ## Built With
 
+Libraries:
+* [dlib](http://dlib.net/) - C++ math library
+* [pybind11](https://github.com/pybind/pybind11) - Bindings for building Python Wheels with c++11
+* [manylinux](https://github.com/pypa/manylinux) - Docker images for building Linux wheels
+
+Tools:
 * [CMake](https://cmake.org/runningcmake/) - Build tools
 * [CLion](https://www.jetbrains.com/clion/) - IDE by JetBrains
+* [Travis CI](https://travis-ci.org/) - Travis CI for building Manylinux Wheels
 
 ## Authors
 
