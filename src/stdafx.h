@@ -6,13 +6,10 @@
  * The drawback is that we will compile a lot of unneeded code.
 */
 
-#define ENABLE_ASSERTS
-
-//#ifndef USE_PRECOMPILED_DLIB
-    #define DLIB_NO_GUI_SUPPORT
+#ifndef USE_PRECOMPILED_DLIB
     #include "../library/dlib/matrix.h"
-//#else
-//    #include "dlib/matrix.h"
-//#endif
+#else
+    #include "dlib/matrix.h"
+#endif
 
 #endif //CPP_SOLNP_STDAFX_H
