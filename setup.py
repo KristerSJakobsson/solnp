@@ -96,7 +96,7 @@ class BuildExt(build_ext):
         build_ext.build_extensions(self)
 
 
-with open("src/python/README.md", "r") as fh:
+with open("python/README.md", "r") as fh:
     long_description = fh.read()
 
 
@@ -112,6 +112,7 @@ setup(name='python-solnp',
       ext_modules=ext_modules,
       install_requires=['pybind11>=2.4'],
       setup_requires=['pybind11>=2.4'],
+      packages=["python"],
       cmdclass={'build_ext': BuildExt},
       zip_safe=False,
       classifiers=[
