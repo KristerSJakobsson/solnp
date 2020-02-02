@@ -2,7 +2,6 @@ from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
-import platform
 
 __version__ = '0.1a3'
 
