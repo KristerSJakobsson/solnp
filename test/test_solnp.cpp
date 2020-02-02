@@ -14,6 +14,14 @@
 #include "../src/benchmark/wright_nine.hpp"
 
 
+/*
+ * These tests compare the scenarios and results from the original SOLNP in Matlab with the results from C++ SOLNP
+ * Notably, these differ a bit from what pysolnp will generate due to:
+ * - Objective/Constraint functions in pysolnp are subject to rounding errors in Python
+ * - The precompiled binaries for pysolnp does not utilize BLAS or LAPACK.
+ * Note that depending on if your system has BLAS and/or LAPACK installed the results from these tests might very.
+ * */
+
 TEST_CASE("Calculate the Alkyla function", "[alkyla]") {
     dlib::matrix<double, 10, 1> parameter_data;
     parameter_data =

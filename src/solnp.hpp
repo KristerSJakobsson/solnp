@@ -10,6 +10,13 @@
 /* This is an interior method QP solver. */
 namespace cppsolnp {
 
+    template<typename T> bool isfinite(T arg)
+    {
+        return arg == arg &&
+               arg != std::numeric_limits<T>::infinity() &&
+               arg != -std::numeric_limits<T>::infinity();
+    }
+
     template<
             typename functor_model,
             typename parameter_input,
