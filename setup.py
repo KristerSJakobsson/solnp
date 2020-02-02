@@ -23,7 +23,7 @@ class get_pybind_include(object):
 
 ext_modules = [
     Extension(
-        'pysolnp',
+        'pysolnp.extension',
         ['src/pysolver.cpp'],
         include_dirs=[
             # Path to pybind11 headers
@@ -101,7 +101,7 @@ with open("src/python/README.md", "r") as fh:
     long_description = fh.read()
 
 
-setup(name='pysolnp',
+setup(name='python-solnp',
       version=__version__,
       author='Krister Sune Jakobsson',
       author_email='krister.s.jakobsson@gmail.com',
