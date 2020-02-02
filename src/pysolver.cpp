@@ -127,9 +127,9 @@ namespace cppsolnp {
             return result;
         };
 
-        cppsolnp::log_list_ptr logger(nullptr);
+        std::shared_ptr<std::vector<std::string>> logger;
         if (debug) {
-            logger = std::make_shared<cppsolnp::log_list>(cppsolnp::log_list());
+            logger = std::make_shared<std::vector<std::string>>(std::vector<std::string>());
         }
 
         /*

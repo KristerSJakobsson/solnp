@@ -12,20 +12,18 @@ namespace cppsolnp {
     struct subnp {
     public:
         subnp(functor_model &objective_function,
-              long number_of_parameter_data, // op(7)
-              long number_of_equality_constraints, // op(5)
+              long number_of_parameter_data,
+              long number_of_equality_constraints,
               long number_of_inequality_constraints,
-              const std::pair<bool, bool> &lagrangian_parameters_bounded,//op(6))
-              const cppsolnp::log_list_ptr &event_log) :
+              const std::pair<bool, bool> &lagrangian_parameters_bounded) :
                 objective_function_(objective_function),
-                number_of_parameters_(number_of_parameter_data), // op(7)
+                number_of_parameters_(number_of_parameter_data),
                 number_of_equality_constraints_(number_of_equality_constraints),
                 number_of_inequality_constraints_(number_of_inequality_constraints),
                 number_of_total_constraints_(number_of_inequality_constraints + number_of_equality_constraints),
                 number_of_parameters_and_inequality_constraints_(
                         number_of_parameter_data + number_of_inequality_constraints),
-                lagrangian_parameters_bounded_(lagrangian_parameters_bounded,
-                event_log_(event_log)){
+                lagrangian_parameters_bounded_(lagrangian_parameters_bounded){
             /* Here we put subnp initialization data, like function declarations or constant parameter_data. */
         }
 
@@ -38,7 +36,8 @@ namespace cppsolnp {
                         double rho, // op(1)
                         int max_iterations, // op(2)
                         const double delta = 1e-5, // op(3)
-                        const double tolerance = 1e-7 // op(4)
+                        const double tolerance = 1e-7, // op(4)
+                        std::shared_ptr<std::vector<std::string>> event_log = nullptr
         ) {
 
 
@@ -193,8 +192,8 @@ namespace cppsolnp {
 
                 }
 
-                if (event_log_ && conditional_number(a) > 1 / std::numeric_limits<double>::epsilon()) {
-                    event_log_->push_back(
+                if (event_log && conditional_number(a) > 1 / std::numeric_limits<double>::epsilon()) {
+                    event_log->push_back(
                             "Warning: Redundant constraints were detected. Poor intermediate results may result.");
                 }
 
@@ -300,8 +299,8 @@ namespace cppsolnp {
                             minor_iteration = 10;
                         }
                     }
-                    if (event_log_ && minor_iteration >= 10) {
-                        event_log_->push_back(
+                    if (event_log && minor_iteration >= 10) {
+                        event_log->push_back(
                                 "Warning: The linearized prblem has no feasible solution. The problem may not be feasible.");
                     }
                     a = dlib::colm(a, dlib::range(0, number_of_parameters_and_inequality_constraints_ - 1));
@@ -680,8 +679,8 @@ namespace cppsolnp {
             // Guarantee that the hessian matrix is symmetric (in theory, it should already be)
             hessian = dlib::make_symmetric(hessian);
 
-            if (event_log_ && reduction > tolerance) {
-                event_log_->push_back(
+            if (event_log && reduction > tolerance) {
+                event_log->push_back(
                         "Warning: Minor optimization routine did not converge. You may need to increase the number of minor iterations.");
             }
 
@@ -696,7 +695,6 @@ namespace cppsolnp {
         const long number_of_total_constraints_;
         const long number_of_parameters_and_inequality_constraints_;
         const std::pair<bool, bool> &lagrangian_parameters_bounded_;
-        const log_list_ptr &event_log_;
 
         // Internal variables
         dlib::matrix<double, 3, 1> alpha_;

@@ -5,10 +5,6 @@
 
 namespace cppsolnp {
 
-    typedef std::vector<std::string> log_list;
-    typedef std::shared_ptr<std::vector<std::string>> log_list_ptr;
-
-
     namespace internal {
         template<typename T>
         dlib::matrix<T> apply_function_to_matrix_elements(dlib::matrix<T> matrix, std::function<T(T)> function) {

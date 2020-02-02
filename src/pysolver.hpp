@@ -146,10 +146,10 @@ namespace cppsolnp {
         double solve_value;
         dlib::matrix<double, 0, 1> optimum;
         int callbacks;
-        cppsolnp::log_list_ptr log;
+        std::shared_ptr<std::vector<std::string>> log;
 
         SolverResult(double solve_value, dlib::matrix<double, 0, 1> optim, int function_calls,
-                     cppsolnp::log_list_ptr log_list) :
+                     std::shared_ptr<std::vector<std::string>> log_list) :
                 solve_value(solve_value), optimum(std::move(optim)), callbacks(function_calls), log(std::move(log_list)) {}
     };
 }

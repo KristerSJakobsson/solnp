@@ -3,7 +3,7 @@ from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 
-__version__ = '0.0.1'
+__version__ = '0.1a3'
 
 
 class get_pybind_include(object):
@@ -22,7 +22,7 @@ class get_pybind_include(object):
 
 ext_modules = [
     Extension(
-        'python_example',
+        'pysolnp',
         ['src/pysolver.cpp'],
         include_dirs=[
             # Path to pybind11 headers
@@ -100,7 +100,7 @@ with open("python_examples/README.md", "r") as fh:
     long_description = fh.read()
 
 setup(name='pysolnp',
-      version='0.1a2',
+      version=__version__,
       author='Krister Sune Jakobsson',
       author_email='krister.s.jakobsson@gmail.com',
       description='This provides the SOLNP optimizaiton Algorithm.',

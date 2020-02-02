@@ -71,9 +71,10 @@ TEST_CASE("Optimize the Alkyla function manual hessian", "[alkyla]") {
     dlib::matrix<double> hessian_matrix;
     hessian_matrix = dlib::identity_matrix<double>(parameter_data.nr() + ib.nr());
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(alkyla_functor(), parameter_data, ib, hessian_matrix, logger, 0.0, 10, 10, 1e-5, 1e-4);
+    double calculate = cppsolnp::solnp(alkyla_functor(), parameter_data, ib, hessian_matrix, logger, 0.0, 10, 10, 1e-5,
+                                       1e-4);
 
     dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
 
@@ -119,7 +120,7 @@ TEST_CASE("Optimize the Box function (case a)", "[box]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(box_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
@@ -146,7 +147,7 @@ TEST_CASE("Optimize the Box function (case b)", "[box]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(box_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
@@ -193,7 +194,7 @@ TEST_CASE("Optimize the Entropy function", "[entropy]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(entropy_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
@@ -249,7 +250,7 @@ TEST_CASE("Optimize the Powell function (rho == 0)", "[powell]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
 
@@ -280,7 +281,7 @@ TEST_CASE("Optimize the Powell function (rho == 1)", "[powell]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
@@ -322,7 +323,7 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==10)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10.0, 10, 10, 1e-5, 1e-4);
 
@@ -349,7 +350,7 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==1)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
@@ -376,7 +377,7 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==0)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
 
@@ -402,7 +403,7 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==10)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10.0, 10, 10, 1e-5, 1e-4);
 
@@ -429,7 +430,7 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==1)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
@@ -456,7 +457,7 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==0)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
 
@@ -482,7 +483,7 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==10)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10.0, 10, 10, 1e-5, 1e-4);
 
@@ -509,7 +510,7 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==1)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
@@ -536,7 +537,7 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==0)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
 
@@ -563,7 +564,7 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==10)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10, 10, 10, 1e-5, 1e-4);
 
@@ -590,7 +591,7 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==1)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
@@ -617,7 +618,7 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==0)", "[wright4]") {
 
     dlib::matrix<double, 0, 0> ib;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
 
@@ -674,7 +675,7 @@ TEST_CASE("Optimize the Wright9 function (case a, rho==1)", "[wright9]") {
             -2, 100,
             5, 100;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
@@ -711,7 +712,7 @@ TEST_CASE("Optimize the Wright9 function (case a, rho==100)", "[wright9]") {
             -2, 100,
             5, 100;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 100.0, 10, 10, 1e-5, 1e-4);
 
@@ -748,7 +749,7 @@ TEST_CASE("Optimize the Wright9 function (case b, rho==100)", "[wright9]") {
             -2, 100,
             5, 100;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 100.0, 10, 10, 1e-5, 1e-4);
 
@@ -794,7 +795,7 @@ TEST_CASE("Optimize the Rosen-Suzuki function", "[rosen_suzuki]") {
             0, 1000,
             0, 1000;
 
-    cppsolnp::log_list_ptr logger(new cppsolnp::log_list());
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
     double calculate = cppsolnp::solnp(rosen_suzuki_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 

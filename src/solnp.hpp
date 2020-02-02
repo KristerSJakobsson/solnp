@@ -20,7 +20,7 @@ namespace cppsolnp {
             const inequality_constraint_vectors &inequality_constraint_data,
             dlib::matrix<double> &hessian_matrix,
             // Optional input
-            const cppsolnp::log_list_ptr &event_log = nullptr,
+            const std::shared_ptr<std::vector<std::string>> &event_log = nullptr,
             double rho = 1.0, //penalty parameter
             int maximum_major_iterations = 400,
             int maximum_minor_iterations = 800,
@@ -214,8 +214,7 @@ namespace cppsolnp {
                 number_of_parameters,
                 number_of_equality_constraints,
                 number_of_inequality_constraints,
-                lagrangian_parameters_bounded,
-                event_log);
+                lagrangian_parameters_bounded);
 
         while (iteration < maximum_major_iterations) {
             ++iteration;
@@ -229,7 +228,8 @@ namespace cppsolnp {
                         rho,
                         maximum_minor_iterations,
                         delta,
-                        tolerance);
+                        tolerance,
+                        event_log);
 
 
             if (event_log)
@@ -329,7 +329,7 @@ namespace cppsolnp {
             parameter_input &parameter_data,
             const inequality_constraint_vectors &inequality_constraint_data,
             // Optional input
-            const cppsolnp::log_list_ptr &event_log = nullptr,
+            const std::shared_ptr<std::vector<std::string>> &event_log = nullptr,
             double rho = 1.0, //penalty parameter
             int maximum_major_iterations = 400,
             int maximum_minor_iterations = 800,
