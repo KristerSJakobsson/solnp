@@ -52,7 +52,6 @@ namespace cppsolnp {
         if (parameter_vector_width == 1) {
             parameters = dlib::colm(parameter_data, 0);
             lagrangian_parameters_bounded.first = false;
-            parameter_bounds(0, 2);
         } else if (parameter_vector_width == 2) {
             parameters = 0.5 * (dlib::colm(parameter_data, 0) + dlib::colm(parameter_data, 1));
             parameter_bounds = dlib::colm(parameter_data, dlib::range(0, 1));
@@ -118,9 +117,7 @@ namespace cppsolnp {
             }
             if (number_of_inequality_constraints > 0) {
                 if (lagrangian_parameters_bounded.first) {
-                    // parameter_bounds = [parameter_bounds; temporary_inequality_constraints]
                     parameter_bounds = dlib::join_cols(temporary_inequality_constraints, parameter_bounds);
-
                 } else {
                     parameter_bounds = temporary_inequality_constraints;
                 }
@@ -173,11 +170,6 @@ namespace cppsolnp {
         dlib::matrix<double, 0, 1> constraints;
 
         if (number_of_constraints != 0) {
-            /*
-              if exist('l') <= 0.5,
-              l=0*ones(nc,1);
-              end;
-            */
             lagrangian_multipliers = dlib::zeros_matrix<double>(number_of_constraints, 1);
 
             constraints = dlib::rowm(cost_vector, dlib::range(1, number_of_constraints));

@@ -23,7 +23,6 @@ find_package(catch2 REQUIRED)
 
 add_executable(solnp_test test_main.cpp)
 
-target_link_libraries(solnp_test dlib::dlib)
 target_link_libraries(solnp_test Catch2::Catch2)
 
 include(CTest)

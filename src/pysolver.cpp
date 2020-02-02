@@ -1,7 +1,5 @@
 #include "pysolver.hpp"
 
-#define DLIB_ISO_CPP_ONLY
-#define DLIB_NO_GUI_SUPPORT
 
 namespace py = pybind11;
 using namespace pybind11::literals;

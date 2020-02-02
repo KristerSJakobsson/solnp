@@ -128,14 +128,16 @@ namespace cppsolnp {
             dlib::matrix<double> a(number_of_equality_constraints_ + number_of_inequality_constraints_,
                                    number_of_inequality_constraints_ + number_of_parameters_);
 
-            dlib::set_colm(a, dlib::range(0, number_of_inequality_constraints_ - 1)) =
-                    dlib::join_cols(
-                            dlib::zeros_matrix<double>(
-                                    number_of_equality_constraints_,
-                                    number_of_inequality_constraints_
-                            ),
-                            -1 * dlib::identity_matrix<double>(number_of_inequality_constraints_)
-                    );
+            if (number_of_inequality_constraints_ > 0) {
+                dlib::set_colm(a, dlib::range(0, number_of_inequality_constraints_ - 1)) =
+                        dlib::join_cols(
+                                dlib::zeros_matrix<double>(
+                                        number_of_equality_constraints_,
+                                        number_of_inequality_constraints_
+                                ),
+                                -1 * dlib::identity_matrix<double>(number_of_inequality_constraints_)
+                        );
+            }
 
             /*
             Automatic Differentiation

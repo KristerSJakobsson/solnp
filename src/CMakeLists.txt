@@ -4,9 +4,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 project(pysolnp)
 
-add_subdirectory(library/dlib dlib)
 add_subdirectory(library/pybind11 pybind)
 
 pybind11_add_module(pysolnp pysolver.cpp)
-target_link_libraries(pysolnp PRIVATE dlib::dlib)
 target_link_libraries(pysolnp PRIVATE pybind11::pybind11)
