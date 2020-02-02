@@ -178,7 +178,7 @@ namespace pysolver {
         return [python_function, val, name](const dlib::matrix<double, 0, 1> &param) {
             const py::list &list_param = dlib_matrix_to_py_list<double>(param);
             const py::list &result = python_function(list_param);
-            if (result.size() != val.nr()) {
+            if (result.size() != (size_t) val.nr()) {
                 std::string expected_size = std::to_string(val.nr());
                 std::string actual_size = std::to_string(result.size());
                 throw std::invalid_argument(

@@ -145,8 +145,8 @@ namespace cppsolnp {
     struct SolverResult {
         double solve_value;
         dlib::matrix<double, 0, 1> optimum;
-        cppsolnp::log_list_ptr log;
         int callbacks;
+        cppsolnp::log_list_ptr log;
 
         SolverResult(double solve_value, dlib::matrix<double, 0, 1> optim, int function_calls,
                      cppsolnp::log_list_ptr log_list) :

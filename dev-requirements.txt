@@ -1,3 +1,2 @@
 nose
-setuptools
-wheel
+pybind11>=2.4

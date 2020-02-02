@@ -24,8 +24,8 @@ namespace cppsolnp {
                 number_of_total_constraints_(number_of_inequality_constraints + number_of_equality_constraints),
                 number_of_parameters_and_inequality_constraints_(
                         number_of_parameter_data + number_of_inequality_constraints),
-                event_log_(event_log),
-                lagrangian_parameters_bounded_(lagrangian_parameters_bounded){
+                lagrangian_parameters_bounded_(lagrangian_parameters_bounded,
+                event_log_(event_log)){
             /* Here we put subnp initialization data, like function declarations or constant parameter_data. */
         }
 
@@ -207,7 +207,6 @@ namespace cppsolnp {
             dlib::matrix<double> dx(number_of_parameters_and_inequality_constraints_ + 1, 1);
             double go;
             int minor_iteration = 0;
-            int major_iteration = 0;
             dlib::matrix<double> gap(parameter_bounds.nr(), 2);
             if (number_of_total_constraints_ != 0) {
                 positive_change = false;
