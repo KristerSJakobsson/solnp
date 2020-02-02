@@ -12,7 +12,6 @@ matrix:
       services:
         - docker
       env: DOCKER_IMAGE=quay.io/pypa/manylinux2014_i686
-           PRE_CMD=linux32
            PLAT=manylinux2014_i686
 
 install:
