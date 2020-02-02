@@ -1,8 +1,8 @@
 import unittest
 
-from .example_alkyla import solve_alkyla
-from .example_box import solve_box
-from .example_rosen_suzuki import solve_rozen_suzuki
+from ..examples.example_alkyla import solve_alkyla
+from ..examples.example_box import solve_box
+from ..examples.example_rosen_suzuki import solve_rozen_suzuki
 
 
 class TestExtension(unittest.TestCase):
