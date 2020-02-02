@@ -7,7 +7,7 @@
 */
 
 #ifndef USE_PRECOMPILED_DLIB
-    #include "../library/dlib/matrix.h"
+    #include "library/dlib/matrix.h"
 #else
     #include "dlib/matrix.h"
 #endif
