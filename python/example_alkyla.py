@@ -38,8 +38,8 @@ equality_values = [0, 0, 0]
 inequality_lower_bounds = [0, 0, 0, 0]
 inequality_upper_bounds = [100, 100, 100, 100]
 
-if __name__ == "__main__":
 
+def solve_alkyla():
     result = pysolnp.solve(
         obj_func=alkyla_objective_function,
         par_start_value=starting_point,
@@ -51,6 +51,11 @@ if __name__ == "__main__":
         ineq_lower_bounds=inequality_lower_bounds,
         ineq_upper_bounds=inequality_upper_bounds,
         rho=0.0)
+    return result
+
+
+if __name__ == "__main__":
+    result = solve_alkyla()
 
     final_parameters = result.optimum
     print(final_parameters)

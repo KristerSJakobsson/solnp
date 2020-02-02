@@ -11,6 +11,7 @@ def rosen_suzuki_objective_function(x):
     result = x[0] * x[0] + x[1] * x[1] + 2 * x[2] * x[2] + x[3] * x[3] - 5 * x[0] - 5 * x[1] - 21 * x[2] + 7 * x[3]
     return result
 
+
 def rosen_suzuki_inequality_function(x):
     result = [
         8 - x[0] * x[0] - x[1] * x[1] - x[2] * x[2] - x[3] * x[3] - x[0] + x[1] - x[2] + x[3],
@@ -24,14 +25,20 @@ starting_point = [1, 1, 1, 1]
 inequality_lower_bounds = [0, 0, 0]
 inequality_upper_bounds = [1000, 1000, 1000]
 
-if __name__ == "__main__":
 
+def solve_rozen_suzuki():
     result = pysolnp.solve(
         obj_func=rosen_suzuki_objective_function,
         par_start_value=starting_point,
         ineq_func=rosen_suzuki_inequality_function,
         ineq_lower_bounds=inequality_lower_bounds,
         ineq_upper_bounds=inequality_upper_bounds)
+
+    return result
+
+
+if __name__ == "__main__":
+    result = solve_rozen_suzuki()
 
     final_parameters = result.optimum
     print(final_parameters)

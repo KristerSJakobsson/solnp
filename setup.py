@@ -96,8 +96,9 @@ class BuildExt(build_ext):
         build_ext.build_extensions(self)
 
 
-with open("python_examples/README.md", "r") as fh:
+with open("python/README.md", "r") as fh:
     long_description = fh.read()
+
 
 setup(name='pysolnp',
       version=__version__,

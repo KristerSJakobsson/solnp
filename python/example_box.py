@@ -31,8 +31,8 @@ upper_bound = [10.0,
 
 equality_values = [100]
 
-if __name__ == "__main__":
 
+def solve_box():
     result = pysolnp.solve(
         obj_func=box_objective_function,
         par_start_value=starting_point,
@@ -40,6 +40,11 @@ if __name__ == "__main__":
         par_upper_limit=upper_bound,
         eq_func=box_equality_function,
         eq_values=equality_values)
+    return result
+
+
+if __name__ == "__main__":
+    result = solve_box()
 
     final_parameters = result.optimum
     print(final_parameters)
