@@ -10,7 +10,7 @@
 
 #ifndef USE_PRECOMPILED_DLIB
     #define DLIB_NO_GUI_SUPPORT
-    #include "library/dlib/matrix.h"
+    #include "../library/dlib/matrix.h"
 #else
     #include "dlib/matrix.h"
 #endif
