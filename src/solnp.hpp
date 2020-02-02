@@ -32,7 +32,7 @@ namespace cppsolnp {
         COMPILE_TIME_ASSERT(parameter_input::NC <= 3 && parameter_input::NC >= 0);
         COMPILE_TIME_ASSERT(inequality_constraint_vectors::NC <= 3);
 
-        if (!isfinite(tolerance * tolerance)) {
+        if (!isfinite<double>(tolerance * tolerance)) {
             throw std::invalid_argument("Tolerance set too low.");
         }
 
