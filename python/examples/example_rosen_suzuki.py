@@ -54,4 +54,4 @@ if __name__ == "__main__":
     for index, value in enumerate(inequality_constraints):
         distance_to_lower = value - inequality_lower_bounds[index]
         distance_to_over = inequality_upper_bounds[index] - value
-        print(f"Distance for index {index}: lower {distance_to_lower} upper {distance_to_over}")
+        print("Distance for index %s: lower %s upper %s" % (index, distance_to_lower, distance_to_over))

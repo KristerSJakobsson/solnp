@@ -60,4 +60,4 @@ if __name__ == "__main__":
     for index, value in enumerate(final_parameters):
         distance_to_lower = value - lower_bound[index]
         distance_to_over = upper_bound[index] - value
-        print(f"Distance for index {index}: lower {distance_to_lower} upper {distance_to_over}")
+        print("Distance for index %s: lower %s upper %s" % (index, distance_to_lower, distance_to_over))

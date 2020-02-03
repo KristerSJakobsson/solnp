@@ -3,7 +3,7 @@ from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 
-__version__ = '0.1a3'
+__version__ = '0.1a4'
 
 
 class get_pybind_include(object):
@@ -80,19 +80,19 @@ class BuildExt(build_ext):
         l_opts['unix'] += darwin_opts
 
     def build_extensions(self):
-        ct = self.compiler.compiler_type
-        opts = self.c_opts.get(ct, [])
-        link_opts = self.l_opts.get(ct, [])
-        if ct == 'unix':
-            opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
-            opts.append(cpp_flag(self.compiler))
+        compiler_type = self.compiler.compiler_type
+        compiler_options = self.c_opts.get(compiler_type, [])
+        link_options = self.l_opts.get(compiler_type, [])
+        if compiler_type == 'unix':
+            compiler_options.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
+            compiler_options.append(cpp_flag(self.compiler))
             if has_flag(self.compiler, '-fvisibility=hidden'):
-                opts.append('-fvisibility=hidden')
-        elif ct == 'msvc':
-            opts.append('/DVERSION_INFO=\\"%s\\"' % self.distribution.get_version())
+                compiler_options.append('-fvisibility=hidden')
+        elif compiler_type == 'msvc':
+            compiler_options.append('/DVERSION_INFO=\\"%s\\"' % self.distribution.get_version())
         for ext in self.extensions:
-            ext.extra_compile_args = opts
-            ext.extra_link_args = link_opts
+            ext.extra_compile_args = compiler_options
+            ext.extra_link_args = link_options
         build_ext.build_extensions(self)
 
 
@@ -100,7 +100,7 @@ with open("python/README.md", "r") as fh:
     long_description = fh.read()
 
 
-setup(name='python-solnp',
+setup(name='pysolnp',
       version=__version__,
       author='Krister Sune Jakobsson',
       author_email='krister.s.jakobsson@gmail.com',
@@ -112,7 +112,7 @@ setup(name='python-solnp',
       ext_modules=ext_modules,
       install_requires=['pybind11>=2.4'],
       setup_requires=['pybind11>=2.4'],
-      packages=["python.test", "python.examples"],
+      packages=["python"],
       cmdclass={'build_ext': BuildExt},
       zip_safe=False,
       classifiers=[
