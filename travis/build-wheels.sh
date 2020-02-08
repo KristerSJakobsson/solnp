@@ -18,5 +18,5 @@ done
 # Install package and test
 for PYBIN in /opt/python/*/bin/; do
     "${PYBIN}/pip" install pysolnp --no-index -f /io/wheelhouse
-    (cd "$PYHOME"; "${PYBIN}/pytest" /io/pysolnp/test)
+    (cd "$PYHOME"; "${PYBIN}/python" /io/pysolnp/test/test.py)
 done

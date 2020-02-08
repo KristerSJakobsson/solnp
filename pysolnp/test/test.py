@@ -1,4 +1,5 @@
 import unittest
+import nose
 import pysolnp
 
 
@@ -45,3 +46,6 @@ class TestExtension(unittest.TestCase):
             ineq_lower_bounds=inequality_lower_bounds,
             ineq_upper_bounds=inequality_upper_bounds,
             rho=0.0)
+
+if __name__ == "__main__":
+    nose.main()
