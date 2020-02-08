@@ -2,7 +2,8 @@ import os
 import sys
 import unittest
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+source_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "..")
+sys.path.append(source_path)
 
 from examples.example_alkyla import solve_alkyla
 from examples.example_box import solve_box

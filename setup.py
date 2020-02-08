@@ -1,12 +1,15 @@
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
+import os
 import sys
 import setuptools
 
-__version__ = '0.1a4'
+__version__ = '0.1a5'
+
+base_path = os.path.dirname(__file__)
 
 
-class get_pybind_include(object):
+class GetIncludes(object):
     """Helper class to determine the pybind11 include path
     The purpose of this class is to postpone importing pybind11
     until it is actually installed, so that the ``get_include()``
@@ -21,13 +24,15 @@ class get_pybind_include(object):
 
 
 ext_modules = [
+    # If you need to link extra libraries or specify extra include directories
+    # see https://docs.python.org/3/extending/building.html#building-c-and-c-extensions-with-distutils
     Extension(
-        'pysolnp.extension',
-        ['src/pysolver.cpp'],
+        'pysolnp',
+        ['pysolnp/pysolver.cpp'],
         include_dirs=[
             # Path to pybind11 headers
-            get_pybind_include(),
-            get_pybind_include(user=True)
+            GetIncludes(),
+            GetIncludes(user=True)
         ],
         language='c++'
     ),
@@ -96,8 +101,8 @@ class BuildExt(build_ext):
         build_ext.build_extensions(self)
 
 
-with open("python/README.md", "r") as fh:
-    long_description = fh.read()
+with open("pysolnp/README.md", "r") as file:
+    long_description = file.read()
 
 
 setup(name='pysolnp',
@@ -112,9 +117,9 @@ setup(name='pysolnp',
       ext_modules=ext_modules,
       install_requires=['pybind11>=2.4'],
       setup_requires=['pybind11>=2.4'],
-      packages=["python"],
       cmdclass={'build_ext': BuildExt},
       zip_safe=False,
+      include_package_data=True,
       classifiers=[
           "Programming Language :: Python",
           "Programming Language :: C++",

@@ -1,19 +1,19 @@
 #ifndef CPP_SOLNP_PYSOLVER_HPP
 #define CPP_SOLNP_PYSOLVER_HPP
 
-#include <utility>
 #include <vector>
+#include <utility>
+#include <iostream>
 #include <functional>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/functional.h>
 
-#include "solnp.hpp"
-#include "stdafx.h"
-#include "utils.hpp"
+#include "../src/stdafx.h"
+#include "../src/utils.hpp"
+#include "../src/solnp.hpp"
 
-#include <iostream>
 
 namespace py = pybind11;
 
