@@ -4,7 +4,7 @@ import os
 import sys
 import setuptools
 
-__version__ = '0.1a5'
+__version__ = '0.1a6qu'
 
 base_path = os.path.dirname(__file__)
 
@@ -28,7 +28,7 @@ ext_modules = [
     # see https://docs.python.org/3/extending/building.html#building-c-and-c-extensions-with-distutils
     Extension(
         'pysolnp',
-        ['pysolnp/pysolver.cpp'],
+        ['python_solnp/pysolver.cpp'],
         include_dirs=[
             # Path to pybind11 headers
             GetIncludes(),
@@ -101,7 +101,7 @@ class BuildExt(build_ext):
         build_ext.build_extensions(self)
 
 
-with open("pysolnp/README.md", "r") as file:
+with open("python_solnp/README.md", "r") as file:
     long_description = file.read()
 
 

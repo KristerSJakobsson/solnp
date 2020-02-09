@@ -4,7 +4,7 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-PYBIND11_MODULE(pysolnp_test, m
+PYBIND11_MODULE(pysolnp, m
 ) {
     py::class_<pysolver::Result>(m, "Result", py::dynamic_attr())
             .def(py::init<double, py::object, int>())
