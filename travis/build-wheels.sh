@@ -1,13 +1,6 @@
 #!/bin/bash
 set -e -x
 
-export PYHOME=/home
-cd ${PYHOME}
-
-/opt/python/cp37-cp37m/bin/pip install twine cmake
-ln -s /opt/python/cp37-cp37m/bin/cmake /usr/bin/cmake
-
-
 # Install a system package required by our library
 yum install -y atlas-devel
 
@@ -15,7 +8,7 @@ yum install -y atlas-devel
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install -r /io/requirements-dev.txt
     "${PYBIN}/pip" wheel /io/ -w wheelhouse/
-#    "${PYBIN}/python" /io/setup.py sdist -d /io/wheelhouse/
+    "${PYBIN}/python" /io/setup.py sdist -d /io/wheelhouse/
 done
 
 # Bundle external shared libraries into the wheels
@@ -29,7 +22,8 @@ done
 
 # Install package and test
 for PYBIN in /opt/python/*/bin; do
-    "${PYBIN}/pip" install pysolnp --no-index --no-cache-dir -f /io/wheelhouse
+    ln -s "${PYBIN}/cmake" /usr/bin/cmake
+    "${PYBIN}/pip" install pysolnp --no-index -f /io/wheelhouse
     (cd "$PYHOME"; "${PYBIN}/nosetests" /io/python_solnp/test/test.py)
 done
 #
