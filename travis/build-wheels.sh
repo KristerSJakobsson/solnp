@@ -17,7 +17,7 @@ for whl in wheelhouse/*.whl; do
 done
 
 for whl in wheelhouse/*.whl; do
-    excho "$whl"
+    echo "$whl"
 done
 
 # Install package and test
