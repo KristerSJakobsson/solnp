@@ -72,7 +72,7 @@ class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
     c_opts = {
         'msvc': ['/EHsc'],
-        'unix': [],
+        'unix': ["-DDLIB_NO_ABORT_ON_2ND_FATAL_ERROR"],
     }
     l_opts = {
         'msvc': [],
