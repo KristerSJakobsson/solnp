@@ -16,7 +16,7 @@ for whl in wheelhouse/*.whl; do
     auditwheel repair "$whl" --plat $PLAT -w /io/wheelhouse/
 done
 
-for whl in wheelhouse/*.whl; do
+for whl in /io/wheelhouse/*; do
     echo "$whl"
 done
 
