@@ -8,6 +8,7 @@ yum install -y atlas-devel
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install -r /io/dev-requirements.txt
     "${PYBIN}/pip" wheel /io/ -w wheelhouse/
+#    "${PYBIN}/python" /io/setup.py sdist -d /io/wheelhouse/
 done
 
 # Bundle external shared libraries into the wheels
@@ -17,7 +18,7 @@ done
 
 # Install package and test
 for PYBIN in /opt/python/*/bin; do
-    "${PYBIN}/pip" install pysolnp --no-index --no-cache-dir -f /io/wheelhouse
+    "${PYBIN}/pip" install "pysolnp*${PLAT}" --no-index --no-cache-dir -f /io/wheelhouse
     (cd "$PYHOME"; "${PYBIN}/nosetests" /io/python_solnp/test/test.py)
 done
 #
