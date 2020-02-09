@@ -4,7 +4,7 @@ import os
 import sys
 import setuptools
 
-__version__ = '0.1a6qu'
+__version__ = '0.1a6'
 
 base_path = os.path.dirname(__file__)
 
