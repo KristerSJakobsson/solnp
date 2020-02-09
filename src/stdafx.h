@@ -6,11 +6,6 @@
  * The drawback is that we will compile a lot of unneeded code.
 */
 
-#ifndef USE_PRECOMPILED_DLIB
-    #define CMAKE_POSITION_INDEPENDENT_CODE
-    #include "../library/dlib/matrix.h"
-#else
-    #include "dlib/matrix.h"
-#endif
+#include <dlib/matrix.h>
 
 #endif //CPP_SOLNP_STDAFX_H

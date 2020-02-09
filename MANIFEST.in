@@ -1,5 +1,4 @@
-recursive-include src *.cpp *.hpp *.h
-recursive-include python_solnp *.py *.cpp *.hpp *.md
-recursive-include library *.cpp *.h
-recursive-exclude src/benchmark *.hpp
-include setup.py
+graft library
+graft python_solnp
+graft src
+include CMakeLists.txt
