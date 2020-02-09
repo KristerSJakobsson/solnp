@@ -16,8 +16,8 @@ for whl in wheelhouse/*.whl; do
 done
 
 # Install package and test
-for PYBIN in /opt/python/*/bin/; do
-    "${PYBIN}/pip" install pysolnp --no-index -f /io/wheelhouse
+for PYBIN in /opt/python/*/bin; do
+    "${PYBIN}/pip" install pysolnp --no-index --no-cache-dir -f /io/wheelhouse
     (cd "$PYHOME"; "${PYBIN}/nosetests" /io/pysolnp/test/test.py)
 done
 
