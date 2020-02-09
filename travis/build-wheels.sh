@@ -18,7 +18,7 @@ done
 
 # Install package and test
 for PYBIN in /opt/python/*/bin; do
-    "${PYBIN}/pip" install "pysolnp*${PLAT}" --no-index --no-cache-dir -f /io/wheelhouse
+    "${PYBIN}/pip" install "pysolnp*${PLAT}.whl" --no-index --no-cache-dir -f /io/wheelhouse
     (cd "$PYHOME"; "${PYBIN}/nosetests" /io/python_solnp/test/test.py)
 done
 #
