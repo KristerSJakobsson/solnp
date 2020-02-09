@@ -16,6 +16,10 @@ for whl in wheelhouse/*.whl; do
     auditwheel repair "$whl" --plat $PLAT -w /io/wheelhouse/
 done
 
+for whl in wheelhouse/*.whl; do
+    excho "$whl"
+done
+
 # Install package and test
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install pysolnp --no-index --no-cache-dir -f /io/wheelhouse
