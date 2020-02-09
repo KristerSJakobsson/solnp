@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e -x
 
+export PYHOME=/home
+cd ${PYHOME}
+
+/opt/python/cp37-cp37m/bin/pip install twine cmake
+ln -s /opt/python/cp37-cp37m/bin/cmake /usr/bin/cmake
+
+
 # Install a system package required by our library
 yum install -y atlas-devel
 
