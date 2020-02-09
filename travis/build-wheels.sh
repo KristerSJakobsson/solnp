@@ -18,15 +18,15 @@ done
 # Install package and test
 for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install pysolnp --no-index --no-cache-dir -f /io/wheelhouse
-    (cd "$PYHOME"; "${PYBIN}/nosetests" /io/pysolnp/test/test.py)
+#    (cd "$PYHOME"; "${PYBIN}/nosetests" /io/pysolnp/test/test.py)
 done
-
-#  Upload
-for WHEEL in /io/wheelhouse/pysolnp*; do
-    /opt/python/cp37-cp37m/bin/twine upload \
-        --skip-existing \
-        --repository-url "${TWINE_SERVER}" \
-        --username "${TWINE_USERNAME}" \
-        --password "${TWINE_PASSWORD}" \
-        "${WHEEL}"
-done
+#
+##  Upload
+#for WHEEL in /io/wheelhouse/pysolnp*; do
+#    /opt/python/cp37-cp37m/bin/twine upload \
+#        --skip-existing \
+#        --repository-url "${TWINE_SERVER}" \
+#        --username "${TWINE_USERNAME}" \
+#        --password "${TWINE_PASSWORD}" \
+#        "${WHEEL}"
+#done
