@@ -7,6 +7,7 @@
 */
 
 #ifndef USE_PRECOMPILED_DLIB
+    #define CMAKE_POSITION_INDEPENDENT_CODE
     #include "../library/dlib/matrix.h"
 #else
     #include "dlib/matrix.h"
