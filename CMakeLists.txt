@@ -5,7 +5,6 @@ project(pysolnp)
 file(GLOB_RECURSE PYSOLNP_SOURCES "python_solnp/pysolver.cpp")
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/python_solnp)
 

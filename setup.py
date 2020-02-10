@@ -11,6 +11,11 @@ from distutils.version import LooseVersion
 __version__ = '0.1a7'
 
 
+# Get requirements from requirements-dev.txt file
+with open(os.path.join(here, 'requirements-dev.txt')) as f:
+    requirements_dev = f.read().replace('==', '>=').splitlines()
+
+
 class CMakeExtension(Extension):
     def __init__(self, name, sourcedir=''):
         Extension.__init__(self, name, sources=[])
@@ -106,10 +111,12 @@ setup(name='pysolnp',
           "Operating System :: Microsoft :: Windows",
           "Operating System :: POSIX :: Linux"
       ],
+      extras_require={
+          'dev': requirements_dev,
+      },
       data_files=[(
-          '.',
-          [
+          '.', [
               'requirements-dev.txt',
           ]
-      )]
+      )],
       )
