@@ -12,6 +12,7 @@ __version__ = '0.1a7'
 
 
 # Get requirements from requirements-dev.txt file
+here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'requirements-dev.txt')) as f:
     requirements_dev = f.read().replace('==', '>=').splitlines()
 
