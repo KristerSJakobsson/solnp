@@ -10,6 +10,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/python_solnp)
 
 set(PYBIND11_CPP_STANDARD -std=c++1y)
 add_subdirectory(library/pybind11)
-target_link_libraries(pysolnp PUBLIC dlib::dlib)
 pybind11_add_module(pysolnp "${PYSOLNP_SOURCES}")
+target_link_libraries(pysolnp PUBLIC dlib::dlib)
 
