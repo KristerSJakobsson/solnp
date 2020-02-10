@@ -16,6 +16,10 @@ here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'requirements-dev.txt')) as f:
     requirements_dev = f.read().replace('==', '>=').splitlines()
 
+# Load readme file for Python package
+with open(os.path.join(here, "python_solnp", 'README.md'), encoding='utf-8') as file:
+    long_description = file.read()
+
 
 class CMakeExtension(Extension):
     def __init__(self, name, sourcedir=''):
@@ -83,10 +87,6 @@ class CMakeBuild(build_ext):
             cwd=self.build_temp
         )
 
-
-# Load readme file for Python package
-with open("python_solnp/README.md", "r") as file:
-    long_description = file.read()
 
 setup(name='pysolnp',
       version=__version__,
