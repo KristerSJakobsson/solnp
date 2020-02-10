@@ -17,6 +17,6 @@ done
 # Test
 for PYBIN in /opt/python/cp3*/bin/; do
     "${PYBIN}/pip" install -r /io/requirements-dev.txt
-    "${PYBIN}/pip" install --no-index -f /io/wheelhouse pysolpnp
+    "${PYBIN}/pip" install --no-index -f /io/wheelhouse pysolnp
     (cd "$PYHOME"; "${PYBIN}/pytest" /io/python_solnp/test/test.py)
 done
