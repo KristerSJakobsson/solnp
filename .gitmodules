@@ -1,0 +1,6 @@
+[submodule "library/pybind11"]
+	path = library/pybind11
+	url = https://github.com/pybind/pybind11.git
+[submodule "library/dlib"]
+	path = library/dlib
+	url = https://github.com/davisking/dlib.git
