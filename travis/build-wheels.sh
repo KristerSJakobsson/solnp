@@ -20,3 +20,13 @@ for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install --no-index -f /io/wheelhouse pysolnp
     (cd "$PYHOME"; "${PYBIN}/pytest" /io/python_solnp/test/test.py)
 done
+
+#  Upload
+#for WHEEL in /io/wheelhouse/pysolnp*; do
+#    /opt/python/cp37-cp37m/bin/twine upload \
+#        --skip-existing \
+#        --repository-url "${TWINE_SERVER}" \
+#        --username "${TWINE_USERNAME}" \
+#        --password "${TWINE_PASSWORD}" \
+#        "${WHEEL}"
+#done
