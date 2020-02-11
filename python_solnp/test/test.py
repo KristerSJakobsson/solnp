@@ -1,5 +1,4 @@
 import unittest
-import nose
 import pysolnp
 
 
