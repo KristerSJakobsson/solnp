@@ -4,7 +4,7 @@ set -e -x
 yum install -y cmake
 
 # Compile wheels
-for PYBIN in /opt/python/cp3*/bin; do
+for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" wheel /io/ -w wheelhouse/
     "${PYBIN}/python" /io/setup.py sdist -d /io/wheelhouse/
 done
@@ -15,7 +15,7 @@ for whl in wheelhouse/*.whl; do
 done
 
 # Test
-for PYBIN in /opt/python/cp3*/bin; do
+for PYBIN in /opt/python/*/bin; do
     "${PYBIN}/pip" install -r /io/requirements-dev.txt
     "${PYBIN}/pip" install --no-index -f /io/wheelhouse pysolnp
     (cd "$PYHOME"; "${PYBIN}/pytest" /io/python_solnp/test/test.py)
