@@ -1,7 +1,7 @@
 notifications:
   email: false
 
-#if: tag IS present
+if: tag IS present
 matrix:
   include:
     - sudo: required
