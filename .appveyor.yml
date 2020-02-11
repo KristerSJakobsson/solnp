@@ -32,7 +32,9 @@ install:
 build_script:
   - ps: |
       if ($env:PYTHON) {
+        cd cpp_sonlp
         python setup.py sdist bdist_wheel
+        cd ..
         pip install ./
       } else {
         echo "conda build conda.recipe"
@@ -42,3 +44,6 @@ build_script:
       }
 test_script:
   - ps: python python_solnp\test\test.py
+artifacts:
+  - path: cpp_sonlp\dist\*.whl
+    name: wheels
