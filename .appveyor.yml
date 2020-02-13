@@ -18,8 +18,8 @@ install:
   - ps: |
       if ($env:PYTHON) {
         if ($env:PLATFORM -eq "x64") { $env:PYTHON = "$env:PYTHON-x64" }
-        $env:PATH = "C:\Python$env:PYTHON\;C:\Python$env:PYTHON\Scripts\;$env:PATH"
-        python -m pip install --disable-pip-version-check --user --upgrade pip setuptools
+#        $env:PATH = "C:\Python$env:PYTHON\;C:\Python$env:PYTHON\Scripts\;$env:PATH"
+        C:\Python$env:PYTHON\bin\pip install --disable-pip-version-check --user --upgrade pip setuptools wheel
       } elseif ($env:CONDA) {
         if ($env:CONDA -eq "27") { $env:CONDA = "" }
         if ($env:PLATFORM -eq "x64") { $env:CONDA = "$env:CONDA-x64" }
@@ -33,7 +33,7 @@ build_script:
   - ps: |
       if ($env:PYTHON) {
         cd cpp_sonlp
-        python setup.py sdist bdist_wheel
+        C:\Python$env:PYTHON\bin\python setup.py sdist bdist_wheel
         cd ..
         pip install ./
       } else {
