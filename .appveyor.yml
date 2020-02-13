@@ -9,10 +9,10 @@ environment:
     PYTHONWARNINGS: ignore:DEPRECATION
     MSSdk: 1
   matrix:
-#    - PYTHON: 27
-    - PYTHON: 36
+    - PYTHON: 27
+#    - PYTHON: 36
 #    - CONDA: 27
-    - CONDA: 36
+#    - CONDA: 36
 install:
   - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
   - ps: |
@@ -42,8 +42,8 @@ build_script:
         echo "conda install --use-local pysolnp"
         conda install --use-local pysolnp
       }
-test_script:
-  - ps: python python_solnp\test\test.py
-artifacts:
-  - path: cpp_sonlp\dist\*.whl
-    name: wheels
+#test_script:
+#  - ps: python python_solnp\test\test.py
+#artifacts:
+#  - path: cpp_sonlp\dist\*.whl
+#    name: wheels
