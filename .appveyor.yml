@@ -1,24 +1,19 @@
 version: '{build}'
 image: Visual Studio 2015
-platform:
-  - x64
 environment:
   global:
     DISTUTILS_USE_SDK: 1
     PYTHONWARNINGS: ignore:DEPRECATION
     MSSdk: 1
-  matrix:
-    - PYTHON: 38
 install:
   - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
-  - ps: |
-      C:\Python38-x64\bin\pip install --disable-pip-version-check --user --upgrade pip setuptools wheel
+  - ps: C:\Python38-x64\bin\pip.exe install --disable-pip-version-check --user --upgrade pip setuptools wheel
 build_script:
   - ps: |
-        cd cpp_sonlp
-        C:\Python38-x64\bin\python setup.py sdist bdist_wheel
-        pip install ./
-        cd ..
+      cd cpp_sonlp
+      C:\Python38-x64\bin\python.exe setup.py sdist bdist_wheel
+      pip install ./
+      cd ..
 artifacts:
   - path: cpp_sonlp\dist\*.whl
     name: wheels
