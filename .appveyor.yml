@@ -1,7 +1,7 @@
 version: '{build}'
 image: Visual Studio 2015
 platform:
-  - x86
+#  - x86
   - x64
 environment:
   global:
@@ -9,17 +9,19 @@ environment:
     PYTHONWARNINGS: ignore:DEPRECATION
     MSSdk: 1
   matrix:
-    - PYTHON: 27
+    - PYTHON: 38
+#    - PYTHON: 27
 #    - PYTHON: 36
 #    - CONDA: 27
 #    - CONDA: 36
 install:
   - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
   - ps: |
+      C:\Python38-x64\bin\pip install --disable-pip-version-check --user --upgrade pip setuptools wheel
 #      if ($env:PYTHON) {
-        if ($env:PLATFORM -eq "x64") { $env:PYTHON = "$env:PYTHON-x64" }
+#        if ($env:PLATFORM -eq "x64") { $env:PYTHON = "$env:PYTHON-x64" }
 #        $env:PATH = "C:\Python$env:PYTHON\;C:\Python$env:PYTHON\Scripts\;$env:PATH"
-        C:\Python$env:PYTHON\bin\pip install --disable-pip-version-check --user --upgrade pip setuptools wheel
+#        C:\Python$env:PYTHON\bin\pip install --disable-pip-version-check --user --upgrade pip setuptools wheel
 #      } elseif ($env:CONDA) {
 #        if ($env:CONDA -eq "27") { $env:CONDA = "" }
 #        if ($env:PLATFORM -eq "x64") { $env:CONDA = "$env:CONDA-x64" }
@@ -33,7 +35,7 @@ build_script:
   - ps: |
 #      if ($env:PYTHON) {
         cd cpp_sonlp
-        C:\Python$env:PYTHON\bin\python setup.py sdist bdist_wheel
+        C:\Python38-x64\bin\python setup.py sdist bdist_wheel
         pip install ./
         cd ..
 #      } else {
