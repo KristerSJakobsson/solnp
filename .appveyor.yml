@@ -7,10 +7,10 @@ environment:
     MSSdk: 1
 install:
   - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
-  - ps: C:\Python38-x64\python.exe -m pip install --disable-pip-version-check --user --upgrade pip setuptools wheel
+  - ps: C:\Python38-x64\python.exe -m pip install setuptools wheel
 build_script:
   - ps: |
-      cd cpp_sonlp
+      cd solnp
       C:\Python38-x64\python.exe setup.py sdist bdist_wheel
       pip install ./
       cd ..
