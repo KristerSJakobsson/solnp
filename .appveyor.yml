@@ -12,6 +12,7 @@ install:
   - ps: C:\Python38-x64\python.exe -m pip install setuptools wheel
 build_script:
   - ps: |
+      $env:path += ";C:\Python38-x64\Scripts"
       cd solnp
       C:\Python38-x64\python.exe setup.py sdist bdist_wheel
       pip install ./
