@@ -8,7 +8,7 @@ environment:
     PYTHONWARNINGS: ignore:DEPRECATION
     MSSdk: 1
 install:
-  - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
+  - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\\..\..\VC\vcvarsall.bat" x64'
   - ps: C:\Python38-x64\python.exe -m pip install setuptools wheel
 build_script:
   - ps: |
