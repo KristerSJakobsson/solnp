@@ -22,7 +22,8 @@ for PYBIN in /opt/python/*/bin; do
 done
 
 #  Upload
-/opt/python/cp38-cp38m/bin/pip install twine
+/opt/python/cp37-cp37m/bin/pip install twine cmake
+ln -s /opt/python/cp37-cp37m/bin/cmake /usr/bin/cmake
 for WHEEL in /io/wheelhouse/pysolnp*; do
     /opt/python/cp37-cp37m/bin/twine upload \
         --skip-existing \
