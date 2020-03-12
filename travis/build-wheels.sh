@@ -10,7 +10,7 @@ for PYBIN in /opt/python/*/bin; do
 done
 
 # Bundle external shared libraries into the wheels
-for WHEEL in wheelhouse/*.WHEEL; do
+for WHEEL in wheelhouse/*.whl; do
     auditwheel repair "$WHEEL" -w /io/wheelhouse/
 done
 
