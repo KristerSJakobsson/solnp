@@ -2,6 +2,7 @@
 set -e -x
 
 yum install -y cmake
+yum install -y openssl-devel
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
