@@ -10,6 +10,10 @@ environment:
       secure:
         OXK5a0Kcyc7jYfkbpqCSUUGu6dBXpIFV3so6rCCxdoRn/xaJjxdu2Ox4rLw2FzA1YS05o72cojfF/wJIuD9Vfm+VOUJAvxRFcYyI7iZP3nwBBRA2JW2yUX/WpbqCDJqk+8lHlMhgmxmFYGzufpcDemTjc5BrCKs6OvHWWhIde7uW1FXa2szD9wf9+4JXCCdRn238Wg0t44CpRPbcAdg/DAeH6IHuRO6RUZtd+RUiif7BDhcRpJmuHGb2zaZ3ZKWybTHJxW4UmRxlqhpADb5ctw==
 
+  matrix:
+    - PYTHON: C:\Python36
+    - PYTHON: C:\Python36-x64
+
 # For the release branch we deploy to real pypi
 for:
   -branches:
@@ -21,9 +25,6 @@ for:
     PYPI_PASSWORD:
       secure: OXK5a0Kcyc7jYfkbpqCSUWoLILcDMX7fwMTunuAXDtVHVKIsvdF4J1/N1jPHAwatqyAc+9DDrMgMLCxvP08yX9LcIFOfdINQFtSNzk77gpHLkL3ubBeVh7rBqN7oV9B4TBEwj80WGsfYqybOU4w5f+AFJVgFiPASw4TBSkupJq9lrv49VdDmcke6Kp2uOh0DrCsA6GAjJrynoU7di5iuNgDTjMQ3Mp3Pv63WiOYga51NIZ3ucEdLkEbwBn+qgWwF
 
-  matrix:
-    - PYTHON: C:\Python36
-    - PYTHON: C:\Python36-x64
 
 install:
   # Install Python 3.6.2 if necessary
