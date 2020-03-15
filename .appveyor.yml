@@ -40,7 +40,7 @@ install:
   # Pin wheel to 0.26 to avoid Windows ABI tag for built wheel
   - pip install wheel==0.26
   - python -m pip install setuptools wheel cmake
-  - git clone https://github.com/KristerSJakobsson/solnp.git
+#  - git clone https://github.com/KristerSJakobsson/solnp.git
 
 build_script:
   # Build and install the wheel
