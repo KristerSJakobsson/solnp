@@ -1,23 +1,59 @@
-version: '{build}'
-image: Visual Studio 2015
-platform:
-  -x64
+# vim ft=yaml
+
+os: Visual Studio 2015
+
 environment:
   global:
-    DISTUTILS_USE_SDK: 1
-    PYTHONWARNINGS: ignore:DEPRECATION
-    MSSdk: 1
+    WHEELHOUSE_UPLOADER_USERNAME: __token__
+    WHEELHOUSE_UPLOADER_SECRET:
+      secure:
+        password
+
+  matrix:
+    - PYTHON: C:\Python36
+    - PYTHON: C:\Python36-x64
+
 install:
-  - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\\..\..\VC\vcvarsall.bat" x64'
-  - ps: |
-      $env:path += "C:\Python37-x64;C:\Python37-x64\Scripts"
-      C:\Python37-x64\python.exe -m pip install setuptools wheel cmake
+  # Install Python 3.6.2 if necessary
+  - ps:
+
+  # Prepend newly installed Python to the PATH of this build (this cannot be
+  # done from inside the powershell script as it would require to restart
+  # the parent CMD process).
+  - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+
+  # Get Python bitness
+  # https://stackoverflow.com/questions/1746475/windows-batch-help-in-setting-a-variable-from-command-output#4509885
+  - set PY_CMD=python -c "import platform; print(platform.architecture()[0][:2])"
+  - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set PYTHON_ARCH=%%i
+
+  # Fix MSVC builds for 64-bit Python
+  # See
+  # http://stackoverflow.com/questions/32091593/cannot-install-windows-sdk-7-1-on-windows-10
+  - echo "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64 > "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64/vcvars64.bat"
+
+  # Check that we have the expected version and architecture for Python
+  - python --version
+  - python -c "import struct; print(struct.calcsize('P') * 8)"
+
+  - python -m pip install --upgrade pip
+  # Pin wheel to 0.26 to avoid Windows ABI tag for built wheel
+  - pip install wheel==0.26
+  - git clone https://github.com/KristerSJakobsson/solnp.git
+
 build_script:
-  - ps: |
-      cd solnp
-      python.exe setup.py sdist bdist_wheel
-      pip install ./
-      cd ..
+  # Build and install the wheel
+  - cd solnp
+  - python -m pip install setuptools wheel cmake
+  - pip install --pre --no-index -f . numpy
+
 artifacts:
-  - path: sonlp\dist\*.whl
-    name: wheels
+  - path: solnp\dist\*.*
+
+#on_success:
+  # Upload the generated wheel package to Rackspace
+  # On Windows, Apache Libcloud cannot find a standard CA cert bundle so we
+  # disable the ssl checks.
+#  - pip install wheelhouse-uploader
+#  - python -m wheelhouse_uploader upload --no-ssl-check --local-folder=dist
+#    mingwpy-wheels
