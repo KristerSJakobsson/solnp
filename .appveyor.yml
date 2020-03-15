@@ -9,10 +9,11 @@ environment:
     MSSdk: 1
 install:
   - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\\..\..\VC\vcvarsall.bat" x64'
-  - ps: C:\Python37-x64\python.exe -m pip install setuptools wheel cmake
+  - ps: |
+      $env:path += "C:\Python37-x64;C:\Python37-x64\Scripts"
+      C:\Python37-x64\python.exe -m pip install setuptools wheel cmake
 build_script:
   - ps: |
-      $env:path = "C:\Python37-x64;C:\Python37-x64\Scripts"
       cd solnp
       python.exe setup.py sdist bdist_wheel
       pip install ./
