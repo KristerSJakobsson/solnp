@@ -57,10 +57,18 @@ install:
 build_script:
   # Build and install the wheel
   - cd solnp
+  - pip install .\requirements-dev.txt
   - python setup.py sdist bdist_wheel
 
 artifacts:
   - path: solnp\dist\*.*
+
+test:
+  # Test the compiled build
+  - ps: |
+      $TARGET = Resolve-Path ".\dist\pysolnp-*.whl"
+      pip install --no-index -f $TARGET.PATH
+      python -m pytest ".\python_solnp\test\test.py"
 
 #on_success:
   # Upload the generated wheel package to Rackspace
