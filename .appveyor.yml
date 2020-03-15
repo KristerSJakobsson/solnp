@@ -64,7 +64,7 @@ build_script:
 artifacts:
   - path: solnp\dist\*.*
 
-test:
+test_script:
   # Test the compiled build
   - ps: |
       $TARGET = Resolve-Path ".\dist\pysolnp-*.whl"
