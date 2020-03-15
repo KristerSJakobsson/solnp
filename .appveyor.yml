@@ -68,7 +68,7 @@ test_script:
   # Test the compiled build
   - ps: |
       $TARGET = Resolve-Path ".\dist\pysolnp-*.whl"
-      pip install --no-index -f $TARGET.PATH
+      pip install --no-index $TARGET.PATH
       python -m pytest ".\python_solnp\test\test.py"
 
 #on_success:
