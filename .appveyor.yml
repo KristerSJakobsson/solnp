@@ -45,7 +45,6 @@ build_script:
   # Build and install the wheel
   - cd solnp
   - python -m pip install setuptools wheel cmake
-  - pip install --pre --no-index -f . numpy
 
 artifacts:
   - path: solnp\dist\*.*
