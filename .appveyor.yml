@@ -71,9 +71,11 @@ test_script:
       pip install --no-index $TARGET.PATH
       python -m pytest ".\python_solnp\test\test.py"
 
-#on_success:
-  # Upload the generated wheel package to Rackspace
-  # On Windows, Apache Libcloud cannot find a standard CA cert bundle so we
-  # disable the ssl checks.
-#  - pip install twine
-#  - python -m twine upload --skip-existing --repository-url "${TWINE_SERVER}" --username "${TWINE_USERNAME}" --password "${TWINE_PASSWORD}" "${WHEEL}"
+on_success:
+  # Upload the generated wheel package to pypi
+  - ps: |
+      pip install twine
+      $TARGET_SRC = Resolve-Path ".\dist\pysolnp-*.tar.gz"
+      python -m twine upload --skip-existing --repository-url "$PYPI_SERVER" --username "$PYPI_USERNAME" --password "$PYPI_PASSWORD" $TARGET_SRC.PATH
+      $TARGET_WHEEL = Resolve-Path ".\dist\pysolnp-*.whl"
+      python -m twine upload --skip-existing --repository-url "$PYPI_SERVER" --username "$PYPI_USERNAME" --password "$PYPI_PASSWORD" $TARGET_WHEEL.PATH
