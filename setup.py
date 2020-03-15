@@ -107,6 +107,7 @@ setup(name='pysolnp',
           "Programming Language :: C++",
           "License :: OSI Approved :: Boost Software License 1.0 (BSL-1.0)",
           "Operating System :: MacOS :: MacOS X",
+          "Operating System :: Microsoft :: Windows",
           "Operating System :: POSIX :: Linux"
       ],
       extras_require={
