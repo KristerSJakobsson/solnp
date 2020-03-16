@@ -1,6 +1,8 @@
 # vim ft=yaml
 
-os: Visual Studio 2015
+image:
+  - Visual Studio 2015
+#  - macos
 
 environment:
   global:
@@ -27,9 +29,6 @@ environment:
 
 
 install:
-  # Install Python 3.6.2 if necessary
-  - ps:
-
   # Prepend newly installed Python to the PATH of this build (this cannot be
   # done from inside the powershell script as it would require to restart
   # the parent CMD process).
@@ -78,4 +77,4 @@ on_success:
       $TARGET_SRC = Resolve-Path ".\dist\pysolnp-*.tar.gz"
       python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_SRC.PATH
       $TARGET_WHEEL = Resolve-Path ".\dist\pysolnp-*.whl"
-      python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_WHEEL.PATH
+      python -m twine upload --verbose --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_WHEEL.PATH
