@@ -77,4 +77,4 @@ on_success:
       $TARGET_SRC = Resolve-Path ".\dist\pysolnp-*.tar.gz"
       python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_SRC.PATH
       $TARGET_WHEEL = Resolve-Path ".\dist\pysolnp-*.whl"
-      python -m twine upload --verbose --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_WHEEL.PATH
+      python -m twine upload --skip-existing --repository-url "$env:PYPI_SERVER" --username "$env:PYPI_USERNAME" --password "$env:PYPI_PASSWORD" $TARGET_WHEEL.PATH
