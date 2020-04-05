@@ -8,7 +8,7 @@ from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
 from distutils.version import LooseVersion
 
-__version__ = '0.1a1'
+__version__ = '0.0.1'
 
 
 # Get requirements from requirements-dev.txt file
