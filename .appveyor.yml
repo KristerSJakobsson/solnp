@@ -14,7 +14,7 @@ environment:
 
 
 # For the release branch we deploy to real pypi
-for:
+#for:
 #  - branches:
 #    only:
 #      - release
@@ -24,66 +24,67 @@ for:
 #      PYPI_PASSWORD:
 #        secure: OXK5a0Kcyc7jYfkbpqCSUWoLILcDMX7fwMTunuAXDtVHVKIsvdF4J1/N1jPHAwatqyAc+9DDrMgMLCxvP08yX9LcIFOfdINQFtSNzk77gpHLkL3ubBeVh7rBqN7oV9B4TBEwj80WGsfYqybOU4w5f+AFJVgFiPASw4TBSkupJq9lrv49VdDmcke6Kp2uOh0DrCsA6GAjJrynoU7di5iuNgDTjMQ3Mp3Pv63WiOYga51NIZ3ucEdLkEbwBn+qgWwF
 
-  - matrix:
-    only:
-      - image: Visual Studio 2015
-        matrix:
-          - PYTHON: C:\Python27
-          - PYTHON: C:\Python27-x64
-          - PYTHON: C:\Python35
-          - PYTHON: C:\Python35-x64
-          - PYTHON: C:\Python36
-          - PYTHON: C:\Python36-x64
-          - PYTHON: C:\Python37
-          - PYTHON: C:\Python37-x64
-          - PYTHON: C:\Python38
-          - PYTHON: C:\Python38-x64
+for:
+  -
+    matrix:
+      only:
+        - image: Visual Studio 2015
+      - PYTHON: C:\Python27
+      - PYTHON: C:\Python27-x64
+      - PYTHON: C:\Python35
+      - PYTHON: C:\Python35-x64
+      - PYTHON: C:\Python36
+      - PYTHON: C:\Python36-x64
+      - PYTHON: C:\Python37
+      - PYTHON: C:\Python37-x64
+      - PYTHON: C:\Python38
+      - PYTHON: C:\Python38-x64
 
-        install:
-          # Prepend newly installed Python to the PATH of this build (this cannot be
-          # done from inside the powershell script as it would require to restart
-          # the parent CMD process).
-          - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+    install:
+      # Prepend newly installed Python to the PATH of this build (this cannot be
+      # done from inside the powershell script as it would require to restart
+      # the parent CMD process).
+      - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
 
-          # Get Python bitness
-          # https://stackoverflow.com/questions/1746475/windows-batch-help-in-setting-a-variable-from-command-output#4509885
-          - set PY_CMD=python -c "import platform; print(platform.architecture()[0][:2])"
-          - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set PYTHON_ARCH=%%i
+      # Get Python bitness
+      # https://stackoverflow.com/questions/1746475/windows-batch-help-in-setting-a-variable-from-command-output#4509885
+      - set PY_CMD=python -c "import platform; print(platform.architecture()[0][:2])"
+      - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set PYTHON_ARCH=%%i
 
-          # Fix MSVC builds for 64-bit Python
-          # See
-          # http://stackoverflow.com/questions/32091593/cannot-install-windows-sdk-7-1-on-windows-10
-          - echo "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64 > "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64/vcvars64.bat"
+      # Fix MSVC builds for 64-bit Python
+      # See
+      # http://stackoverflow.com/questions/32091593/cannot-install-windows-sdk-7-1-on-windows-10
+      - echo "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64 > "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64/vcvars64.bat"
 
-          # Check that we have the expected version and architecture for Python
-          - python --version
-          - python -c "import struct; print(struct.calcsize('P') * 8)"
+      # Check that we have the expected version and architecture for Python
+      - python --version
+      - python -c "import struct; print(struct.calcsize('P') * 8)"
 
-          - python -m pip install --upgrade pip
-          - git clone --recursive https://github.com/KristerSJakobsson/solnp.git
+      - python -m pip install --upgrade pip
+      - git clone --recursive https://github.com/KristerSJakobsson/solnp.git
 
-        build_script:
-          # Build and install the wheel
-          - cd solnp
-          - pip install wheel
-          - pip install -r ".\requirements-dev.txt"
-          - python setup.py sdist bdist_wheel
+    build_script:
+      # Build and install the wheel
+      - cd solnp
+      - pip install wheel
+      - pip install -r ".\requirements-dev.txt"
+      - python setup.py sdist bdist_wheel
 
-        artifacts:
-          - path: solnp\dist\*.*
+    artifacts:
+      - path: solnp\dist\*.*
 
-        test_script:
-          # Test the compiled build
-          - ps: |
-              $TARGET = Resolve-Path ".\dist\pysolnp-*.whl"
-              pip install --no-index $TARGET.PATH
-              python -m pytest ".\python_solnp\test\test.py"
+    test_script:
+      # Test the compiled build
+      - ps: |
+          $TARGET = Resolve-Path ".\dist\pysolnp-*.whl"
+          pip install --no-index $TARGET.PATH
+          python -m pytest ".\python_solnp\test\test.py"
 
-        on_success:
-          # Upload the generated wheel package to pypi
-          - ps: |
-              pip install twine==1.15.0
-              $TARGET_SRC = Resolve-Path ".\dist\pysolnp-*.tar.gz"
-              python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_SRC.PATH
-              $TARGET_WHEEL = Resolve-Path ".\dist\pysolnp-*.whl"
-              python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_WHEEL.PATH
+    on_success:
+      # Upload the generated wheel package to pypi
+      - ps: |
+          pip install twine==1.15.0
+          $TARGET_SRC = Resolve-Path ".\dist\pysolnp-*.tar.gz"
+          python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_SRC.PATH
+          $TARGET_WHEEL = Resolve-Path ".\dist\pysolnp-*.whl"
+          python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_WHEEL.PATH
