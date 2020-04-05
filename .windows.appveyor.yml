@@ -13,16 +13,16 @@ environment:
 
   matrix:
 # TODO: Need to fix builds for Python 2.7 & 3.5
-#    - PYTHON: C:\Python27
-#    - PYTHON: C:\Python27-x64
-#    - PYTHON: C:\Python35
-#    - PYTHON: C:\Python35-x64
-    - PYTHON: C:\Python36
-    - PYTHON: C:\Python36-x64
-    - PYTHON: C:\Python37
-    - PYTHON: C:\Python37-x64
-    - PYTHON: C:\Python38
-    - PYTHON: C:\Python38-x64
+    - PYTHON: C:\Python27
+    - PYTHON: C:\Python27-x64
+    - PYTHON: C:\Python35
+    - PYTHON: C:\Python35-x64
+#    - PYTHON: C:\Python36
+#    - PYTHON: C:\Python36-x64
+#    - PYTHON: C:\Python37
+#    - PYTHON: C:\Python37-x64
+#    - PYTHON: C:\Python38
+#    - PYTHON: C:\Python38-x64
 
 
 

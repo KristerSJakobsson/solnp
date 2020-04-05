@@ -1,2 +1,2 @@
 autopep8==1.4.3
-pytest==5.2.0
+pytest==4.6.9
