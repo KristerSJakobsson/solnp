@@ -1,25 +1,30 @@
 # vim ft=yaml
 
-matrix:
-  - image:
-    - Visual Studio 2015
-    environment:
-      global:
-        - PYTHON: C:\Python27
-        - PYTHON: C:\Python27-x64
-        - PYTHON: C:\Python35
-        - PYTHON: C:\Python35-x64
-        - PYTHON: C:\Python36
-        - PYTHON: C:\Python36-x64
-        - PYTHON: C:\Python37
-        - PYTHON: C:\Python37-x64
-        - PYTHON: C:\Python38
-        - PYTHON: C:\Python38-x64
-  - macOS
-
-
-
 environment:
+  matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: C:\Python27
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: C:\Python27-x64
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: C:\Python35
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: C:\Python35-x64
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: C:\Python36
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: C:\Python36-x64
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: C:\Python37
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: C:\Python37-x64
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: C:\Python38
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: C:\Python38-x64
+    - APPVEYOR_BUILD_WORKER_IMAGE: macOS
+      MY_VAR: value4
+
   global:
     PYPI_USERNAME: __token__
     PYPI_SERVER: https://test.pypi.org/legacy/
