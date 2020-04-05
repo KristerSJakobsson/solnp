@@ -75,7 +75,8 @@ This project is licensed under the Boost License - see the [license](LICENSE.md)
 
 ## Acknowledgments
 
-* **Yinyu Ye** -  Publisher of the original algorithm,
+* **Yinyu Ye** -  Publisher and mastermind behind the original SOLNP algorithm,
 [Original Sources](https://web.stanford.edu/~yyye/matlab/)
-* **Rsolnp** - An R implementation of SOLNP, 
+* **Alexios Ghalanos and Stefan Theussl** - The people behind RSOLNP,
 [Github repository](https://github.com/cran/Rsolnp)
+* **Davis King** - The mastermind behind Dlib, check out his blog! [Blog](http://blog.dlib.net/) 
