@@ -38,7 +38,7 @@ for:
         PYPI_USERNAME: __token__
         PYPI_SERVER: https://upload.pypi.org/legacy/
         PYPI_PASSWORD:
-          secure: OXK5a0Kcyc7jYfkbpqCSUWoLILcDMX7fwMTunuAXDtVHVKIsvdF4J1/N1jPHAwatqyAc+9DDrMgMLCxvP08yX9LcIFOfdINQFtSNzk77gpHLkL3ubBeVh7rBqN7oV9B4TBEwj80WGsfYqybOU4w5f+AFJVgFiPASw4TBSkupJq9lrv49VdDmcke6Kp2uOh0DrCsA6GAjJrynoU7di5iuNgDTjMQ3Mp3Pv63WiOYga51NIZ3ucEdLkEbwBn+qgWwF
+          secure: BlFonvNFzspp5kZ6nsJTjSJfWqviD0DDAiCgMtKVbyspHPCu+PR/fS++fUCt6hM3X03oTdvzX0wYGbZiZwPr09SO4lblS0Qyilm8rnHpICzuCDn+KBBNrIFYdvU4WYndcQ9fNniPw1QiWxmMJsbxsSc7io3thIt+fG8L9OJxFQmjzDj2Az0oXOUswSVjKmq8aoOD2agdcS+JI6uyEq9Ve5kQYdY4Bgn3FNWSsL8QxnHW8MQxuNrpaWvhV22BGqGk0NQVNlnlEyCuiPVatPKsUA==
 
 install:
   # Prepend newly installed Python to the PATH of this build (this cannot be
