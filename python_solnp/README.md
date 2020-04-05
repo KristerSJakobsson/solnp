@@ -12,10 +12,9 @@ SOLNP solves the general nonlinear optimization problem on the form:
 where f(x), g(x) and h(x) are smooth functions.
 
 ## Compatability
-Precompiled libraries for:
-- Windows: Python 3.5+
+Precompiled Wheels are available for CPython:
+- Windows: Python 3.6+
 - Linux: Python 2.7+
-- Mac OS X: Python 2.7+
 
 For other systems, or to have BLAS and LAPACK support, please build the wheels manually.
 
@@ -110,7 +109,8 @@ This project is licensed under the Boost License - see the [license](LICENSE.md)
 
 ## Acknowledgments
 
-* **Yinyu Ye** -  Publisher of the original algorithm,
+* **Yinyu Ye** -  Publisher and mastermind behind the original SOLNP algorithm,
 [Original Sources](https://web.stanford.edu/~yyye/matlab/)
-* **Rsolnp** - An R implementation of SOLNP,
+* **Alexios Ghalanos and Stefan Theussl** - The people behind RSOLNP,
 [Github repository](https://github.com/cran/Rsolnp)
+* **Davis King** - The mastermind behind Dlib, check out his blog! [Blog](http://blog.dlib.net/) 

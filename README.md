@@ -40,6 +40,18 @@ These are:
 
 Run the tests `solnp_test` using CMake.
 
+## CI and building Wheels
+
+This project uses CI to automatically build wheels for a wide range of distributions.
+Notably currently only builds for CPython are available on PyPi, but one can also manually installing the package from source as explained above.
+
+Appveyor CI:
+  - Windows with Visual Studio - PARTIALLY IMPLEMENTED
+  - Mac OS with CMake - NOT IMPLEMENTED
+  
+Travis CI:
+  - `manylinux2014` Docker with GCC
+
 ## Built With
 
 Libraries:
@@ -51,6 +63,7 @@ Tools:
 * [CMake](https://cmake.org/runningcmake/) - Build tools
 * [CLion](https://www.jetbrains.com/clion/) - IDE by JetBrains
 * [Travis CI](https://travis-ci.org/) - Travis CI for building Manylinux Wheels
+* [Appveyor CI](https://www.appveyor.com/) - Appveyor CI for building Windows and Mac OS Wheels
 
 ## Authors
 
