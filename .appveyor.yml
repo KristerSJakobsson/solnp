@@ -15,14 +15,14 @@ environment:
 
 # For the release branch we deploy to real pypi
 for:
-  - branches:
-    only:
-      - release
-    global:
-      PYPI_USERNAME: __token__
-      PYPI_SERVER: https://pypi.org/legacy/
-      PYPI_PASSWORD:
-        secure: OXK5a0Kcyc7jYfkbpqCSUWoLILcDMX7fwMTunuAXDtVHVKIsvdF4J1/N1jPHAwatqyAc+9DDrMgMLCxvP08yX9LcIFOfdINQFtSNzk77gpHLkL3ubBeVh7rBqN7oV9B4TBEwj80WGsfYqybOU4w5f+AFJVgFiPASw4TBSkupJq9lrv49VdDmcke6Kp2uOh0DrCsA6GAjJrynoU7di5iuNgDTjMQ3Mp3Pv63WiOYga51NIZ3ucEdLkEbwBn+qgWwF
+#  - branches:
+#    only:
+#      - release
+#    global:
+#      PYPI_USERNAME: __token__
+#      PYPI_SERVER: https://pypi.org/legacy/
+#      PYPI_PASSWORD:
+#        secure: OXK5a0Kcyc7jYfkbpqCSUWoLILcDMX7fwMTunuAXDtVHVKIsvdF4J1/N1jPHAwatqyAc+9DDrMgMLCxvP08yX9LcIFOfdINQFtSNzk77gpHLkL3ubBeVh7rBqN7oV9B4TBEwj80WGsfYqybOU4w5f+AFJVgFiPASw4TBSkupJq9lrv49VdDmcke6Kp2uOh0DrCsA6GAjJrynoU7di5iuNgDTjMQ3Mp3Pv63WiOYga51NIZ3ucEdLkEbwBn+qgWwF
 
   - matrix:
     only:
