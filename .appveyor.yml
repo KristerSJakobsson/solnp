@@ -29,16 +29,18 @@ for:
     matrix:
       only:
         - image: Visual Studio 2015
-      - PYTHON: C:\Python27
-      - PYTHON: C:\Python27-x64
-      - PYTHON: C:\Python35
-      - PYTHON: C:\Python35-x64
-      - PYTHON: C:\Python36
-      - PYTHON: C:\Python36-x64
-      - PYTHON: C:\Python37
-      - PYTHON: C:\Python37-x64
-      - PYTHON: C:\Python38
-      - PYTHON: C:\Python38-x64
+      environment:
+        global:
+          - PYTHON: C:\Python27
+          - PYTHON: C:\Python27-x64
+          - PYTHON: C:\Python35
+          - PYTHON: C:\Python35-x64
+          - PYTHON: C:\Python36
+          - PYTHON: C:\Python36-x64
+          - PYTHON: C:\Python37
+          - PYTHON: C:\Python37-x64
+          - PYTHON: C:\Python38
+          - PYTHON: C:\Python38-x64
 
     install:
       # Prepend newly installed Python to the PATH of this build (this cannot be
