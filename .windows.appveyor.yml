@@ -14,15 +14,25 @@ environment:
   matrix:
 # TODO: Need to fix builds for Python 2.7 & 3.5
     - PYTHON: C:\Python27
+      TWINE_VERSION: 1.15.0
     - PYTHON: C:\Python27-x64
+      TWINE_VERSION: 1.15.0
     - PYTHON: C:\Python35
+      TWINE_VERSION: 1.15.0
     - PYTHON: C:\Python35-x64
-#    - PYTHON: C:\Python36
-#    - PYTHON: C:\Python36-x64
-#    - PYTHON: C:\Python37
-#    - PYTHON: C:\Python37-x64
-#    - PYTHON: C:\Python38
-#    - PYTHON: C:\Python38-x64
+      TWINE_VERSION: 1.15.0
+    - PYTHON: C:\Python36
+      TWINE_VERSION: 3.1.1
+    - PYTHON: C:\Python36-x64
+      TWINE_VERSION: 3.1.1
+    - PYTHON: C:\Python37
+      TWINE_VERSION: 3.1.1
+    - PYTHON: C:\Python37-x64
+      TWINE_VERSION: 3.1.1
+    - PYTHON: C:\Python38
+      TWINE_VERSION: 3.1.1
+    - PYTHON: C:\Python38-x64
+      TWINE_VERSION: 3.1.1
 
 
 
@@ -83,7 +93,7 @@ test_script:
 on_success:
   # Upload the generated wheel package to pypi
   - ps: |
-      pip install twine==1.15.0
+      pip install twine==%TWINE_VERSION%
       $TARGET_SRC = Resolve-Path ".\dist\pysolnp-*.tar.gz"
       python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_SRC.PATH
       $TARGET_WHEEL = Resolve-Path ".\dist\pysolnp-*.whl"
