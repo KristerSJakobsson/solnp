@@ -4,11 +4,12 @@ import sys
 import platform
 import subprocess
 
+from datetime import datetime
 from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
 from distutils.version import LooseVersion
 
-__version__ = '0.0.1'
+__version__ = datetime.today().strftime('%Y.%m.%d')
 
 
 # Get requirements from requirements-dev.txt file
@@ -17,7 +18,7 @@ with open(os.path.join(here, 'requirements-dev.txt')) as f:
     requirements_dev = f.read().replace('==', '>=').splitlines()
 
 # Load readme file for Python package
-with open(os.path.join(here, "python_solnp", 'README.md'), encoding='utf-8') as file:
+with open(os.path.join(here, "python_solnp", 'README.md')) as file:
     long_description = file.read()
 
 

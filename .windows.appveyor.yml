@@ -93,7 +93,7 @@ test_script:
 on_success:
   # Upload the generated wheel package to pypi
   - ps: |
-      pip install twine==%TWINE_VERSION%
+      pip install twine==$env:TWINE_VERSION
       $TARGET_SRC = Resolve-Path ".\dist\pysolnp-*.tar.gz"
       python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_SRC.PATH
       $TARGET_WHEEL = Resolve-Path ".\dist\pysolnp-*.whl"
