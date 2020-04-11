@@ -38,7 +38,7 @@ for:
 install:
   - git clone --recursive https://github.com/KristerSJakobsson/solnp.git
   - sh: |
-      cd ${PYTHON}
+      cd /Users/appveyor
       ls
       "${PYTHON}/Scripts/python" -m pip install --upgrade pip
 
