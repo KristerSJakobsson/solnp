@@ -38,8 +38,6 @@ for:
 install:
   - git clone --recursive https://github.com/KristerSJakobsson/solnp.git
   - sh: |
-      cd ${PYTHON}
-      ls
       "${PYTHON}/python" -m pip install --upgrade pip
 
 build_script:
