@@ -58,6 +58,7 @@ test_script:
       pattern="*.whl"
       files=( $pattern )
       "${PYTHON}/pip" install --no-index "${files[0]}"
+      cd ..
       "${PYTHON}/python" -m pytest "./solnp/python_solnp/test/test.py"
 
 #on_success:
