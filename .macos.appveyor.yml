@@ -38,14 +38,14 @@ for:
 install:
   - git clone --recursive https://github.com/KristerSJakobsson/solnp.git
   - sh: |
-      ls -d -- ${PYTHON}
+      cd ${PYTHON}
+      ls
       "${PYTHON}/Scripts/python" -m pip install --upgrade pip
 
 build_script:
   # Build and install the wheel
   - sh: |
       cd solnp
-      ls -d -- ${PYTHON}
       "${PYTHON}/Scripts/pip" install wheel==0.34.2
       "${PYTHON}/Scripts/pip" install -r "./requirements-dev.txt"
       "${PYTHON}/Scripts/python" setup.py sdist bdist_wheel
