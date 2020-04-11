@@ -1,2 +1,70 @@
 # vim ft=yaml
 # TODO: Add build scripts for Mac OS X
+
+image:
+  - macos
+  - macos-mojave
+
+environment:
+  global:
+    PYPI_USERNAME: __token__
+    PYPI_SERVER: https://test.pypi.org/legacy/
+    PYPI_PASSWORD:
+      secure:
+        OXK5a0Kcyc7jYfkbpqCSUUGu6dBXpIFV3so6rCCxdoRn/xaJjxdu2Ox4rLw2FzA1YS05o72cojfF/wJIuD9Vfm+VOUJAvxRFcYyI7iZP3nwBBRA2JW2yUX/WpbqCDJqk+8lHlMhgmxmFYGzufpcDemTjc5BrCKs6OvHWWhIde7uW1FXa2szD9wf9+4JXCCdRn238Wg0t44CpRPbcAdg/DAeH6IHuRO6RUZtd+RUiif7BDhcRpJmuHGb2zaZ3ZKWybTHJxW4UmRxlqhpADb5ctw==
+
+  matrix:
+    - PYTHON: ~/venv2.7.17
+    - PYTHON: ~/venv3.5.9
+    - PYTHON: ~/venv3.6.10
+    - PYTHON: ~/venv3.7.5
+    - PYTHON: ~/venv3.8.2
+    - PYTHON: ~/venv3.9.0
+
+# For the release branch we deploy to real pypi
+for:
+  -
+    branches:
+      only:
+        - release
+
+    environment:
+      global:
+        PYPI_USERNAME: __token__
+        PYPI_SERVER: https://upload.pypi.org/legacy/
+        PYPI_PASSWORD:
+          secure: BlFonvNFzspp5kZ6nsJTjSJfWqviD0DDAiCgMtKVbyspHPCu+PR/fS++fUCt6hM3X03oTdvzX0wYGbZiZwPr09SO4lblS0Qyilm8rnHpICzuCDn+KBBNrIFYdvU4WYndcQ9fNniPw1QiWxmMJsbxsSc7io3thIt+fG8L9OJxFQmjzDj2Az0oXOUswSVjKmq8aoOD2agdcS+JI6uyEq9Ve5kQYdY4Bgn3FNWSsL8QxnHW8MQxuNrpaWvhV22BGqGk0NQVNlnlEyCuiPVatPKsUA==
+
+install:
+  - git clone --recursive https://github.com/KristerSJakobsson/solnp.git
+  - sh: |
+      "${PYTHON}/python" -m pip install --upgrade pip
+
+build_script:
+  # Build and install the wheel
+  - sh: |
+      cd solnp
+      "${PYTHON}/pip" install wheel==0.34.2
+      "${PYTHON}/pip" install -r "./requirements-dev.txt"
+      "${PYTHON}/python" setup.py sdist bdist_wheel
+
+artifacts:
+  - path: solnp/dist/*.*
+
+test_script:
+  # Test the compiled build
+  - ps: |
+      for WHEEL in solnp/dist/*.whl; do
+        "${PYTHON}/pip" install --no-index ${WHEEL}
+        "${PYTHON}/python" -m pytest "./solnp/python_solnp/test/test.py"
+      done
+
+#on_success:
+#  # Upload the generated wheel package to pypi, note that Python 3.5 has broken twine so we use Python 3.8
+#  - ps: |
+#      C:\Python38\Scripts\pip3.exe install twine==3.1.1
+#      $TARGET_SRC = Resolve-Path ".\dist\pysolnp-*.tar.gz"
+#      C:\Python38\python.exe python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_SRC.PATH
+#      $TARGET_WHEEL = Resolve-Path ".\dist\pysolnp-*.whl"
+#      C:\Python38\python.exe -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_WHEEL.PATH
+

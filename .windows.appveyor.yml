@@ -1,7 +1,7 @@
 # vim ft=yaml
 
 image:
-  - Visual Studio 2015
+  - Visual Studio 2019
 
 environment:
   global:
@@ -32,8 +32,6 @@ environment:
       WHEEL_VERSION: 0.34.2
     - PYTHON: C:\Python38-x64
       WHEEL_VERSION: 0.34.2
-
-
 
 # For the release branch we deploy to real pypi
 for:
