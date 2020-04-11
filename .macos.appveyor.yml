@@ -38,15 +38,17 @@ for:
 install:
   - git clone --recursive https://github.com/KristerSJakobsson/solnp.git
   - sh: |
-      "${PYTHON}/python" -m pip install --upgrade pip
+      ls -d -- ${PYTHON}
+      "${PYTHON}/Scripts/python" -m pip install --upgrade pip
 
 build_script:
   # Build and install the wheel
   - sh: |
       cd solnp
-      "${PYTHON}/pip" install wheel==0.34.2
-      "${PYTHON}/pip" install -r "./requirements-dev.txt"
-      "${PYTHON}/python" setup.py sdist bdist_wheel
+      ls -d -- ${PYTHON}
+      "${PYTHON}/Scripts/pip" install wheel==0.34.2
+      "${PYTHON}/Scripts/pip" install -r "./requirements-dev.txt"
+      "${PYTHON}/Scripts/python" setup.py sdist bdist_wheel
 
 artifacts:
   - path: solnp/dist/*.*
@@ -55,8 +57,8 @@ test_script:
   # Test the compiled build
   - ps: |
       for WHEEL in solnp/dist/*.whl; do
-        "${PYTHON}/pip" install --no-index ${WHEEL}
-        "${PYTHON}/python" -m pytest "./solnp/python_solnp/test/test.py"
+        "${PYTHON}/Scripts/pip" install --no-index ${WHEEL}
+        "${PYTHON}/Scripts/python" -m pytest "./solnp/python_solnp/test/test.py"
       done
 
 #on_success:
