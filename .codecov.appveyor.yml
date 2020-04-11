@@ -1,0 +1,4 @@
+# vim ft=yaml
+# TODO: Use codecov with AppVeyor for Code Coverage through CI
+# https://codingnest.com/how-to-get-code-coverage-from-ci/
+# https://github.com/RWTH-HPC/CMake-codecov

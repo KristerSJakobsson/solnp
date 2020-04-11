@@ -4,3 +4,6 @@
 [submodule "library/dlib"]
 	path = library/dlib
 	url = https://github.com/davisking/dlib.git
+[submodule "library/cmake_codecov"]
+	path = library/cmake_codecov
+	url = git://github.com/RWTH-HPC/CMake-codecov.git

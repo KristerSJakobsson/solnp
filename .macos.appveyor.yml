@@ -1,5 +1,4 @@
 # vim ft=yaml
-# TODO: Add build scripts for Mac OS X
 
 image:
   - macos
