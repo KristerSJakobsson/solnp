@@ -54,10 +54,11 @@ artifacts:
 test_script:
   # Test the compiled build
   - ps: |
-      for WHEEL in solnp/dist/*.whl; do
-        "${PYTHON}/pip" install --no-index ${WHEEL}
-        "${PYTHON}/python" -m pytest "./solnp/python_solnp/test/test.py"
-      done
+      cd dist
+      pattern="*.whl"
+      files=( $pattern )
+      "${PYTHON}/pip" install --no-index "${files[0]}"
+      "${PYTHON}/python" -m pytest "./solnp/python_solnp/test/test.py"
 
 #on_success:
 #  # Upload the generated wheel package to pypi, note that Python 3.5 has broken twine so we use Python 3.8
