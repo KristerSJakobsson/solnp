@@ -1,3 +1,4 @@
+# Note: 2.8.12 is needed for compatability with anylinux docker
 cmake_minimum_required(VERSION 2.8.12)
 set(CMAKE_BUILD_TYPE Release)
 project(pysolnp)
