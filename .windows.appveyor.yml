@@ -16,10 +16,10 @@ environment:
       WHEEL_VERSION: 0.34.2
     - PYTHON: C:\Python27-x64
       WHEEL_VERSION: 0.34.2
-    - PYTHON: C:\Python35
-      WHEEL_VERSION: 0.31.0
-    - PYTHON: C:\Python35-x64
-      WHEEL_VERSION: 0.31.0
+#    - PYTHON: C:\Python35
+#      WHEEL_VERSION: 0.31.0
+#    - PYTHON: C:\Python35-x64
+#      WHEEL_VERSION: 0.31.0
     - PYTHON: C:\Python36
       WHEEL_VERSION: 0.34.2
     - PYTHON: C:\Python36-x64
@@ -32,6 +32,8 @@ environment:
       WHEEL_VERSION: 0.34.2
     - PYTHON: C:\Python38-x64
       WHEEL_VERSION: 0.34.2
+
+
 
 # For the release branch we deploy to real pypi
 for:
@@ -72,11 +74,11 @@ install:
 
 build_script:
   # Build and install the wheel
-  - ps: |
-      cd solnp
-      pip install wheel==$env:WHEEL_VERSION
-      pip install -r ".\requirements-dev.txt"
-      python setup.py sdist bdist_wheel
+  - cd solnp
+  - pip install wheel
+  - pip install wheel==0.34.2
+  - pip install -r ".\requirements-dev.txt"
+  - python setup.py sdist bdist_wheel
 
 artifacts:
   - path: solnp\dist\*.*
