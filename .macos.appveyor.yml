@@ -54,19 +54,20 @@ artifacts:
 test_script:
   # Test the compiled build
   - sh: |
-      cd dist
-      pattern="*.whl"
+      ls
+      pattern="./dist/*.whl"
       files=( $pattern )
       "${PYTHON}/pip" install --no-index "${files[0]}"
-      cd ..
-      "${PYTHON}/python" -m pytest "./solnp/python_solnp/test/test.py"
+      "${PYTHON}/python" -m pytest "./python_solnp/test/test.py"
 
-#on_success:
-#  # Upload the generated wheel package to pypi, note that Python 3.5 has broken twine so we use Python 3.8
-#  - sh: |
-#      C:\Python38\Scripts\pip3.exe install twine==3.1.1
-#      $TARGET_SRC = Resolve-Path ".\dist\pysolnp-*.tar.gz"
-#      C:\Python38\python.exe python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_SRC.PATH
-#      $TARGET_WHEEL = Resolve-Path ".\dist\pysolnp-*.whl"
-#      C:\Python38\python.exe -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_WHEEL.PATH
+on_success:
+  # Upload the generated wheel package to pypi
+  - sh: |
+      /Users/appveyor/venv3.8.2/bin/pip install twine==3.1.1
+      pattern="./dist/*.tar.gz"
+      files=( $pattern )
+      /Users/appveyor/venv3.8.2/bin/python -m twine upload --skip-existing --repository-url ${PYPI_SERVER} --username ${PYPI_USERNAME} --password ${PYPI_PASSWORD} "${files[0]}"
+      pattern="./dist/*.whl"
+      files=( $pattern )
+      /Users/appveyor/venv3.8.2/bin/python -m twine upload --skip-existing --repository-url ${PYPI_SERVER} --username ${PYPI_USERNAME} --password ${PYPI_PASSWORD} "${files[0]}"
 
