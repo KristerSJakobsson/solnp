@@ -53,7 +53,7 @@ artifacts:
 
 test_script:
   # Test the compiled build
-  - ps: |
+  - sh: |
       cd dist
       pattern="*.whl"
       files=( $pattern )
@@ -62,7 +62,7 @@ test_script:
 
 #on_success:
 #  # Upload the generated wheel package to pypi, note that Python 3.5 has broken twine so we use Python 3.8
-#  - ps: |
+#  - sh: |
 #      C:\Python38\Scripts\pip3.exe install twine==3.1.1
 #      $TARGET_SRC = Resolve-Path ".\dist\pysolnp-*.tar.gz"
 #      C:\Python38\python.exe python -m twine upload --skip-existing --repository-url $env:PYPI_SERVER --username $env:PYPI_USERNAME --password $env:PYPI_PASSWORD $TARGET_SRC.PATH
