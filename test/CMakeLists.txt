@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.14)
 
 set(CMAKE_CXX_STANDARD 11)
 
-
 project(solnp_test)
 include(FetchContent)
 
@@ -29,3 +28,14 @@ include(Catch)
 catch_discover_tests(cpp_solnp_test)
 catch_discover_tests(solnp_test)
 
+
+if (ENABLE_COVERAGE)
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/../library/cmake_codecov")
+    list(APPEND LCOV_REMOTE_PATTERNS "${CMAKE_CURRENT_LIST_DIR}/../library/*")
+    list(APPEND LCOV_REMOTE_PATTERNS "${CMAKE_CURRENT_LIST_DIR}/../python_solnp/*")
+
+    find_package(codecov)
+    add_coverage(pysolnp)
+    list(APPEND LCOV_REMOVE_PATTERNS "/usr/")
+    coverage_evaluate()
+endif()
