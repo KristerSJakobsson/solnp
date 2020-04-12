@@ -46,8 +46,8 @@ This project uses CI to automatically build wheels for a wide range of distribut
 Notably currently only builds for CPython are available on PyPi, but one can also manually installing the package from source as explained above.
 
 Appveyor CI:
-  - Windows with Visual Studio - PARTIALLY IMPLEMENTED
-  - Mac OS with CMake - NOT IMPLEMENTED
+  - Windows with Visual Studio
+  - Mac OS with Clang
   
 Travis CI:
   - `manylinux2014` Docker with GCC

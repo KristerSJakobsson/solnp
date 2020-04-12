@@ -21,8 +21,11 @@ For other systems, or to have BLAS and LAPACK support, please build the wheels m
 Note: For best results, building it from source is recommended, as BLAS and LAPACK will make a difference.
 
 ## Installation
-Simply install the package:
+Simply install the package through PyPi with:
 `pip install pysolnp`
+
+When compiling from source code you will need CMake etc.<br>
+See the [README for the C++ code](https://github.com/KristerSJakobsson/solnp/blob/master/README.md) for details.
 
 ## Usage
 Below is the Box example, for the complete example see [/python_examples/example_box.py](/python_examples/example_box.py).
@@ -66,22 +69,22 @@ Output:
 ## Parameters
 The basic signature is:
 ```python
-solve(obj_func: function, par_start_value: list, par_lower_limit: object = None, par_upper_limit: object = None, eq_func: object = None, eq_values: object = None, ineq_func: object = None, ineq_lower_bounds: object = None, ineq_upper_bounds: object = None, rho: float = 1.0, max_major_iter: int = 10, max_minor_iter: int = 10, delta: float = 1e-05, tolerance: float = 0.0001, debug: bool = False) -> pysolnp.Result
+solve(obj_func: function, par_start_value: List, par_lower_limit: object = None, par_upper_limit: object = None, eq_func: object = None, eq_values: object = None, ineq_func: object = None, ineq_lower_bounds: object = None, ineq_upper_bounds: object = None, rho: float = 1.0, max_major_iter: int = 10, max_minor_iter: int = 10, delta: float = 1e-05, tolerance: float = 0.0001, debug: bool = False) -> pysolnp.Result
 ```
 
 Inputs:
 
 | Parameter          | Type                      | Default value*   | Description                                                                       |
 | -------------------|:--------------------------|:-----------------|-----------------------------------------------------------------------------------|
-| obj_func           | Callable\[list, float\]   | -                | The objective function f(x) to minimize.                                          |
-| par_start_value    | list                      | -                | The starting parameter x_0.                                                       |
-| par_lower_limit    | list                      | None             | The parameter lower limit x_l.                                                    |
-| par_upper_limit    | list                      | None             | The parameter upper limit x_u.                                                    |
-| eq_func            | Callable\[list, float\]   | None             | The equality constraint function h(x).                                            |
-| eq_values          | list                      | None             | The equality constraint values e_x.                                               |
-| ineq_func          | Callable\[list, float\]   | None             | The inequality constraint function g(x).                                          |
-| ineq_lower_bounds  | list                      | None             | The inequality constraint lower limit g_l.                                        |
-| ineq_upper_bounds  | list                      | None             | The inequality constraint upper limit g_l.                                        |
+| obj_func           | Callable\[List, float\]   | -                | The objective function f(x) to minimize.                                          |
+| par_start_value    | List                      | -                | The starting parameter x_0.                                                       |
+| par_lower_limit    | List                      | None             | The parameter lower limit x_l.                                                    |
+| par_upper_limit    | List                      | None             | The parameter upper limit x_u.                                                    |
+| eq_func            | Callable\[List, float\]   | None             | The equality constraint function h(x).                                            |
+| eq_values          | List                      | None             | The equality constraint values e_x.                                               |
+| ineq_func          | Callable\[List, float\]   | None             | The inequality constraint function g(x).                                          |
+| ineq_lower_bounds  | List                      | None             | The inequality constraint lower limit g_l.                                        |
+| ineq_upper_bounds  | List                      | None             | The inequality constraint upper limit g_l.                                        |
 | rho                | float                     | 1.0              | Penalty weighting scalar for infeasability in the augmented objective function.** |
 | max_major_iter     | int                       | 400              | Maximum number of outer iterations.                                               |
 | max_minor_iter     | int                       | 800              | Maximum number of inner iterations.                                               |
@@ -97,8 +100,8 @@ The function returns the `pysolnp.Result` with the below properties.
 
 | Property           | Type           | Description                                           |
 | -------------------|:---------------|-------------------------------------------------------|
-| solve_value        | double         | The value of the objective function at optimum f(x*). |
-| optimum            | list\[double\] | A list of parameters for the optimum x*.              |
+| solve_value        | float          | The value of the objective function at optimum f(x*). |
+| optimum            | List\[float\]  | A list of parameters for the optimum x*.              |
 | callbacks          | int            | Number of callbacks done to find this optimum.        |
 
 ## Authors
