@@ -11,7 +11,10 @@ jobs:
         - docker
       env:
         - DOCKER_IMAGE=quay.io/pypa/manylinux2014_x86_64
-        - TYPE=docker
+      install:
+        - docker pull $DOCKER_IMAGE
+      script:
+        - bash travis/run-docker.sh
     - name: manylinux2014_i686
       language: ruby
       os: linux
@@ -22,13 +25,15 @@ jobs:
         - DOCKER_IMAGE=quay.io/pypa/manylinux2014_i686
         - PRE_CMD=linux32
         - TYPE=docker
+      install:
+        - docker pull $DOCKER_IMAGE
+      script:
+        - bash travis/run-docker.sh
     - name: codecov
       os: linux
       dist: xenial
       compiler: gcc
       language: c
-      script:
-        - docker
       env:
         - TYPE=codecov
       addons:
@@ -37,17 +42,5 @@ jobs:
             - cmake
             - lcov
             - gfortran
-
-install:
-  - if [ $TYPE == "docker"]; then
-    docker pull $DOCKER_IMAGE
-    fi
-
-script:
-  - if [ $TYPE == "docker"]; then
-    docker run --rm -v `pwd`:/io -e TWINE_USERNAME=$PYPI_USERNAME -e TWINE_PASSWORD=$PYPI_PASSWORD -e TWINE_SERVER=$PYPI_SERVER $DOCKER_IMAGE $PRE_CMD /io/travis/build-wheels.sh
-    ls wheelhouse/
-    fi
-  - if [ $TYPE == "codecov"]; then
-    echo "Hello World1337"
-    fi
+      script:
+        - bash travis/run-codecov.sh
