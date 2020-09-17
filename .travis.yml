@@ -14,7 +14,7 @@ jobs:
       install:
         - docker pull $DOCKER_IMAGE
       script:
-        - bash travis/run-docker.sh
+        - bash run-docker.sh
     - name: manylinux2014_i686
       language: ruby
       os: linux
@@ -28,7 +28,7 @@ jobs:
       install:
         - docker pull $DOCKER_IMAGE
       script:
-        - bash travis/run-docker.sh
+        - bash run-docker.sh
     - name: codecov
       os: linux
       dist: xenial
