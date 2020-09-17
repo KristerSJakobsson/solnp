@@ -14,7 +14,8 @@ jobs:
       install:
         - docker pull $DOCKER_IMAGE
       script:
-        - bash run-docker.sh
+        - docker run --rm -v $(pwd):/io -e TWINE_USERNAME="$PYPI_USERNAME" -e TWINE_PASSWORD="$PYPI_PASSWORD" -e TWINE_SERVER="$PYPI_SERVER" "$DOCKER_IMAGE" "$PRE_CMD" /io/travis/build-wheels.sh
+        - ls wheelhouse/
     - name: manylinux2014_i686
       language: ruby
       os: linux
@@ -28,7 +29,8 @@ jobs:
       install:
         - docker pull $DOCKER_IMAGE
       script:
-        - bash run-docker.sh
+        - docker run --rm -v $(pwd):/io -e TWINE_USERNAME="$PYPI_USERNAME" -e TWINE_PASSWORD="$PYPI_PASSWORD" -e TWINE_SERVER="$PYPI_SERVER" "$DOCKER_IMAGE" "$PRE_CMD" /io/travis/build-wheels.sh
+        - ls wheelhouse/
     - name: codecov
       os: linux
       dist: xenial
