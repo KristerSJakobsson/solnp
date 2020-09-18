@@ -45,4 +45,4 @@ jobs:
             - lcov
             - gfortran
       script:
-        - bash travis/run-codecov.sh
+        - bash test/run-codecov.sh
