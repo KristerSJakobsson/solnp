@@ -41,5 +41,6 @@ jobs:
             - cmake
             - lcov
             - gfortran
+            - catch2
       script:
         - bash test/run-codecov.sh
