@@ -1,5 +1,5 @@
 project(cpp_solnp_test)
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.12.4)
 
 set(CMAKE_CXX_STANDARD 11)
 
