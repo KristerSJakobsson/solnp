@@ -1,4 +1,4 @@
 coverage:
   ignore:
-    - "**/library"
+    - "library/**/*"
     - "*.py"
