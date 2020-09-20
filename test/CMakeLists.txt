@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.12.4)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_library(${CMAKE_CURRENT_SOURCE_DIR}/../library/dlib)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../library/dlib, ${CMAKE_CURRENT_SOURCE_DIR}/../library/dlib)
 
 find_package(Catch2 REQUIRED)
 
