@@ -25,7 +25,6 @@ jobs:
       env:
         - DOCKER_IMAGE=quay.io/pypa/manylinux2014_i686
         - PRE_CMD=linux32
-        - TYPE=docker
       install:
         - docker pull $DOCKER_IMAGE
       script:
@@ -36,11 +35,12 @@ jobs:
       dist: xenial
       compiler: gcc
       language: c
-      env:
-        - TYPE=codecov
       addons:
         apt:
+          sources:
+            - george-edison55-precise-backports
           packages:
+            - cmake-data
             - cmake
             - lcov
             - gfortran
