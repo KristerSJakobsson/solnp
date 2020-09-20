@@ -5,8 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 project(solnp_test)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../library/dlib)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../library/catch)
+add_library(${CMAKE_CURRENT_SOURCE_DIR}/../library/dlib)
 
 find_package(Catch2 REQUIRED)
 
@@ -14,8 +13,6 @@ add_executable(cpp_solnp_test test_main.cpp)
 
 target_link_libraries(cpp_solnp_test dlib::dlib)
 target_link_libraries(cpp_solnp_test Catch2::Catch2)
-
-set (USE_PRECOMPILED_DLIB true)
 
 include(CTest)
 include(Catch)
@@ -28,7 +25,7 @@ if (ENABLE_COVERAGE)
     list(APPEND LCOV_REMOTE_PATTERNS "${CMAKE_CURRENT_LIST_DIR}/../python_solnp/*")
 
     find_package(codecov)
-    add_coverage(pysolnp)
+    add_coverage(cpp_solnp_test)
     list(APPEND LCOV_REMOVE_PATTERNS "/usr/")
     coverage_evaluate()
 endif()
