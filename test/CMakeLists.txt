@@ -4,8 +4,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../library/dlib, ${CMAKE_CURRENT_SOURCE_DIR}/../library/dlib)
-
-find_package(Catch2 REQUIRED)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../library/Catch2, ${CMAKE_CURRENT_SOURCE_DIR}/../library/Catch2)
 
 add_executable(cpp_solnp_test test_main.cpp)
 

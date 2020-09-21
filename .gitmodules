@@ -7,3 +7,6 @@
 [submodule "library/cmake_codecov"]
 	path = library/cmake_codecov
 	url = git://github.com/RWTH-HPC/CMake-codecov.git
+[submodule "library/Catch2"]
+	path = library/Catch2
+	url = https://github.com/catchorg/Catch2.git
