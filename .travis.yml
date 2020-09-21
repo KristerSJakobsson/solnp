@@ -41,6 +41,7 @@ jobs:
             - cmake
             - lcov
             - gfortran
-            - catch
+      before_install:
+        - bash travis/install-catch.sh
       script:
         - bash test/run-codecov.sh
