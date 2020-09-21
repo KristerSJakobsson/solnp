@@ -3,13 +3,15 @@ cmake_minimum_required(VERSION 3.12.4)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../library/dlib, ${CMAKE_CURRENT_SOURCE_DIR}/../library/dlib)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../library/Catch2, ${CMAKE_CURRENT_SOURCE_DIR}/../library/Catch2)
+set(CATCH_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/library/Catch2/single_include)
+add_library(Catch INTERFACE)
+target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib, ${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
 
 add_executable(cpp_solnp_test test_main.cpp)
 
 target_link_libraries(cpp_solnp_test dlib::dlib)
-target_link_libraries(cpp_solnp_test Catch2::Catch2)
 
 include(CTest)
 include(Catch)
