@@ -53,7 +53,8 @@ class CMakeBuild(build_ext):
             self.get_ext_fullpath(ext.name)))
         cmake_args = [
             '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir,
-            '-DPYTHON_EXECUTABLE=' + sys.executable
+            '-DPYTHON_EXECUTABLE=' + sys.executable,
+            '-DBUILD_PYSOLNP="TRUE"'
         ]
 
         cfg = 'Debug' if self.debug else 'Release'
@@ -98,7 +99,7 @@ setup(name='pysolnp',
       long_description_content_type="text/markdown",
       url='https://github.com/KristerSJakobsson/cpp-solnp',
       license='Boost Software License',
-      ext_modules=[CMakeExtension('pysolnp')],
+      ext_modules=[CMakeExtension('solnp')],
       cmdclass=dict(build_ext=CMakeBuild),
       zip_safe=False,
       packages=find_packages(),
