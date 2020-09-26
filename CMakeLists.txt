@@ -1,10 +1,11 @@
 # Note: This script builds pysolnp, for building the C++ code, see test/CMakeLists
 # Note2: Version 2.8.12 is needed for compatability with anylinux docker
 cmake_minimum_required(VERSION 2.8.12)
-set(CMAKE_BUILD_TYPE Release)
-project(pysolnp)
+project(solnp)
 
 IF(${BUILD_PYSOLNP})
+    set(CMAKE_BUILD_TYPE Release)
+    message("Building pysolnp")
 
     file(GLOB_RECURSE PYSOLNP_SOURCES "python_solnp/*.cpp")
 
@@ -19,6 +20,6 @@ IF(${BUILD_PYSOLNP})
     pybind11_add_module(pysolnp "${PYSOLNP_SOURCES}")
     target_link_libraries(pysolnp PRIVATE dlib::dlib)
 ELSE()
+    message("Building solnp")
     set(CMAKE_BUILD_TYPE Debug)
-    message("Hello world")
 ENDIF()
