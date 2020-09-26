@@ -1,12 +1,11 @@
+cmake_minimum_required(VERSION 2.8.12)
+
 project(cpp_solnp_test)
-cmake_minimum_required(VERSION 3.12.4)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_library(Catch INTERFACE)
 target_include_directories(Catch INTERFACE catch.hpp)
-
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib, ${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
 
 add_executable(cpp_solnp_test test_main.cpp)
 
