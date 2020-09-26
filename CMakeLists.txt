@@ -3,6 +3,9 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(solnp)
 
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+
 IF(${BUILD_PYSOLNP})
     set(CMAKE_BUILD_TYPE Release)
     message("Building pysolnp")
@@ -11,8 +14,6 @@ IF(${BUILD_PYSOLNP})
 
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/python_solnp)
 
     set(PYBIND11_CPP_STANDARD -std=c++1y)
@@ -20,6 +21,6 @@ IF(${BUILD_PYSOLNP})
     pybind11_add_module(pysolnp "${PYSOLNP_SOURCES}")
     target_link_libraries(pysolnp PRIVATE dlib::dlib)
 ELSE()
-    message("Building solnp")
     set(CMAKE_BUILD_TYPE Debug)
+    message("Building solnp")
 ENDIF()
