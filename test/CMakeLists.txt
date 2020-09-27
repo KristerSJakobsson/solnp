@@ -4,7 +4,6 @@ project(cpp_solnp_test)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_library(Catch INTERFACE)
 target_include_directories(Catch INTERFACE catch.hpp)
 
 add_executable(cpp_solnp_test test_main.cpp)
