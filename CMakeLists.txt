@@ -36,6 +36,6 @@ ELSE()
 
     include(CTest)
     include(Catch)
-    catch_discover_tests(cpp_solnp_test)
+    catch_discover_tests(solnp)
 
 ENDIF()
