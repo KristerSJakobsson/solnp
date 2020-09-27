@@ -4,11 +4,14 @@ project(cpp_solnp_test)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+find_package(Catch2 REQUIRED)
+
 target_include_directories(Catch INTERFACE catch.hpp)
 
 add_executable(cpp_solnp_test test_main.cpp)
 
 target_link_libraries(cpp_solnp_test dlib::dlib)
+target_link_libraries(cpp_solnp_test Catch2::Catch2)
 
 include(CTest)
 include(Catch)
