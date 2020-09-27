@@ -23,7 +23,9 @@ ELSE()
     set(CMAKE_BUILD_TYPE Debug)
     message("Building solnp")
 
+
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
+
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/Catch2)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)

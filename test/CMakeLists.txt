@@ -4,10 +4,10 @@ project(cpp_solnp_test)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_executable(cpp_solnp_test test_main.cpp)
-
 target_link_libraries(cpp_solnp_test dlib::dlib)
 target_link_libraries(cpp_solnp_test Catch2::Catch2)
+
+add_executable(cpp_solnp_test test_main.cpp)
 
 include(CTest)
 include(Catch)
