@@ -41,6 +41,7 @@ jobs:
             - cmake
             - lcov
             - gfortran
+            - catch
       script:
         - cmake .
         - make gcov
