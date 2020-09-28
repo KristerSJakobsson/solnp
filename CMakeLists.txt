@@ -28,14 +28,13 @@ ELSE()
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
-    add_executable(solnp ${CMAKE_CURRENT_SOURCE_DIR}/test/test_main.cpp)
+    add_executable(solnp_tests ${CMAKE_CURRENT_SOURCE_DIR}/test/test_main.cpp)
 
-    target_link_libraries(solnp dlib::dlib)
-    target_link_libraries(solnp Catch2::Catch2)
-
+    target_link_libraries(solnp_tests dlib::dlib)
+    target_link_libraries(solnp_tests Catch2::Catch2)
 
     include(CTest)
     include(Catch)
-    catch_discover_tests(solnp)
+    catch_discover_tests(solnp_tests)
 
 ENDIF()
