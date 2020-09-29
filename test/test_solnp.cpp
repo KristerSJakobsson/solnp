@@ -1,17 +1,16 @@
 
 #include <catch2/catch.hpp>
-
-#include "../src/stdafx.h"
-#include "../src/solnp.hpp"
+#include <solnp/stdafx.h>
+#include <solnp/solnp.hpp>"
 
 // Benchmark functions
-#include "../src/benchmark/alkyla.hpp"
-#include "../src/benchmark/box.hpp"
-#include "../src/benchmark/entropy.hpp"
-#include "../src/benchmark/powell.hpp"
-#include "../src/benchmark/rosen_suzuki.hpp"
-#include "../src/benchmark/wright_four.hpp"
-#include "../src/benchmark/wright_nine.hpp"
+#include "./benchmark/alkyla.hpp"
+#include "./benchmark/box.hpp"
+#include "./benchmark/entropy.hpp"
+#include "./benchmark/powell.hpp"
+#include "./benchmark/rosen_suzuki.hpp"
+#include "./benchmark/wright_four.hpp"
+#include "./benchmark/wright_nine.hpp"
 
 
 /*

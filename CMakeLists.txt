@@ -23,19 +23,15 @@ ELSE()
     set(CMAKE_BUILD_TYPE Debug)
     message("Building solnp")
 
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
+    find_package(dlib REQUIRED)
+
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/Catch2)
     find_package(Catch2 REQUIRED)
 
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/test)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
+    find_package(solnp REQUIRED)
 
-    add_executable(solnp_tests ${CMAKE_CURRENT_SOURCE_DIR}/test/test_main.cpp)
-
-    target_link_libraries(solnp_tests dlib::dlib)
-    target_link_libraries(solnp_tests Catch2::Catch2)
-
-    include(CTest)
-    include(Catch)
-    catch_discover_tests(solnp_tests)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
 ENDIF()
