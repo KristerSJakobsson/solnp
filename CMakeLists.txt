@@ -23,7 +23,7 @@ ELSE()
     set(CMAKE_BUILD_TYPE Debug)
     message("Building solnp")
 
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib dlib_build)
     find_package(dlib REQUIRED)
     message("Found dlib")
 
