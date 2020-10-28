@@ -1,8 +1,8 @@
 
-#include <catch2/catch.hpp>
+#include "catch.hpp"
 
-#include <solnp/stdafx.h>
-#include <solnp/utils.hpp>"
+#include "../src/stdafx.h"
+#include "../src/utils.hpp"
 
 
 TEST_CASE("Conditional number statically sized", "[utils]") {

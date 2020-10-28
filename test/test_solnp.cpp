@@ -1,7 +1,9 @@
 
-#include <catch2/catch.hpp>
-#include <solnp/stdafx.h>
-#include <solnp/solnp.hpp>"
+#include "catch.hpp"
+
+#include "../src/stdafx.h"
+#include "../src/solnp.hpp"
+
 
 // Benchmark functions
 #include "./benchmark/alkyla.hpp"
