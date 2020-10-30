@@ -43,12 +43,8 @@ jobs:
             - gfortran
       script:
         - cmake .
-        - make gcov
-        - make lcov
       after_success:
-        # Create lcov report
-        - lcov --capture --directory . --output-file coverage.info
-        - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter system-files
-        - lcov --list coverage.info # debug info
-        # Uploading report to CodeCov
-        - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
+        - cd build/
+        - cmake ..
+        - make unit_tests
+        - ./unit_tests -r junit > unit_test_result.xml
