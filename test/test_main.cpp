@@ -5,7 +5,7 @@
 
 #undef DLIB_USE_LAPACK
 
-#include <catch.hpp>
+#include "test_main.hpp"
 
 #include "../src/stdafx.h"
 #include "../src/utils.hpp"

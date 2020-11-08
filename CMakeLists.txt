@@ -31,8 +31,8 @@ ELSE()
     include(CodeCoverage)
     # test coverage build configuration for C++: debug build, no optimization, profiling enabled
     set(CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
-    # exclude /test and /ext directories from coverage analysis
-    set(LCOV_REMOVE_EXTRA "'test/*'" "'ext/*'")
+    # exclude /test and /library directories from coverage analysis
+    set(LCOV_REMOVE_EXTRA "'test/*'" "'library/*'")
     # cmake code coverage module target
     setup_target_for_coverage(unit_tests_coverage unit_tests coverage)
     # --- Coverage specific configuration --- end
@@ -47,7 +47,7 @@ ELSE()
     include_directories(src)
     include_directories(library/Catch2/include)
 
-    add_executable(unit_tests ${sources_test} ${sources_production})
+    add_executable(unit_tests ${sources_test} ${sources_production} test/test_main.hpp)
     target_link_libraries(unit_tests PRIVATE dlib::dlib)
 
 ENDIF()
