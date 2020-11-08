@@ -37,7 +37,8 @@ ELSE()
     setup_target_for_coverage(unit_tests_coverage unit_tests coverage)
     # --- Coverage specific configuration --- end
 
-    file(STRINGS test/test_main.cpp sources_test)
+    file(GLOB_RECURSE sources_test test/*.cpp)
+    file(GLOB_RECURSE sources_test test/*.hpp)
 
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
