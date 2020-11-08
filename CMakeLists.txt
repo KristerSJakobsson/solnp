@@ -37,6 +37,7 @@ ELSE()
     setup_target_for_coverage(unit_tests_coverage unit_tests coverage)
     # --- Coverage specific configuration --- end
 
+    file(GLOB_RECURSE sources_production src/*.cpp)
     file(GLOB_RECURSE sources_test test/*.cpp)
     file(GLOB_RECURSE sources_test test/*.hpp)
 
@@ -46,7 +47,7 @@ ELSE()
     include_directories(src)
     include_directories(library/Catch2/include)
 
-    add_executable(unit_tests ${sources_test})
+    add_executable(unit_tests ${sources_test} ${sources_production})
     target_link_libraries(unit_tests PRIVATE dlib::dlib)
 
 ENDIF()
