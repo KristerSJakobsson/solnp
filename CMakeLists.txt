@@ -49,10 +49,10 @@ ELSE()
     include_directories(library/Catch2/single_include)
 
     add_library(catch2_main STATIC test/test_main.cpp)
+    target_link_libraries(catch2_main PRIVATE dlib::dlib)
     add_executable(solnp_tests test/test_solnp.cpp)
     add_executable(utils_tests test/test_utils.cpp)
     target_link_libraries(solnp_tests catch2_main)
     target_link_libraries(utils_tests catch2_main)
-    target_link_libraries(utils_tests PRIVATE dlib::dlib)
 
 ENDIF()
