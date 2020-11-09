@@ -45,7 +45,7 @@ ELSE()
 
     add_subdirectory(library/dlib)
     include_directories(src)
-    include_directories(library/Catch2/include)
+    include_directories(library/Catch2/single_include)
 
     add_executable(unit_tests ${sources_test} ${sources_production} test/test_main.hpp)
     target_link_libraries(unit_tests PRIVATE dlib::dlib)
