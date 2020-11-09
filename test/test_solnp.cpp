@@ -1,4 +1,9 @@
 
+#include "catch.hpp"
+
+#include "../src/stdafx.h"
+#include "../src/solnp.hpp"
+
 // Benchmark functions
 #include "./benchmark/alkyla.hpp"
 #include "./benchmark/box.hpp"

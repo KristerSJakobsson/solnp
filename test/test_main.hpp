@@ -5,6 +5,6 @@
 #ifndef PYSOLNP_TEST_MAIN_H
 #define PYSOLNP_TEST_MAIN_H
 
-#include <catch.hpp>
+#include "catch.hpp"
 
 #endif //PYSOLNP_TEST_MAIN_H

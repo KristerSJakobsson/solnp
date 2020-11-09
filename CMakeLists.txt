@@ -34,7 +34,8 @@ ELSE()
     # exclude /test and /library directories from coverage analysis
     set(LCOV_REMOVE_EXTRA "'test/*'" "'library/*'")
     # cmake code coverage module target
-    setup_target_for_coverage(unit_tests_coverage unit_tests coverage)
+    setup_target_for_coverage(solnp_tests_coverage solnp_tests coverage)
+    setup_target_for_coverage(utils_tests_coverage utils_tests coverage)
     # --- Coverage specific configuration --- end
 
     file(GLOB_RECURSE sources_production src/*.cpp)
@@ -47,7 +48,11 @@ ELSE()
     include_directories(src)
     include_directories(library/Catch2/single_include)
 
-    add_executable(unit_tests ${sources_test} ${sources_production} test/test_main.hpp)
-    target_link_libraries(unit_tests PRIVATE dlib::dlib)
+    add_library(catch2_main STATIC test/test_main.cpp)
+    add_executable(solnp_tests test/test_solnp.cpp)
+    add_executable(utils_tests test/test_utils.cpp)
+    target_link_libraries(solnp_tests catch2_main)
+    target_link_libraries(utils_tests catch2_main)
+    target_link_libraries(utils_tests PRIVATE dlib::dlib)
 
 ENDIF()

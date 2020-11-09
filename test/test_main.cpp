@@ -7,9 +7,3 @@
 
 #include "test_main.hpp"
 
-#include "../src/stdafx.h"
-#include "../src/utils.hpp"
-#include "../src/solnp.hpp"
-
-#include "test_utils.cpp"
-#include "test_solnp.cpp"
