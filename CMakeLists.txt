@@ -3,6 +3,10 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(solnp)
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
 IF(${BUILD_PYSOLNP})
     set(CMAKE_BUILD_TYPE Release)
     message("Building pysolnp")
