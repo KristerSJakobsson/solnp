@@ -30,7 +30,7 @@ ELSE()
     set(CMAKE_BUILD_TYPE Coverage)
     # add the project specific cmake modules directory to the cmake module path
     # (w.r.t. CI/CD builds this is not the best approach)
-    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
     # include the cmake code coverage module
     include(CodeCoverage)
     # test coverage build configuration for C++: debug build, no optimization, profiling enabled
@@ -42,7 +42,6 @@ ELSE()
     setup_target_for_coverage(utils_tests_coverage utils_tests coverage)
     # --- Coverage specific configuration --- end
 
-    file(GLOB_RECURSE sources_production src/*.cpp)
     file(GLOB_RECURSE sources_test test/*.cpp)
     file(GLOB_RECURSE sources_test test/*.hpp)
 
@@ -52,10 +51,28 @@ ELSE()
     include_directories(src)
     include_directories(library/Catch2/single_include)
 
+    add_library(solnp_lib STATIC src/*)
     add_library(catch2_main STATIC test/test_main.cpp)
     add_executable(solnp_tests test/test_solnp.cpp)
     add_executable(utils_tests test/test_utils.cpp)
-    target_link_libraries(solnp_tests PUBLIC catch2_main PRIVATE dlib::dlib)
-    target_link_libraries(utils_tests PUBLIC catch2_main PRIVATE dlib::dlib)
+    target_link_libraries(
+            solnp_tests
+            PUBLIC catch2_main
+            PUBLIC solnp_lib
+            PRIVATE dlib::dlib)
+    target_link_libraries(
+            utils_tests
+            PUBLIC catch2_main
+            PUBLIC solnp_lib
+            PRIVATE dlib::dlib)
+
+    set_target_properties(
+            solnp_lib PROPERTIES
+            PUBLIC_HEADER "solnp.hpp")
+
+    INSTALL(TARGETS solnp_lib
+            LIBRARY DESTINATION solnp
+            PUBLIC_HEADER DESTINATION include
+            )
 
 ENDIF()

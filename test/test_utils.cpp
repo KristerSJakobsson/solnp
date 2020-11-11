@@ -1,8 +1,8 @@
 
 #include "catch.hpp"
 
-#include "../src/stdafx.h"
-#include "../src/utils.hpp"
+#include "stdafx.h"
+#include "utils.hpp"
 
 
 TEST_CASE("Conditional number statically sized", "[utils]") {
