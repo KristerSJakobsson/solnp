@@ -47,3 +47,6 @@ jobs:
         - cmake .
         - make solnp_tests
         - ./solnp_tests -r junit > solnp_tests_result.xml
+        - make utils_tests
+        - ./utils_tests -r junit > utils_tests_result.xml
+        - bash <(curl -s https://codecov.io/bash)
