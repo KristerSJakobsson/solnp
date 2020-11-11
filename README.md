@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg)](https://codecov.io/gh/KristerSJakobsson/solnp)
+
 # Python/C++ SOLNP
 
 This is a C++ implementation of the SOLNP algorithm by Yinyu Ye (1989) with Python Wrappers.
