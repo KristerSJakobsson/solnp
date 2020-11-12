@@ -66,13 +66,4 @@ ELSE()
             PUBLIC solnp_lib
             PRIVATE dlib::dlib)
 
-    set_target_properties(
-            solnp_lib PROPERTIES
-            PUBLIC_HEADER "solnp.hpp")
-
-    INSTALL(TARGETS solnp_lib
-            LIBRARY DESTINATION solnp
-            PUBLIC_HEADER DESTINATION include
-            )
-
 ENDIF()

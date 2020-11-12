@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg)](https://codecov.io/gh/KristerSJakobsson/solnp)
+
 # pysolnp - Nonlinear optimization with the augmented Lagrange method
 
 ## Description
