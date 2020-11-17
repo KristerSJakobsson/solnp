@@ -1,0 +1,54 @@
+%% Titlepage Package Information
+\ProvidesPackage{title}[2017/08/10 Thesis Titlepage]
+\RequirePackage{sphinx}
+
+
+%% Arguments
+% - Title
+% - Subtitle
+% - Author
+% - Institute
+% - Department
+% - Supervisor
+% - Date
+\newcommand*{\subtitle}[1]{\gdef\@subtitle{#1}}%
+\newcommand*{\@subtitle}{}
+\newcommand*{\institute}[1]{\gdef\@institute{#1}}%
+\newcommand*{\@institute}{}
+\newcommand*{\department}[1]{\gdef\@department{#1}}%
+\newcommand*{\@department}{}
+
+
+%% Maketitle
+\renewcommand*{\maketitle}{%
+\begin{titlepage}
+
+    %% Sphinx-Logo
+    %\centering{\resizebox{.35\textwidth}{!}{\sphinxlogo}}%
+
+    %% Metadata
+    \centering
+
+    \vspace{3cm}
+    {\scshape\Large\@subtitle\unskip\strut\par}
+
+    \rule{\linewidth}{0.5mm}
+    {\huge\bfseries\@title\unskip\strut\par}
+    \rule{\linewidth}{0.5mm}
+
+    \vspace{2cm}
+    {\Large\itshape\@author\unskip\strut\par}
+
+    \vspace{1cm}
+    {\scshape\LARGE\@institute\par}
+
+    \vspace{1cm}
+    \@department\unskip\strut\par
+
+    \vfill
+
+    {\large \@date\par}
+
+\end{titlepage}
+}
+\endinput

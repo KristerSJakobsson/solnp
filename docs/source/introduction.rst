@@ -1,0 +1,32 @@
+Introduction
+=================================
+
+pysolnp is an implementation of the SOLNP algorithm by Yinyu Ye (1989) with Python Wrappers.
+The algorithm was originally implemented in `Matlab`_, and have gained some fame through it's R implementation (`RSOLNP`_).
+pysolnp is written in C++ and has wrappers to integrate seamlessly with Python, providing high efficiency and ease of use.
+
+This algorithm solves the general nonlinear optimization problem on the form:
+
+.. math::
+   :nowrap:
+
+   \begin{gather*}
+    \min_{\mathbf{x}} f(\mathbf{x}) \\
+    \textrm{s.t.} \\
+    \mathbf{g}(\mathbf{x}) = \mathbf{e}_\mathbf{x} \\
+    \mathbf{l}_\mathbf{h} \le \mathbf{h}(\mathbf{x}) \le \mathbf{u}_\mathbf{h} \\
+    \mathbf{l}_\mathbf{x} \le \mathbf{x} \le \mathbf{u}_\mathbf{x} \\
+   \end{gather*}
+
+Here:
+
+- :math:`\mathbf{x}` is the optimization parameter.
+- :math:`f(\mathbf{x})`,  :math:`\mathbf{h}(\mathbf{x})` and :math:`\mathbf{g}(\mathbf{x})` are smooth constraint functions.
+- The constant-valued vector :math:`\mathbf{e}_\mathbf{x}` is the target value for the equality constraint(s).
+- The constant-valued vectors :math:`\mathbf{l}_\mathbf{h}` and :math:`\mathbf{u}_\mathbf{h}` are the lower and upper limits resp. for the inequality constraint(s).
+- The constant-valued vectors :math:`\mathbf{l}_\mathbf{x}` and :math:`\mathbf{u}_\mathbf{x}` are the lower and upper limits resp. for the parameter constraint(s).
+
+Bold characters indicate the variable or function can be vector-valued. All constraints are optional.
+
+.. _RSOLNP: https://cran.r-project.org/web/packages/Rsolnp/index.html
+.. _`Matlab`: https://web.stanford.edu/~yyye/matlab/

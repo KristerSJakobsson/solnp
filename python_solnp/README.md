@@ -8,7 +8,7 @@ SOLNP solves the general nonlinear optimization problem on the form:
     minimize f(x)
       subject to
        g(x) = e_x
-   l_h <= h(x) <= u_x
+   l_h <= h(x) <= u_h
    l_x <=  x   <= u_X
 ```
 where f(x), g(x) and h(x) are smooth functions.
