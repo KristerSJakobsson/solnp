@@ -1,11 +1,9 @@
 Introduction
-=================================
+=============
 
-pysolnp is an implementation of the SOLNP algorithm by Yinyu Ye (1989) with Python Wrappers.
+The SOLNP algorithm by Yinyu Ye (1989) solves the general nonlinear optimization problem below.
 The algorithm was originally implemented in `Matlab`_, and have gained some fame through it's R implementation (`RSOLNP`_).
-pysolnp is written in C++ and has wrappers to integrate seamlessly with Python, providing high efficiency and ease of use.
-
-This algorithm solves the general nonlinear optimization problem on the form:
+solnp is written in C++ and with the Python wrappers (pysolnp) you have seamless integration with Python, providing high efficiency and ease of use.
 
 .. math::
    :nowrap:

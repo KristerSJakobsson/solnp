@@ -18,7 +18,7 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 
-project = 'pysolnp'
+project = 'solnp'
 copyright = '2020, Krister S. Jakobsson'
 master_doc = 'index'
 title = 'Title'

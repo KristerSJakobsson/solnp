@@ -1,5 +1,5 @@
-Welcome to pysolnp's documentation!
-===================================
+Python/C++ SOLNP
+================
 
 .. image:: https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/KristerSJakobsson/solnp
@@ -14,5 +14,8 @@ Welcome to pysolnp's documentation!
 
    introduction.rst
 
-   getting_started.rst
+   pysolnp.rst
 
+   cppsolnp.rst
+
+   about.rst
