@@ -1,3 +1,5 @@
+.. _Introduction:
+
 Introduction
 =============
 
@@ -24,7 +26,7 @@ Here:
 - The constant-valued vectors :math:`\mathbf{l}_\mathbf{h}` and :math:`\mathbf{u}_\mathbf{h}` are the lower and upper limits resp. for the inequality constraint(s).
 - The constant-valued vectors :math:`\mathbf{l}_\mathbf{x}` and :math:`\mathbf{u}_\mathbf{x}` are the lower and upper limits resp. for the parameter constraint(s).
 
-Bold characters indicate the variable or function can be vector-valued. All constraints are optional.
+Bold characters indicate the variable or function can be vector-valued. All constraints are optional and vectors can be of any dimension.
 
 .. _RSOLNP: https://cran.r-project.org/web/packages/Rsolnp/index.html
 .. _`Matlab`: https://web.stanford.edu/~yyye/matlab/

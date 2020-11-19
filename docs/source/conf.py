@@ -36,7 +36,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
     'sphinx.ext.githubpages',
-    "sphinx_rtd_theme",
+    'sphinx_rtd_theme',
 ]
 
 todo_include_todos = True

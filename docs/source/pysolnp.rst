@@ -1,6 +1,7 @@
 pysolnp
 =======
-pysolnp provides the power of the SOLNP algorithm to Python.
+pysolnp provides Python with the power of the SOLNP algorithm explained in :ref:`Introduction<Introduction>` section.
+It is simply a Python wrapper for :ref:`C++ solnp<C++ solnp>`.
 
 Installation
 ------------
@@ -99,9 +100,10 @@ The function returns the :code:`pysolnp.Result` object with the below properties
 | callbacks          | int            | Number of callbacks done to find this optimum.                |
 +--------------------+----------------+---------------------------------------------------------------+
 
-Example 1: Box Function
+Example 1: Box Problem
 ------------------------
-The Box Function
+The Box Problem is a common example function used for testing optimization algorithms.
+It has one equality constraint and variable bounds.
 
 .. code-block:: python
 

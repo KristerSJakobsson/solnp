@@ -10,7 +10,7 @@ The Box function from the original documentation of SOLNP:
     const double x3 = m(2);
 
 
-    // compute the alkyla function and return the result, equality constraint results and teh inequality constraint results
+    // compute the box function and return the result, equality constraint results and the equality constraint results
     dlib::matrix<double, 2, 1> return_values(2);
     // Function value
     return_values(0) = -1 * x1 * x2 * x3;
