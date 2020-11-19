@@ -1,11 +1,10 @@
 pysolnp
 =======
-
-
+pysolnp provides the power of the SOLNP algorithm to Python.
 
 Installation
 ------------
-For most situations, installing with package installer for Python, pip, will work by simply running:
+In most situations, installing with the package installer for Python, pip, will work:
 
 ::
 
@@ -18,6 +17,11 @@ Precompiled Wheels are available for CPython:
 - Mac OS: Python 2.7, 3.5+
 
 For other systems, or to have BLAS and LAPACK support, please build the wheels manually.
+::
+
+    $ pip install --no-binary :all: pysolnp
+
+Note that this require CMake and other C++ solnp dependencies, see C++ solnp installation instructions for details.
 
 Method
 ------

@@ -1,18 +1,4 @@
-# Configuration file for the Sphinx documentation builder.
-#
-# This file only contains a selection of the most common options. For a full
-# list see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
-
 # -- Path setup --------------------------------------------------------------
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
 
 import sphinx_rtd_theme
 
@@ -21,11 +7,11 @@ import sphinx_rtd_theme
 project = 'solnp'
 copyright = '2020, Krister S. Jakobsson'
 master_doc = 'index'
-title = 'Title'
+title = 'Python/C++ SOLNP'
 subtitle = 'Thesis'
 author = 'Krister S. Jakobsson'
 institute = ''
-department = ""
+department = ''
 source_suffix = '.rst'
 
 # -- General configuration ---------------------------------------------------
@@ -80,7 +66,6 @@ latex_packaes = [
     "amsfonts",
     "amssymb",
     "dsfont"
-    # "optidef"
 ]
 
 default_role = 'math'
@@ -148,13 +133,6 @@ latex_elements = {
     'figure_align': 'htbp',
     'preamble': '',
 }
-
-latex_elements['preamble'] += r"""
-\usepackage{amsfonts}
-\usepackage{parskip}
-\usepackage{microtype}
-\usepackage{amsmath}
-"""
 
 # Latex Titlepage
 latex_logo = None

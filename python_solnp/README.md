@@ -1,6 +1,8 @@
 [![codecov](https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg)](https://codecov.io/gh/KristerSJakobsson/solnp)
 [![Documentation Status](https://readthedocs.org/projects/solnp/badge/?version=latest)](https://solnp.readthedocs.io/en/latest/?badge=latest)
 
+See full documentation on [solnp.readthedocs.io](https://solnp.readthedocs.io/en/latest/).
+
 # pysolnp - Nonlinear optimization with the augmented Lagrange method
 
 ## Description

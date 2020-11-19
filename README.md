@@ -1,6 +1,7 @@
 [![codecov](https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg)](https://codecov.io/gh/KristerSJakobsson/solnp)
 [![Documentation Status](https://readthedocs.org/projects/solnp/badge/?version=latest)](https://solnp.readthedocs.io/en/latest/?badge=latest)
 
+See full documentation on [solnp.readthedocs.io](https://solnp.readthedocs.io/en/latest/).
 
 # Python/C++ SOLNP
 
@@ -34,15 +35,27 @@ See the `/test` folder for examples.
 
 ### Prerequisites
 
-The sources for all prerequisites are downloaded by the CMake script when run.
-These are:
-- pybind11 - Bindings for C++ to Python
+The sources for all prerequisites are linked using github submodules.
+To compile the tests, run the CMake script.
+
+Prerequisites for running the C++ SOLNP tests are:
 - dlib - A c++ mathematical library
 - catch2 (for tests) - A testing library
 
+Additionally, when building the Python wheels you need:
+- pybind11 - Bindings for C++ to Python
+
 ## Running the tests
 
-Run the tests `solnp_test` using CMake.
+Run the tests in the `solnp_test` and export the results to xml by running below in the solnp root folder:
+```
+$ cmake .
+$ make solnp_tests
+$ ./solnp_tests -r junit > solnp_tests_result.xml
+$ make utils_tests
+$ ./utils_tests -r junit > utils_tests_result.xml
+```
+
 
 ## CI and building Wheels
 
@@ -55,6 +68,10 @@ Appveyor CI:
   
 Travis CI:
   - `manylinux2014` Docker with GCC
+  - CodeCov
+
+ReadTheDocs CI:
+  - Building and hosting the [docs](https://solnp.readthedocs.io/en/latest/)
 
 ## Built With
 
