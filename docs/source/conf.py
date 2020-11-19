@@ -32,6 +32,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
+    'sphinx.ext.imgconverter',
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
     'sphinx.ext.githubpages',

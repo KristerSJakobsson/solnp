@@ -28,8 +28,21 @@ Method
 
 .. code-block:: python
 
-    solve(obj_func: function, par_start_value: List, par_lower_limit: object = None, par_upper_limit: object = None, eq_func: object = None, eq_values: object = None, ineq_func: object = None, ineq_lower_bounds: object = None, ineq_upper_bounds: object = None, rho: float = 1.0, max_major_iter: int = 10, max_minor_iter: int = 10, delta: float = 1e-05, tolerance: float = 0.0001, debug: bool = False) -> pysolnp.Result
-
+    solve(obj_func: function,
+          par_start_value: List,
+          par_lower_limit: object = None,
+          par_upper_limit: object = None,
+          eq_func: object = None,
+          eq_values: object = None,
+          ineq_func: object = None,
+          ineq_lower_bounds: object = None,
+          ineq_upper_bounds: object = None,
+          rho: float = 1.0,
+          max_major_iter: int = 10,
+          max_minor_iter: int = 10,
+          delta: float = 1e-05,
+          tolerance: float = 0.0001,
+          debug: bool = False) -> pysolnp.Result
 
 Inputs
 -------
@@ -76,15 +89,15 @@ Outputs
 
 The function returns the :code:`pysolnp.Result` object with the below properties.
 
-+--------------------+----------------+-------------------------------------------------------+
-| Property           | Type           | Description                                           |
-+--------------------+----------------+-------------------------------------------------------+
-| solve_value        | float          | The value of the objective function at optimum f(x*). |
-+--------------------+----------------+-------------------------------------------------------+
-| optimum            | List\[float\]  | A list of parameters for the optimum x*.              |
-+--------------------+----------------+-------------------------------------------------------+
-| callbacks          | int            | Number of callbacks done to find this optimum.        |
-+--------------------+----------------+-------------------------------------------------------+
++--------------------+----------------+---------------------------------------------------------------+
+| Property           | Type           | Description                                                   |
++--------------------+----------------+---------------------------------------------------------------+
+| solve_value        | float          | The value of the objective function at optimum :math:`f(x*)`. |
++--------------------+----------------+---------------------------------------------------------------+
+| optimum            | List\[float\]  | A list of parameters for the optimum :math:`x*`.              |
++--------------------+----------------+---------------------------------------------------------------+
+| callbacks          | int            | Number of callbacks done to find this optimum.                |
++--------------------+----------------+---------------------------------------------------------------+
 
 Example 1: Box Function
 ------------------------
