@@ -22,7 +22,7 @@ For other systems, or to have BLAS and LAPACK support, please build the wheels m
 
     $ pip install --no-binary :all: pysolnp
 
-Note that this require CMake and other C++ solnp dependencies, see C++ solnp installation instructions for details.
+Note that this require CMake.
 
 Method
 ------

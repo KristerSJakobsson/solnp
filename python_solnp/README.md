@@ -1,7 +1,7 @@
 [![codecov](https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg)](https://codecov.io/gh/KristerSJakobsson/solnp)
 [![Documentation Status](https://readthedocs.org/projects/solnp/badge/?version=latest)](https://solnp.readthedocs.io/en/latest/?badge=latest)
 
-See full documentation on [solnp.readthedocs.io](https://solnp.readthedocs.io/en/latest/).
+See full documentation on [http://solnp.readthedocs.io](https://solnp.readthedocs.io/en/latest/).
 
 # pysolnp - Nonlinear optimization with the augmented Lagrange method
 
@@ -29,7 +29,7 @@ Note: For best results, building it from source is recommended, as BLAS and LAPA
 Simply install the package through PyPi with:
 `pip install pysolnp`
 
-When compiling from source code you will need CMake etc.<br>
+When compiling from source code you will need CMake.<br>
 See the [README for the C++ code](https://github.com/KristerSJakobsson/solnp/blob/master/README.md) for details.
 
 ## Usage
