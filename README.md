@@ -15,7 +15,7 @@ This algorithm solves the general nonlinear optimization problem on the form:
       subject to
        g(x) = 0
    l_h <= h(x) <= u_h
-   l_x <=  x   <= u_X
+   l_x <   x   < u_X
 ```
 where f(x), g(x) and h(x) are smooth functions.
 

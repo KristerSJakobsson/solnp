@@ -1,28 +1,10 @@
 pysolnp
 =======
-pysolnp provides Python with the power of the SOLNP algorithm explained in :ref:`Introduction<Introduction>` section.
-It is simply a Python wrapper for :ref:`C++ solnp<C++ solnp>`.
+pygosolnp extends on the functionality of pysolnp by solving the problem multiple times from a randomized set of starting values. This library is implemented purely in Python.
 
 Installation
 ------------
-In most situations, installing with the package installer for Python, pip, will work:
-
-::
-
-    $ pip install pysolnp
-
-Precompiled Wheels are available for CPython:
-
-- Windows: Python 2.7, 3.6+
-- Linux: Python 2.7, 3.5+
-- Mac OS: Python 2.7, 3.5+
-
-For other systems, or to have BLAS and LAPACK support, please build the wheels manually.
-::
-
-    $ pip install --no-binary :all: pysolnp
-
-Note that this require CMake.
+Works on any environment that supports pysolnp and has Python 3.5+ installed.
 
 Method
 ------
@@ -145,8 +127,8 @@ Running this will yield the ouput:
 
 Use-cases and Applications
 --------------------------
-* NMPC - Nonlinear model predictive controls-case studies using Matlab, REXYGEN and pysolnp NLP solver under Python environment by Štěpán Ožana. [`NMPC Overhead Crane (PDF)`_] [`GitHub Source Code`_] [`Štěpán's Homepage`_]
-
-.. _`NMPC Overhead Crane (PDF)`: https://github.com/StepanOzana/NMPC/raw/main/NMPC_Overhead_Crane/NMPC_overhead_crane_description.pdf
-.. _`GitHub Source Code`: https://github.com/StepanOzana/NMPC
-.. _`Štěpán's Homepage`: http://stepan-ozana.com
+* NMPC - Nonlinear model predictive controls-case studies using Matlab, REXYGEN and pysolnp NLP solver under Python environment by Štěpán Ožana.
+** [GitHub Source Code](https://github.com/StepanOzana/NMPC)
+** [Youtube Video](https://youtu.be/yP1qj3_ujzM)
+** [Documentation](https://github.com/StepanOzana/NMPC/blob/main/NMPC_Overhead_Crane/NMPC_overhead_crane_description.pdf)
+** [Štěpán's Homepage](http://stepan-ozana.com/)

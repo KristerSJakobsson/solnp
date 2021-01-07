@@ -12,7 +12,7 @@ SOLNP solves the general nonlinear optimization problem on the form:
       subject to
        g(x) = e_x
    l_h <= h(x) <= u_h
-   l_x <=  x   <= u_X
+   l_x <   x   < u_X
 ```
 where f(x), g(x) and h(x) are smooth functions.
 
@@ -108,6 +108,12 @@ The function returns the `pysolnp.Result` with the below properties.
 | solve_value        | float          | The value of the objective function at optimum f(x*). |
 | optimum            | List\[float\]  | A list of parameters for the optimum x*.              |
 | callbacks          | int            | Number of callbacks done to find this optimum.        |
+
+## Use-cases and Applications
+* NMPC - Nonlinear model predictive controls-case studies using Matlab, REXYGEN and pysolnp NLP solver under Python environment by Štěpán Ožana. 
+[[NMPC Overhead Crane (PDF)](https://github.com/StepanOzana/NMPC/raw/main/NMPC_Overhead_Crane/NMPC_overhead_crane_description.pdf)] 
+[[GitHub Source Code](https://github.com/StepanOzana/NMPC)]
+[[Štěpán's Homepage](http://stepan-ozana.com/)]
 
 ## Authors
 

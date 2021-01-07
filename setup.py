@@ -9,7 +9,7 @@ from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
 from distutils.version import LooseVersion
 
-__version__ = datetime.today().strftime('%Y.%m.%d').replace(".0", ".") # Remove initial 0 from date, ex: 01 -> 1
+__version__ = datetime.today().strftime('%Y.%m.%d').replace(".0", ".")  # Remove initial 0 from date, ex: 01 -> 1
 
 
 # Get requirements from requirements-dev.txt file
@@ -97,7 +97,7 @@ setup(name='pysolnp',
       description='This provides the SOLNP optimizaiton Algorithm.',
       long_description=long_description,
       long_description_content_type="text/markdown",
-      url='https://github.com/KristerSJakobsson/cpp-solnp',
+      url='https://github.com/KristerSJakobsson/solnp',
       license='Boost Software License',
       ext_modules=[CMakeExtension('pysolnp')],
       cmdclass=dict(build_ext=CMakeBuild),
