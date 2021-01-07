@@ -14,8 +14,8 @@ solnp is written in C++ and with the Python wrappers (pysolnp) you have seamless
     \min_{\mathbf{x}} f(\mathbf{x}) \\
     \textrm{s.t.} \\
     \mathbf{g}(\mathbf{x}) = \mathbf{e}_\mathbf{x} \\
-    \mathbf{l}_\mathbf{h} \le \mathbf{h}(\mathbf{x}) \le \mathbf{u}_\mathbf{h} \\
-    \mathbf{l}_\mathbf{x} \lt \mathbf{x} \lt \mathbf{u}_\mathbf{x} \\
+    \mathbf{l}_\mathbf{h} < \mathbf{h}(\mathbf{x}) < \mathbf{u}_\mathbf{h} \\
+    \mathbf{l}_\mathbf{x} < \mathbf{x} < \mathbf{u}_\mathbf{x} \\
    \end{gather*}
 
 Here:
