@@ -41,6 +41,8 @@ jobs:
             - cmake
             - lcov
             - gfortran
+      script:
+        - cmake .
       after_success:
         - cmake .
         - make solnp_tests
