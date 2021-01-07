@@ -23,7 +23,7 @@ for PYBIN in /opt/python/*/bin; do
 done
 
 #  Upload
-/opt/python/cp37-cp37m/binpython -m pip install --upgrade pip
+/opt/python/cp37-cp37m/bin/pip install --upgrade pip
 /opt/python/cp37-cp37m/bin/pip install twine>=3.1.1
 for WHEEL in /io/wheelhouse/pysolnp*; do
     /opt/python/cp37-cp37m/bin/twine upload \
