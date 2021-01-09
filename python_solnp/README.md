@@ -113,7 +113,7 @@ The function returns the `pysolnp.Result` with the below properties.
 * NMPC - Nonlinear model predictive controls-case studies using Matlab, REXYGEN and pysolnp NLP solver under Python environment by Štěpán Ožana. 
 [[NMPC Overhead Crane (PDF)](https://github.com/StepanOzana/NMPC/raw/main/NMPC_Overhead_Crane/NMPC_overhead_crane_description.pdf)] 
 [[GitHub Source Code](https://github.com/StepanOzana/NMPC)]
-[[Štěpán's Homepage](http://stepan-ozana.com/)]
+[[Štěpán's Homepage](http://stepan-ozana.com/index.php?lang=EN)]
 
 ## Authors
 

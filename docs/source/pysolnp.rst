@@ -149,4 +149,4 @@ Use-cases and Applications
 
 .. _`NMPC Overhead Crane (PDF)`: https://github.com/StepanOzana/NMPC/raw/main/NMPC_Overhead_Crane/NMPC_overhead_crane_description.pdf
 .. _`GitHub Source Code`: https://github.com/StepanOzana/NMPC
-.. _`Štěpán's Homepage`: http://stepan-ozana.com
+.. _`Štěpán's Homepage`: http://stepan-ozana.com/index.php?lang=EN
