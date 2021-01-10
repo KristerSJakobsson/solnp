@@ -51,7 +51,7 @@ ELSE()
     include_directories(src)
     include_directories(library/Catch2/single_include)
 
-    add_library(solnp_lib STATIC src/*)
+    add_library(solnp_lib STATIC src/solnp.hpp src/stdafx.h src/subnp.hpp src/utils.hpp)
     add_library(catch2_main STATIC test/test_main.cpp)
     add_executable(solnp_tests test/test_solnp.cpp)
     add_executable(utils_tests test/test_utils.cpp)
