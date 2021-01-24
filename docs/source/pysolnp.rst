@@ -1,5 +1,8 @@
-pysolnp
-=======
+Python SOLNP (pysolnp)
+======================
+.. image:: https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/KristerSJakobsson/solnp
+   :alt: Codecov Status pysolnp
 pysolnp provides Python with the power of the SOLNP algorithm explained in :ref:`Introduction<Introduction>` section.
 It is simply a Python wrapper for :ref:`C++ solnp<C++ solnp>`.
 
@@ -132,7 +135,7 @@ It has one equality constraint and variable bounds.
     result.optimum
     result.callbacks
 
-Running this will yield the ouput:
+Running this will yield the output:
 
 ::
 

@@ -1,7 +1,10 @@
 .. _C++ solnp:
 
-C++ solnp
-=========
+C++ SOLNP (cppsolnp)
+====================
+.. image:: https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/KristerSJakobsson/solnp
+   :alt: Codecov Status cppsolnp
 C++ solnp implements the SOLNP algorithm explained in the :ref:`Introduction<Introduction>` section.
 
 Installation
@@ -77,7 +80,7 @@ The parameter_data matrix will be modified in-memory and contain the correspondi
 If a logger is supplied as a smart-pointer to an std::vector of strings, various log messages will be stored in it.
 
 Example 1: Box Problem
-----------
+----------------------
 The Box Problem is a common example function used for testing optimization algorithms.
 It has one equality constraint and variable bounds.
 

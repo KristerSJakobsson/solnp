@@ -1,8 +1,5 @@
-Python/C++ SOLNP
-================
-
-.. image:: https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/KristerSJakobsson/solnp
+Python/C++ SOLNP & Python GOSOLNP
+=================================
 
 .. image:: https://readthedocs.org/projects/solnp/badge/?version=latest
    :target: https://solnp.readthedocs.io/en/latest/?badge=latest
@@ -15,6 +12,8 @@ Python/C++ SOLNP
    introduction.rst
 
    pysolnp.rst
+
+   pygosolnp.rst
 
    cppsolnp.rst
 
