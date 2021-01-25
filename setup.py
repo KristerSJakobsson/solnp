@@ -1,5 +1,6 @@
 import os
 import re
+import io
 import sys
 import platform
 import subprocess
@@ -14,11 +15,11 @@ __version__ = datetime.today().strftime('%Y.%m.%d').replace(".0", ".")  # Remove
 
 # Get requirements from requirements-dev.txt file
 here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, 'requirements-dev.txt')) as f:
+with io.open(os.path.join(here, 'requirements-dev.txt'), "r", encoding="utf-8") as f:
     requirements_dev = f.read().replace('==', '>=').splitlines()
 
 # Load readme file for Python package
-with open(os.path.join(here, "python_solnp", 'README.md')) as file:
+with io.open(os.path.join(here, "python_solnp", 'README.md'), "r", encoding="utf-8") as file:
     long_description = file.read()
 
 
