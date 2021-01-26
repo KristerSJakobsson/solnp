@@ -1,7 +1,26 @@
 # vim ft=yaml
 
-image:
-  - Visual Studio 2019
+matrix:
+  - image: Visual Studio 2015
+    PYTHON: C:\Python27
+  - image: Visual Studio 2015
+    PYTHON: C:\Python27-x64
+  - image: Visual Studio 2015
+    PYTHON: C:\Python36
+  - image: Visual Studio 2015
+    PYTHON: C:\Python36-x64
+  - image: Visual Studio 2015
+    PYTHON: C:\Python37
+  - image: Visual Studio 2015
+    PYTHON: C:\Python37-x64
+  - image: Visual Studio 2015
+    PYTHON: C:\Python38
+  - image: Visual Studio 2015
+    PYTHON: C:\Python38-x64
+  - image: Visual Studio 2019
+    PYTHON: C:\Python39
+  - image: Visual Studio 2019
+    PYTHON: C:\Python39-x64
 
 environment:
   global:
@@ -10,18 +29,6 @@ environment:
     PYPI_PASSWORD:
       secure:
         OXK5a0Kcyc7jYfkbpqCSUUGu6dBXpIFV3so6rCCxdoRn/xaJjxdu2Ox4rLw2FzA1YS05o72cojfF/wJIuD9Vfm+VOUJAvxRFcYyI7iZP3nwBBRA2JW2yUX/WpbqCDJqk+8lHlMhgmxmFYGzufpcDemTjc5BrCKs6OvHWWhIde7uW1FXa2szD9wf9+4JXCCdRn238Wg0t44CpRPbcAdg/DAeH6IHuRO6RUZtd+RUiif7BDhcRpJmuHGb2zaZ3ZKWybTHJxW4UmRxlqhpADb5ctw==
-
-  matrix:
-    - PYTHON: C:\Python27
-    - PYTHON: C:\Python27-x64
-    - PYTHON: C:\Python36
-    - PYTHON: C:\Python36-x64
-    - PYTHON: C:\Python37
-    - PYTHON: C:\Python37-x64
-    - PYTHON: C:\Python38
-    - PYTHON: C:\Python38-x64
-    - PYTHON: C:\Python39
-    - PYTHON: C:\Python39-x64
 
 # For the release branch we deploy to real pypi
 for:
