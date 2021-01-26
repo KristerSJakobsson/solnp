@@ -2,13 +2,16 @@
 
 C++ SOLNP (cppsolnp)
 ====================
+
 .. image:: https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/KristerSJakobsson/solnp
    :alt: Codecov Status cppsolnp
+
 C++ solnp implements the SOLNP algorithm explained in the :ref:`Introduction<Introduction>` section.
 
 Installation
 ------------
+
 C++ solnp is a header-only library, so the only thing you need to do is:
 
 - Add dlib to your project.

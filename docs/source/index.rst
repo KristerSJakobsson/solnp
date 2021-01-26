@@ -17,4 +17,6 @@ Python/C++ SOLNP & Python GOSOLNP
 
    cppsolnp.rst
 
+   changelog.rst
+
    about.rst
