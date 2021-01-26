@@ -30,25 +30,6 @@ for:
           secure: BlFonvNFzspp5kZ6nsJTjSJfWqviD0DDAiCgMtKVbyspHPCu+PR/fS++fUCt6hM3X03oTdvzX0wYGbZiZwPr09SO4lblS0Qyilm8rnHpICzuCDn+KBBNrIFYdvU4WYndcQ9fNniPw1QiWxmMJsbxsSc7io3thIt+fG8L9OJxFQmjzDj2Az0oXOUswSVjKmq8aoOD2agdcS+JI6uyEq9Ve5kQYdY4Bgn3FNWSsL8QxnHW8MQxuNrpaWvhV22BGqGk0NQVNlnlEyCuiPVatPKsUA==
 
 install:
-  # Prepend newly installed Python to the PATH of this build (this cannot be
-  # done from inside the powershell script as it would require to restart
-  # the parent CMD process).
-  - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
-
-  # Get Python bitness
-  # https://stackoverflow.com/questions/1746475/windows-batch-help-in-setting-a-variable-from-command-output#4509885
-  - set PY_CMD=python -c "import platform; print(platform.architecture()[0][:2])"
-  - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set PYTHON_ARCH=%%i
-
-  # Fix MSVC builds for 64-bit Python
-  # See
-  # http://stackoverflow.com/questions/32091593/cannot-install-windows-sdk-7-1-on-windows-10
-  - echo "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64 > "C:\Program Files (x86)\Microsoft Visual Studio 16.0\VC\bin\amd64/vcvars64.bat"
-
-  # Check that we have the expected version and architecture for Python
-  - python --version
-  - python -c "import struct; print(struct.calcsize('P') * 8)"
-
   - python -m pip install --upgrade pip
   - git clone --recursive https://github.com/KristerSJakobsson/solnp.git
 
