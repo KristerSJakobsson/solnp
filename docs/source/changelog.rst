@@ -1,7 +1,7 @@
 Changelog
 =========
 
-pysolnp 2021.1.26
+pysolnp 2021.1.27
 -------------------
 Add wheel to Python 3.9 for all platforms and fix below issues:
 
