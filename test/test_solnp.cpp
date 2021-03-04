@@ -81,24 +81,25 @@ TEST_CASE("Optimize the Alkyla function manual hessian", "[alkyla]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(alkyla_functor(), parameter_data, ib, hessian_matrix, logger, 0.0, 10, 10, 1e-5,
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(alkyla_functor(), parameter_data, ib, hessian_matrix, logger, 0.0, 10, 10, 1e-5,
                                        1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    CHECK(calculate.converged == true);
 
     // Validate values
-    CHECK(result(0) == Approx(0.169963765876488e2));
-    CHECK(result(1) == Approx(0.159994026791621e2));
-    CHECK(result(2) == Approx(0.576883584245853e2));
-    CHECK(result(3) == Approx(0.303248903549694e2));
-    CHECK(result(4) == Approx(0.199999896454138e2));
-    CHECK(result(5) == Approx(0.905654248087076e2));
-    CHECK(result(6) == Approx(0.949999927142590e2));
-    CHECK(result(7) == Approx(0.105901405233357e2));
-    CHECK(result(8) == Approx(0.015616462840774e2));
-    CHECK(result(9) == Approx(1.535353201975077e2));
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
+    CHECK(result(0) == Approx(0.169963765876488e2).margin(1e-2));
+    CHECK(result(1) == Approx(0.159994026791621e2).margin(1e-2));
+    CHECK(result(2) == Approx(0.576883584245853e2).margin(1e-2));
+    CHECK(result(3) == Approx(0.303248903549694e2).margin(1e-2));
+    CHECK(result(4) == Approx(0.199999896454138e2).margin(1e-2));
+    CHECK(result(5) == Approx(0.905654248087076e2).margin(1e-2));
+    CHECK(result(6) == Approx(0.949999927142590e2).margin(1e-2));
+    CHECK(result(7) == Approx(0.105901405233357e2).margin(1e-2));
+    CHECK(result(8) == Approx(0.015616462840774e2).margin(1e-2));
+    CHECK(result(9) == Approx(1.535353201975077e2).margin(1e-2));
 
-    REQUIRE(calculate <= Approx(-1.726412486481025e2));
+    REQUIRE(calculate.solve_value <= Approx(-1.726412486481025e2).margin(1e-3));
 
 }
 
@@ -130,16 +131,16 @@ TEST_CASE("Optimize the Box function (case a)", "[box]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(box_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(box_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Check the parameters
     CHECK(result(0) == Approx(2.886775069536727));
     CHECK(result(1) == Approx(2.886775072009683));
     CHECK(result(2) == Approx(5.773407750048355));
 
-    REQUIRE(calculate <= -48.112522068150462);
+    REQUIRE(calculate.solve_value <= -48.1125220681);
 
 }
 
@@ -157,16 +158,16 @@ TEST_CASE("Optimize the Box function (case b)", "[box]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(box_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(box_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Check the parameters
     CHECK(result(0) == Approx(2.888765743268910));
     CHECK(result(1) == Approx(2.888765747765645));
     CHECK(result(2) == Approx(5.765448483893261));
 
-    REQUIRE(calculate <= Approx(-48.112480408240664));
+    REQUIRE(calculate.solve_value <= Approx(-48.112480408240664));
 
 }
 
@@ -204,9 +205,9 @@ TEST_CASE("Optimize the Entropy function", "[entropy]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(entropy_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(entropy_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(0.857717373389226));
@@ -220,7 +221,7 @@ TEST_CASE("Optimize the Entropy function", "[entropy]") {
     CHECK(result(8) == Approx(0.857608122266489));
     CHECK(result(9) == Approx(0.858022625546437));
 
-    REQUIRE(calculate <= Approx(0.185478885901993));
+    REQUIRE(calculate.solve_value <= Approx(0.185478885901993));
 
 }
 
@@ -260,9 +261,9 @@ TEST_CASE("Optimize the Powell function (rho == 0)", "[powell]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Check the parameters
     CHECK(result(0) == Approx(-1.717126203723513));
@@ -271,7 +272,7 @@ TEST_CASE("Optimize the Powell function (rho == 0)", "[powell]") {
     CHECK(result(3) == Approx(-0.763645042210886));
     CHECK(result(4) == Approx(-0.763645042234952));
 
-    REQUIRE(calculate <= 0.053949827793391);
+    REQUIRE(calculate.solve_value <= 0.053949827793391);
 
 }
 
@@ -291,9 +292,9 @@ TEST_CASE("Optimize the Powell function (rho == 1)", "[powell]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(powell_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Check the parameters
     CHECK(result(0) == Approx(-1.717142506313303));
@@ -302,7 +303,7 @@ TEST_CASE("Optimize the Powell function (rho == 1)", "[powell]") {
     CHECK(result(3) == Approx(-0.763643197991088));
     CHECK(result(4) == Approx(-0.763643197980140));
 
-    REQUIRE(calculate <= 0.053949846871732);
+    REQUIRE(calculate.solve_value <= 0.0539498469);
 
 }
 
@@ -333,9 +334,9 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==10)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(1.116639595144975));
@@ -344,7 +345,7 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==10)", "[wright4]") {
     CHECK(result(3) == Approx(1.972752470314671));
     CHECK(result(4) == Approx(1.791088179957703));
 
-    REQUIRE(calculate <= Approx(0.029310831271171));
+    REQUIRE(calculate.solve_value <= Approx(0.029310831271171));
 
 }
 
@@ -360,9 +361,9 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==1)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(1.116643803185402));
@@ -371,7 +372,7 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==1)", "[wright4]") {
     CHECK(result(3) == Approx(1.972741018934506));
     CHECK(result(4) == Approx(1.791081456246007));
 
-    REQUIRE(calculate <= Approx(0.029310831002758));
+    REQUIRE(calculate.solve_value <= Approx(0.029310831002758));
 
 }
 
@@ -387,9 +388,9 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==0)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(1.116609971954848));
@@ -398,7 +399,7 @@ TEST_CASE("Optimize the Wright4 function (case a, rho==0)", "[wright4]") {
     CHECK(result(3) == Approx(1.972781636643539));
     CHECK(result(4) == Approx(1.791135716667731));
 
-    REQUIRE(calculate <= Approx(0.029310831942731));
+    REQUIRE(calculate.solve_value <= Approx(0.029310831942731));
 
 }
 
@@ -413,9 +414,9 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==10)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(1.116634078024861));
@@ -424,7 +425,7 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==10)", "[wright4]") {
     CHECK(result(3) == Approx(1.972763493598540));
     CHECK(result(4) == Approx(1.791097035073237));
 
-    REQUIRE(calculate <= Approx(0.029310831022048));
+    REQUIRE(calculate.solve_value <= Approx(0.029310831022048));
 
 }
 
@@ -440,9 +441,9 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==1)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(1.116634870722612));
@@ -451,7 +452,7 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==1)", "[wright4]") {
     CHECK(result(3) == Approx(1.972770662225987));
     CHECK(result(4) == Approx(1.791095775742904));
 
-    REQUIRE(calculate <= Approx(0.029310830648204));
+    REQUIRE(calculate.solve_value <= Approx(0.029310830648204));
 
 }
 
@@ -467,9 +468,9 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==0)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(1.116636615308806));
@@ -478,7 +479,7 @@ TEST_CASE("Optimize the Wright4 function (case b, rho==0)", "[wright4]") {
     CHECK(result(3) == Approx(1.972769218398222));
     CHECK(result(4) == Approx(1.791092977407627));
 
-    REQUIRE(calculate <= Approx(0.029310830686406));
+    REQUIRE(calculate.solve_value <= Approx(0.029310830686406));
 
 }
 
@@ -493,9 +494,9 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==10)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(-0.703068933803915));
@@ -504,7 +505,7 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==10)", "[wright4]") {
     CHECK(result(3) == Approx(-1.797457648464959));
     CHECK(result(4) == Approx(-2.844671274183172));
 
-    REQUIRE(calculate <= Approx(44.022877145171257));
+    REQUIRE(calculate.solve_value <= Approx(44.022877145171257));
 
 }
 
@@ -520,9 +521,9 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==1)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(-0.703523524834065));
@@ -531,7 +532,7 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==1)", "[wright4]") {
     CHECK(result(3) == Approx(-1.797997954636873));
     CHECK(result(4) == Approx(-2.842832966138447));
 
-    REQUIRE(calculate <= Approx(44.022075061138295));
+    REQUIRE(calculate.solve_value <= Approx(44.022075061138295));
 
 }
 
@@ -547,9 +548,9 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==0)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(-0.703376376169597));
@@ -558,7 +559,7 @@ TEST_CASE("Optimize the Wright4 function (case c, rho==0)", "[wright4]") {
     CHECK(result(3) == Approx(-1.797935433028946));
     CHECK(result(4) == Approx(-2.843427812167240));
 
-    REQUIRE(calculate <= Approx(44.022128023467303));
+    REQUIRE(calculate.solve_value <= Approx(44.022128023467303));
 
 }
 
@@ -574,9 +575,9 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==10)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 10, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(-1.273052029422237));
@@ -585,7 +586,7 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==10)", "[wright4]") {
     CHECK(result(3) == Approx(-0.154238130707192));
     CHECK(result(4) == Approx(-1.571027698602370));
 
-    REQUIRE(calculate <= Approx(27.871905223431018));
+    REQUIRE(calculate.solve_value <= Approx(27.871905223431018));
 
 }
 
@@ -601,9 +602,9 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==1)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(-1.272710813834789));
@@ -612,7 +613,7 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==1)", "[wright4]") {
     CHECK(result(3) == Approx(-0.154425728750688));
     CHECK(result(4) == Approx(-1.571448524460437));
 
-    REQUIRE(calculate <= Approx(27.871903584038883));
+    REQUIRE(calculate.solve_value <= Approx(27.871903584038883));
 
 }
 
@@ -628,9 +629,9 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==0)", "[wright4]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_four_functor(), parameter_data, ib, logger, 0.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(-1.273023411221166));
@@ -639,7 +640,7 @@ TEST_CASE("Optimize the Wright4 function (case d, rho==0)", "[wright4]") {
     CHECK(result(3) == Approx(-0.154284646055543));
     CHECK(result(4) == Approx(-1.571062971404984));
 
-    REQUIRE(calculate <= Approx(27.871904866028800));
+    REQUIRE(calculate.solve_value <= Approx(27.871904866028800));
 
 }
 
@@ -685,9 +686,9 @@ TEST_CASE("Optimize the Wright9 function (case a, rho==1)", "[wright9]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(-0.082010879422399));
@@ -696,7 +697,7 @@ TEST_CASE("Optimize the Wright9 function (case a, rho==1)", "[wright9]") {
     CHECK(result(3) == Approx(0.377176847262690));
     CHECK(result(4) == Approx(0.173650632156765));
 
-    REQUIRE(calculate <= Approx(-2.104078394423900e2));
+    REQUIRE(calculate.solve_value <= Approx(-2.104078394423900e2));
 
 }
 
@@ -722,9 +723,9 @@ TEST_CASE("Optimize the Wright9 function (case a, rho==100)", "[wright9]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 100.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 100.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(-0.081246392868120));
@@ -733,7 +734,7 @@ TEST_CASE("Optimize the Wright9 function (case a, rho==100)", "[wright9]") {
     CHECK(result(3) == Approx(0.377589784583978));
     CHECK(result(4) == Approx(0.173399403653944));
 
-    REQUIRE(calculate <= Approx(-2.104073432066561e2));
+    REQUIRE(calculate.solve_value <= Approx(-2.104073432066561e2));
 
 }
 
@@ -759,9 +760,9 @@ TEST_CASE("Optimize the Wright9 function (case b, rho==100)", "[wright9]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 100.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(wright_nine_functor(), parameter_data, ib, logger, 100.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(1.479634676414054));
@@ -770,7 +771,7 @@ TEST_CASE("Optimize the Wright9 function (case b, rho==100)", "[wright9]") {
     CHECK(result(3) == Approx(-1.611508943269783));
     CHECK(result(4) == Approx(2.673892424752704));
 
-    REQUIRE(calculate <= Approx(-2.500584227790517e3));
+    REQUIRE(calculate.solve_value <= Approx(-2.500584227790517e3));
 
 }
 
@@ -805,9 +806,9 @@ TEST_CASE("Optimize the Rosen-Suzuki function", "[rosen_suzuki]") {
 
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    double calculate = cppsolnp::solnp(rosen_suzuki_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(rosen_suzuki_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
-    dlib::matrix<double, 0, 1> result = dlib::colm(parameter_data, 0);
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Validate values
     CHECK(result(0) == Approx(0.000230374253029));
@@ -815,6 +816,6 @@ TEST_CASE("Optimize the Rosen-Suzuki function", "[rosen_suzuki]") {
     CHECK(result(2) == Approx(2.000278419459943));
     CHECK(result(3) == Approx(-0.999859532645383));
 
-    REQUIRE(calculate <= Approx(-43.999759237182886));
+    REQUIRE(calculate.solve_value <= Approx(-43.999759237182886));
 
 }
