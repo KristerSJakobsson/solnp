@@ -12,7 +12,7 @@ PYBIND11_MODULE(pysolnp, m
             .def_readwrite("optimum", &pysolver::Result::optimum)
             .def_readwrite("callbacks", &pysolver::Result::callbacks)
             .def_readwrite("converged", &pysolver::Result::converged)
-            .def_readwrite("hessian", &pysolver::Result::hessian);
+            .def_readwrite("hessian_matrix", &pysolver::Result::hessian_matrix);
 
     m.doc() = R"pbdoc(
 
@@ -155,8 +155,7 @@ namespace cppsolnp {
                 tolerance);
 
         dlib::matrix<double, 0, 1> final_vector = dlib::colm(parameter_data, 0);
-        dlib::matrix<double, 0, 1> hessian = dlib::reshape_to_column_vector(result.hessian_matrix);
-        CppsolnpResult final_result(result.solve_value, final_vector, function_calls, result.converged, logger, hessian);
+        CppsolnpResult final_result(result.solve_value, final_vector, function_calls, result.converged, logger, result.hessian_matrix);
 
         return final_result;
     }
@@ -271,11 +270,7 @@ namespace pysolver {
         }
 
         const py::object &return_optimum = pysolver::dlib_1d_matrix_to_py_list<double>(result.optimum);
-//        dlib::matrix<double, 0, 1> flattened_hessian = dlib::reshape_to_column_vector(result.hessian_matrix);
-        const py::object &return_hessian_matrix = pysolver::dlib_1d_matrix_to_py_list<double>(result.hessian);
-
-//        std::string return_hessian_string = cppsolnp::to_string(result.hessian_matrix);
-//        std::cout << return_hessian_string << std::endl;
+        const py::object &return_hessian_matrix = pysolver::dlib_2d_matrix_to_py_nester_list<double>(result.hessian_matrix);
 
         pysolver::Result return_value(result.solve_value, return_optimum, result.callbacks, result.converged, return_hessian_matrix);
         return return_value;

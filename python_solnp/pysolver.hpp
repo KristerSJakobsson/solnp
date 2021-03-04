@@ -107,15 +107,28 @@ namespace pysolver {
         return list;
     }
 
+    template<typename T>
+    inline
+    py::list dlib_2d_matrix_to_py_nester_list(
+            const dlib::matrix<T> &matrix
+    ) {
+        py::list list(matrix.nc());
+        for (auto col = 0L; col < matrix.nr(); ++col) {
+            py::list column_values = dlib_1d_matrix_to_py_list<double>(dlib::colm(matrix, col));
+            list[col] = column_values;
+        }
+        return list;
+    }
+
     struct Result {
         double solve_value;
         py::object optimum;
         int callbacks;
         bool converged;
-        py::object hessian;
+        py::object hessian_matrix;
 
-        Result(double solve_value, py::object optimum, int callbacks, bool converged, py::object hessian) :
-                solve_value(solve_value), optimum(optimum), callbacks(callbacks), converged(converged), hessian(hessian) {
+        Result(double solve_value, py::object optimum, int callbacks, bool converged, py::object hessian_matrix) :
+                solve_value(solve_value), optimum(optimum), callbacks(callbacks), converged(converged), hessian_matrix(hessian_matrix) {
         }
 
     };
@@ -150,13 +163,13 @@ namespace cppsolnp {
         int callbacks;
         std::shared_ptr<std::vector<std::string>> log;
         bool converged;
-        dlib::matrix<double, 0, 1> hessian;
+        dlib::matrix<double> hessian_matrix;
 
         CppsolnpResult(double solve_value, dlib::matrix<double, 0, 1> optim, int function_calls,
                      bool converged, std::shared_ptr<std::vector<std::string>> log_list,
-                     dlib::matrix<double, 0, 1> hessian) :
+                     dlib::matrix<double> hessian_matrix) :
                 solve_value(solve_value), optimum(std::move(optim)), callbacks(function_calls), log(std::move(log_list)),
-                converged(converged), hessian(std::move(hessian)) {}
+                converged(converged), hessian_matrix(std::move(hessian_matrix)) {}
     };
 }
 
