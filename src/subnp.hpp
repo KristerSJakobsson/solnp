@@ -301,7 +301,7 @@ namespace cppsolnp {
                     }
                     if (event_log && minor_iteration >= 10) {
                         event_log->push_back(
-                                "Warning: The linearized prblem has no feasible solution. The problem may not be feasible.");
+                                "Warning: The linearized problem has no feasible solution. The problem may not be feasible.");
                     }
                     a = dlib::colm(a, dlib::range(0, number_of_parameters_and_inequality_constraints_ - 1));
                     b = a *

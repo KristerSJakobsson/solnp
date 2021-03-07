@@ -96,15 +96,19 @@ Outputs
 
 The function returns the :code:`pysolnp.Result` object with the below properties.
 
-+--------------------+----------------+---------------------------------------------------------------+
-| Property           | Type           | Description                                                   |
-+--------------------+----------------+---------------------------------------------------------------+
-| solve_value        | float          | The value of the objective function at optimum :math:`f(x*)`. |
-+--------------------+----------------+---------------------------------------------------------------+
-| optimum            | List\[float\]  | A list of parameters for the optimum :math:`x*`.              |
-+--------------------+----------------+---------------------------------------------------------------+
-| callbacks          | int            | Number of callbacks done to find this optimum.                |
-+--------------------+----------------+---------------------------------------------------------------+
++--------------------+-----------------------+---------------------------------------------------------------+
+| Property           | Type                  | Description                                                   |
++--------------------+-----------------------+---------------------------------------------------------------+
+| solve_value        | float                 | The value of the objective function at optimum :math:`f(x*)`. |
++--------------------+-----------------------+---------------------------------------------------------------+
+| optimum            | List\[float\]         | A list of parameters for the optimum :math:`x*`.              |
++--------------------+-----------------------+---------------------------------------------------------------+
+| callbacks          | int                   | Number of callbacks done to find this optimum.                |
++--------------------+-----------------------+---------------------------------------------------------------+
+| converged          | boolean               | Indicates if the algorithm converged or not.                  |
++--------------------+-----------------------+---------------------------------------------------------------+
+| hessian_matrix     | List\[List\[float\]\] | The final Hessian Matrix used by pysolnp.                     |
++--------------------+-----------------------+---------------------------------------------------------------+
 
 Example 1: Box Problem
 ------------------------
@@ -137,6 +141,7 @@ It has one equality constraint and variable bounds.
     result.solve_value
     result.optimum
     result.callbacks
+    result.converged
 
 Running this will yield the output:
 
@@ -148,6 +153,8 @@ Running this will yield the output:
     [2.8867750707815447, 2.8867750713194273, 5.773407748939196]
     >>> result.callbacks
     118
+    >>> result.converged
+    True
 
 Use-cases and Applications
 --------------------------

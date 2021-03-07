@@ -59,6 +59,7 @@ result = pysolnp.solve(
 result.solve_value
 result.optimum
 result.callbacks
+result.converged
 ```
 
 Output:
@@ -69,6 +70,8 @@ Output:
 [2.8867750707815447, 2.8867750713194273, 5.773407748939196]
 >>> result.callbacks
 118
+>>> result.converged
+True
 ```
 
 ## Parameters
@@ -103,11 +106,13 @@ Inputs:
 Output:
 The function returns the `pysolnp.Result` with the below properties.
 
-| Property           | Type           | Description                                           |
-| -------------------|:---------------|-------------------------------------------------------|
-| solve_value        | float          | The value of the objective function at optimum f(x*). |
-| optimum            | List\[float\]  | A list of parameters for the optimum x*.              |
-| callbacks          | int            | Number of callbacks done to find this optimum.        |
+| Property           | Type                  | Description                                           |
+| -------------------|:----------------------|-------------------------------------------------------|
+| solve_value        | float                 | The value of the objective function at optimum f(x*). |
+| optimum            | List\[float\]         | A list of parameters for the optimum x*.              |
+| callbacks          | int                   | Number of callbacks done to find this optimum.        |
+| converged          | boolean               | Indicates if the algorithm converged or not.          |
+| hessian_matrix     | List\[List\[float\]\] | The final Hessian Matrix used by pysolnp.             |
 
 ## Use-cases and Applications
 * NMPC - Nonlinear model predictive controls-case studies using Matlab, REXYGEN and pysolnp NLP solver under Python environment by Štěpán Ožana. 
