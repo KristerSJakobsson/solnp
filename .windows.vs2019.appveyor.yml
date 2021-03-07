@@ -41,7 +41,6 @@ install:
   - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set PYTHON_ARCH=%%i
 
   - python -m pip install --upgrade pip
-  - git clone --recursive https://github.com/KristerSJakobsson/solnp.git
 
 build_script:
   # Build and install the wheel
