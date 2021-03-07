@@ -7,10 +7,12 @@ using namespace pybind11::literals;
 PYBIND11_MODULE(pysolnp, m
 ) {
     py::class_<pysolver::Result>(m, "Result", py::dynamic_attr())
-            .def(py::init<double, py::object, int>())
+            .def(py::init<double, py::object, int, bool, py::object>())
             .def_readwrite("solve_value", &pysolver::Result::solve_value)
             .def_readwrite("optimum", &pysolver::Result::optimum)
-            .def_readwrite("callbacks", &pysolver::Result::callbacks);
+            .def_readwrite("callbacks", &pysolver::Result::callbacks)
+            .def_readwrite("converged", &pysolver::Result::converged)
+            .def_readwrite("hessian_matrix", &pysolver::Result::hessian_matrix);
 
     m.doc() = R"pbdoc(
 
@@ -50,7 +52,7 @@ PYBIND11_MODULE(pysolnp, m
 
 namespace cppsolnp {
 
-    SolverResult solve_simple(const cppsolnp::MatrixFunction<double> &obj_func,
+    CppsolnpResult solve_simple(const cppsolnp::MatrixFunction<double> &obj_func,
                               dlib::matrix<double, 0, 0> &parameter_data,
                               cppsolnp::MatrixFunction<dlib::matrix<double, 0, 1>> eq_func,
                               std::shared_ptr<dlib::matrix<double, 0, 1>> eq_values,
@@ -141,7 +143,7 @@ namespace cppsolnp {
             inequality_limits = *ineq_data;
         }
 
-        double result = cppsolnp::solnp(
+        cppsolnp::SolveResult result = cppsolnp::solnp(
                 objective_function,
                 parameter_data,
                 inequality_limits,
@@ -153,8 +155,7 @@ namespace cppsolnp {
                 tolerance);
 
         dlib::matrix<double, 0, 1> final_vector = dlib::colm(parameter_data, 0);
-
-        SolverResult final_result(result, final_vector, function_calls, logger);
+        CppsolnpResult final_result(result.solve_value, final_vector, function_calls, result.converged, logger, result.hessian_matrix);
 
         return final_result;
     }
@@ -166,7 +167,7 @@ namespace pysolver {
     cppsolnp::MatrixFunction<double> objective_mapping_function(const py::function &f) {
         auto python_function = f.cast<py::function>();
         return [python_function](const dlib::matrix<double, 0, 1> &param) {
-            const py::list &list_param = dlib_matrix_to_py_list<double>(param);
+            const py::list &list_param = dlib_1d_matrix_to_py_list<double>(param);
             double result = py::float_(python_function(list_param));
             return result;
         };
@@ -176,7 +177,7 @@ namespace pysolver {
     constraint_mapping_function(const py::function &f, const dlib::matrix<double> &val, const std::string &name) {
         auto python_function = f.cast<py::function>();
         return [python_function, val, name](const dlib::matrix<double, 0, 1> &param) {
-            const py::list &list_param = dlib_matrix_to_py_list<double>(param);
+            const py::list &list_param = dlib_1d_matrix_to_py_list<double>(param);
             const py::list &result = python_function(list_param);
             if (result.size() != (size_t) val.nr()) {
                 std::string expected_size = std::to_string(val.nr());
@@ -248,7 +249,7 @@ namespace pysolver {
                     "Bad input: Must provide inequality function together with upper and lower bounds or not provide one at all.");
         }
 
-        cppsolnp::SolverResult result = cppsolnp::solve_simple(
+        cppsolnp::CppsolnpResult result = cppsolnp::solve_simple(
                 objective_mapping_function(obj_func),
                 parameter_data,
                 equality_function,
@@ -268,9 +269,10 @@ namespace pysolver {
             }
         }
 
-        const py::object &return_optimum = pysolver::dlib_matrix_to_py_list<double>(result.optimum);
+        const py::object &return_optimum = pysolver::dlib_1d_matrix_to_py_list<double>(result.optimum);
+        const py::object &return_hessian_matrix = pysolver::dlib_2d_matrix_to_py_nester_list<double>(result.hessian_matrix);
 
-        pysolver::Result return_value(result.solve_value, return_optimum, result.callbacks);
+        pysolver::Result return_value(result.solve_value, return_optimum, result.callbacks, result.converged, return_hessian_matrix);
         return return_value;
     }
 

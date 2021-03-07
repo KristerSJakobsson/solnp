@@ -17,11 +17,21 @@ namespace cppsolnp {
                arg != -std::numeric_limits<T>::infinity();
     }
 
+    struct SolveResult {
+        double solve_value;
+        dlib::matrix<double, 0, 1> optimum;
+        bool converged;
+        dlib::matrix<double> hessian_matrix;
+
+        SolveResult(double solve_value, dlib::matrix<double, 0, 1> optimum, bool converged, dlib::matrix<double> hessian_matrix) :
+                solve_value(solve_value), optimum(optimum), converged(converged), hessian_matrix(hessian_matrix) {}
+    };
+
     template<
             typename functor_model,
             typename parameter_input,
             typename inequality_constraint_vectors>
-    double solnp(
+    SolveResult solnp(
             functor_model functor,
             parameter_input &parameter_data,
             const inequality_constraint_vectors &inequality_constraint_data,
@@ -307,23 +317,27 @@ namespace cppsolnp {
 
         }
 
-        // Save result to original parameter data matrix.
-        dlib::set_colm(parameter_data, 0) =
+        // Save result
+        dlib::matrix<double, 0, 1> optimal_parameters =
                 dlib::rowm(parameters, dlib::range(
                         number_of_inequality_constraints,
                         number_of_inequality_constraints + number_of_parameters - 1)
                 );
 
+        bool converged = false;
         if (event_log) {
             if (std::hypot(t(0), t(1)) <= tolerance) {
                 // Reached tolerance
                 event_log->push_back("Reached requested tolerance in " + std::to_string(iteration) + " iterations.");
+                converged = true;
             } else {
                 event_log->push_back("Exiting after maximum number of iterations. Tolerance not reached.");
             }
         }
 
-        return objective_function_value;
+        SolveResult result(objective_function_value, optimal_parameters, converged, hessian_matrix);
+
+        return result;
     }
 
 
@@ -331,7 +345,7 @@ namespace cppsolnp {
             typename functor_model,
             typename parameter_input,
             typename inequality_constraint_vectors>
-    double solnp(
+    SolveResult solnp(
             functor_model functor,
             parameter_input &parameter_data,
             const inequality_constraint_vectors &inequality_constraint_data,
