@@ -49,5 +49,5 @@ This is done by:
    a. Objective function :math:`f(\mathbf{x})` for all :math:`\mathbf{x}` that satisfies the inequality constraints :math:`\mathbf{l}_\mathbf{x} < \mathbf{x} < \mathbf{u}_\mathbf{x}`
    b. Penalty Barrier function: :math:`f(\mathbf{x}) + 100 \sum_i(\max(0, 0.9 + l_{x_i} - [\mathbf{g}(\mathbf{x})]_i)^2 + \max(0, 0.9 + [\mathbf{g}(\mathbf{x})]_i - u_{x_i})^2) + \sum_j([h(\mathbf{x})]_j - e_{x_j})^2/100`
 
-#. For the m starting parameters that converged with the lowest evaluation function value, run pysolnp to find nearest optimum.
-#. Return the best valid solution among the ones found through the various starting parameters (lowest solution value within bounds.)
+#. For the m starting parameters with the lowest evaluation function value, run pysolnp to find nearest optimum.
+#. Return the best converged solution among the ones found through the various starting parameters (lowest solution value.)
