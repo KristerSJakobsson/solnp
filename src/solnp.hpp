@@ -325,12 +325,14 @@ namespace cppsolnp {
                 );
 
         bool converged = false;
-        if (event_log) {
-            if (std::hypot(t(0), t(1)) <= tolerance) {
+        if (std::hypot(t(0), t(1)) <= tolerance) {
+            if (event_log) {
                 // Reached tolerance
                 event_log->push_back("Reached requested tolerance in " + std::to_string(iteration) + " iterations.");
-                converged = true;
-            } else {
+            }
+            converged = true;
+        } else {
+            if (event_log) {
                 event_log->push_back("Exiting after maximum number of iterations. Tolerance not reached.");
             }
         }

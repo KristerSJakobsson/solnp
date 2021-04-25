@@ -1,6 +1,10 @@
 Changelog
 =========
 
+pysolnp 2021.4.26
+-------------------
+Fixed bug where the converged flag would only be set correctly when the debug was set to true.
+
 pysolnp 2021.4.25
 -------------------
 No changes, re-release due to issue with source code build in previosu version.
