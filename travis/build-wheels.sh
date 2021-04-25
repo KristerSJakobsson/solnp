@@ -24,7 +24,7 @@ done
 
 #  Upload
 /opt/python/cp37-cp37m/bin/pip install twine==2.0.0  # Note: Old version to provide support with i686 anylinux docker
-for WHEEL in /io/wheelhouse/pysolnp*; do
+for WHEEL in /io/wheelhouse/pysolnp*.whl; do
     /opt/python/cp37-cp37m/bin/twine upload \
         --skip-existing \
         --repository-url "${TWINE_SERVER}" \
