@@ -44,7 +44,6 @@ install:
 
 build_script:
   # Build and install the wheel
-  - cd solnp
   - pip install wheel==0.34.2
   - pip install -r ".\requirements-dev.txt"
   - python setup.py sdist bdist_wheel

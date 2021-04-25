@@ -39,7 +39,7 @@ The sources for all prerequisites are linked using github submodules.
 To compile the tests, run the CMake script.
 
 Prerequisites for running the C++ SOLNP tests are:
-- dlib - A c++ mathematical library
+- dlib - A C++ mathematical library
 - catch2 (for tests) - A testing library
 
 Additionally, when building the Python wheels you need:
@@ -77,7 +77,7 @@ ReadTheDocs CI:
 
 Libraries:
 * [dlib](http://dlib.net/) - C++ math library
-* [pybind11](https://github.com/pybind/pybind11) - Bindings for building Python Wheels with c++11
+* [pybind11](https://github.com/pybind/pybind11) - Bindings for building Python Wheels with C++11
 * [manylinux](https://github.com/pypa/manylinux) - Docker images for building Linux wheels
 
 Tools:

@@ -7,7 +7,7 @@ SOLNP
 -----
 
 The SOLNP algorithm by Yinyu Ye (1989) solves the general nonlinear optimization problem below.
-In other words, it will find an optimum (possibly local) to the problem below.
+In other words, it will find an optimum (possibly local) to it.
 The algorithm was originally implemented in `Matlab`_, and have gained some fame through it's R implementation (`RSOLNP`_).
 solnp is written in C++ and with the Python wrappers (pysolnp) you have seamless integration with Python, providing high efficiency and ease of use.
 
