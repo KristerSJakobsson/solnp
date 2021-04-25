@@ -1,6 +1,10 @@
 Changelog
 =========
 
+pysolnp 2021.4.25
+-------------------
+No changes, re-release due to issue with source code build in previosu version.
+
 pysolnp 2021.3.8
 -------------------
 
