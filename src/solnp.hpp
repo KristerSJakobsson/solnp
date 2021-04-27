@@ -337,6 +337,10 @@ namespace cppsolnp {
             }
         }
 
+        if (event_log) {
+            event_log->push_back("Final result:" + cppsolnp::to_string(optimal_parameters, false));
+        }
+
         SolveResult result(objective_function_value, optimal_parameters, converged, hessian_matrix);
 
         return result;
@@ -370,6 +374,6 @@ namespace cppsolnp {
                      maximum_major_iterations, maximum_minor_iterations, delta, tolerance);
     }
 
-}; //namespace dccgarch
+}; //namespace cppsolnp
 
 #endif // CPP_SOLNP_SOLNP_HPP
