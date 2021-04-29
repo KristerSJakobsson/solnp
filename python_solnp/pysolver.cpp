@@ -154,8 +154,7 @@ namespace cppsolnp {
                 delta,
                 tolerance);
 
-        dlib::matrix<double, 0, 1> final_vector = dlib::colm(parameter_data, 0);
-        CppsolnpResult final_result(result.solve_value, final_vector, function_calls, result.converged, logger, result.hessian_matrix);
+        CppsolnpResult final_result(result.solve_value, result.optimum, function_calls, result.converged, logger, result.hessian_matrix);
 
         return final_result;
     }

@@ -74,9 +74,13 @@ if __name__ == "__main__":
     for index, value in enumerate(final_parameters):
         distance_to_lower = value - lower_bound[index]
         distance_to_over = upper_bound[index] - value
-        print("Distance for index %s: lower %s upper %s" % (index, distance_to_lower, distance_to_over))
+        print("Distance for Parameter Constraint index %s: lower %s upper %s" % (index, distance_to_lower, distance_to_over))
 
     for index, value in enumerate(inequality_constraints):
         distance_to_lower = value - inequality_lower_bounds[index]
         distance_to_over = inequality_upper_bounds[index] - value
-        print("Distance for index %s: lower %s upper %s" % (index, distance_to_lower, distance_to_over))
+        print("Distance for Inequality Constraint index %s: lower %s upper %s" % (index, distance_to_lower, distance_to_over))
+
+    for index, value in enumerate(equality_constaints):
+        distance_equality_constraint = value - equality_values[index]
+        print("Distance for Equality Constraint index %s: distance %s" % (index, distance_equality_constraint))
