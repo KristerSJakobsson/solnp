@@ -162,7 +162,7 @@ class TestExtension(unittest.TestCase):
             self.assertGreaterEqual(value, inequality_lower_bounds[index] - 1e-5)
 
         self.assertLessEqual(result.solve_value,
-                             -43.999759237182886)  # This reference value is taken form the Matlab reference tests
+                             -43.999)  # This reference value is taken form the C++ reference tests
 
     def test_solve_wright_four(self):
 

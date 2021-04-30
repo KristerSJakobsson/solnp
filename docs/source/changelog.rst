@@ -1,25 +1,29 @@
 Changelog
 =========
 
-pysolnp 2021.4.26
+pysolnp 2021.4.30
 -------------------
+Serious issue found in releases 2021.3.8, 2021.4.25 and 2021.4.26 that caused incorrect output.
+This has been fixed in this release and previous releases have been deprecated.
+
+Older Releases
+-------------------
+
+**pysolnp 2021.4.26** [Deprecated due to bug in output]
+
 Fixed bug where the converged flag would only be set correctly when the debug was set to true.
 
-pysolnp 2021.4.25
--------------------
-No changes, re-release due to issue with source code build in previosu version.
+**pysolnp 2021.4.25** [Deprecated due to bug in output]
 
-pysolnp 2021.3.8
--------------------
+No changes, re-release due to issue with source code build in previous version.
+
+**pysolnp 2021.3.8** [Deprecated due to bug in output]
 
 - Fixed issues where build would fail on Windows with newer versions of pip
 - Added outputs:
 
   1.  converged : Boolean that indicates if the algorithm converged or not
   2.  hessian_matrix : A nested list of the last Hessian Matrix used by pysolnp
-
-Older Releases
--------------------
 
 **pysolnp 2021.1.27** [Deprecated due to build issues]
 
