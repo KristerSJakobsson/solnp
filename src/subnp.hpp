@@ -265,7 +265,6 @@ namespace cppsolnp {
                                                                                              lagrangian_multipliers));
 
                         if (temporary_vector(number_of_parameters_and_inequality_constraints_) > 0) {
-                            // z
                             double temporary_scalar = parameter0(number_of_parameters_and_inequality_constraints_) /
                                                       temporary_vector(
                                                               number_of_parameters_and_inequality_constraints_);

@@ -71,5 +71,5 @@ if __name__ == "__main__":
     equality_constaints = wright_four_equality_function(final_parameters)
 
     for index, value in enumerate(equality_constaints):
-        distance_to_equality = value - equality_constaints[index]
-        print("Distance to equality constraint for index %s: %s" % (index, distance_to_equality))
+        distance_equality_constraint = value - equality_values[index]
+        print("Distance for Equality Constraint index %s: distance %s" % (index, distance_equality_constraint))

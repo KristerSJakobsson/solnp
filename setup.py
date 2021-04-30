@@ -10,7 +10,7 @@ from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
 from distutils.version import LooseVersion
 
-__version__ = "2021.4.26"
+__version__ = "2021.4.30"
 
 
 # Get requirements from requirements-dev.txt file
