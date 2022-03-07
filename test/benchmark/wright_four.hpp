@@ -30,7 +30,7 @@ Wright4 function from the original documentation of SOLNP:
 
 struct wright_four_functor {
 public:
-    wright_four_functor() = default;;
+    wright_four_functor() = default;
 
     dlib::matrix<double, 4, 1> operator()(const dlib::matrix<double, 5, 1> &x) {
         return wright_four(x);

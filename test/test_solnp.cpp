@@ -14,8 +14,28 @@
 #include "./benchmark/wright_nine.hpp"
 
 
+TEST_CASE("Calculate trivial Quadratic function", "[y=x^2]") {
+    dlib::matrix<double, 1, 1> parameter_data;
+    parameter_data = 1.0;
+
+    auto quadratic_function = [](const dlib::matrix<double, 1, 1> &m) -> dlib::matrix<double, 1, 1> {
+        return dlib::mat(m(0)*m(0));
+    };
+
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(quadratic_function, parameter_data);
+
+    CHECK(calculate.converged == true);
+
+    // Validate values
+    dlib::matrix<double, 0, 1> result = calculate.optimum;
+    CHECK(result(0) == Approx(0.0).margin(1e-2));
+
+    REQUIRE(calculate.solve_value <= Approx(0.0).margin(1e-3));
+
+}
+
 /*
- * These tests compare the scenarios and results from the original SOLNP in Matlab with the results from C++ SOLNP
+ * Below tests compare the scenarios and results from the original SOLNP in Matlab with the results from C++ SOLNP
  * Notably, these differ a bit from what pysolnp will generate due to:
  * - Objective/Constraint functions in pysolnp are subject to rounding errors in Python
  * - The precompiled binaries for pysolnp does not utilize BLAS or LAPACK.
@@ -127,20 +147,18 @@ TEST_CASE("Optimize the Box function (case a)", "[box]") {
             1.1, 1.0, 10.0,
             9.0, 1.0, 10.0;
 
-    dlib::matrix<double, 0, 0> ib;
-
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    cppsolnp::SolveResult calculate = cppsolnp::solnp(box_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(box_functor(), parameter_data, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
     dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Check the parameters
     CHECK(result(0) == Approx(2.886775069536727));
     CHECK(result(1) == Approx(2.886775072009683));
-    CHECK(result(2) == Approx(5.773407750048355));
+    CHECK(result(2) == Approx(5.773407750048355).margin(1e-2));
 
-    REQUIRE(calculate.solve_value <= -48.1125220681);
+    REQUIRE(calculate.solve_value <= Approx(-48.1125220681));
 
 }
 
@@ -154,18 +172,16 @@ TEST_CASE("Optimize the Box function (case b)", "[box]") {
             5.5, 1.0, 10.0,
             5.5, 1.0, 10.0;
 
-    dlib::matrix<double, 0, 0> ib;
-
     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
 
-    cppsolnp::SolveResult calculate = cppsolnp::solnp(box_functor(), parameter_data, ib, logger, 1.0, 10, 10, 1e-5, 1e-4);
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(box_functor(), parameter_data, logger, 1.0, 10, 10, 1e-5, 1e-4);
 
     dlib::matrix<double, 0, 1> result = calculate.optimum;
 
     // Check the parameters
-    CHECK(result(0) == Approx(2.888765743268910));
-    CHECK(result(1) == Approx(2.888765747765645));
-    CHECK(result(2) == Approx(5.765448483893261));
+    CHECK(result(0) == Approx(2.888765743268910).margin(1e-2));
+    CHECK(result(1) == Approx(2.888765747765645).margin(1e-2));
+    CHECK(result(2) == Approx(5.765448483893261).margin(1e-2));
 
     REQUIRE(calculate.solve_value <= Approx(-48.112480408240664));
 
@@ -272,7 +288,7 @@ TEST_CASE("Optimize the Powell function (rho == 0)", "[powell]") {
     CHECK(result(3) == Approx(-0.763645042210886));
     CHECK(result(4) == Approx(-0.763645042234952));
 
-    REQUIRE(calculate.solve_value <= 0.053949827793391);
+    REQUIRE(calculate.solve_value <= Approx(0.053949827793391));
 
 }
 
@@ -303,7 +319,7 @@ TEST_CASE("Optimize the Powell function (rho == 1)", "[powell]") {
     CHECK(result(3) == Approx(-0.763643197991088));
     CHECK(result(4) == Approx(-0.763643197980140));
 
-    REQUIRE(calculate.solve_value <= 0.0539498469);
+    REQUIRE(calculate.solve_value <= Approx(0.0539498469));
 
 }
 

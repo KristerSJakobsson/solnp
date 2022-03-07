@@ -1,6 +1,10 @@
 Changelog
 =========
 
+pysolnp 2021.3.08
+-------------------
+Fixed bug that would give incorrect results for completely unconstrained problems.
+
 pysolnp 2021.4.30
 -------------------
 Serious issue found in releases 2021.3.8, 2021.4.25 and 2021.4.26 that caused incorrect output.

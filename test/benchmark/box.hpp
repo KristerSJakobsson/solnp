@@ -22,7 +22,7 @@ The Box function from the original documentation of SOLNP:
 
 struct box_functor {
 public:
-    box_functor() = default;;
+    box_functor() = default;
 
     dlib::matrix<double, 2, 1> operator()(const dlib::matrix<double, 3, 1> &x) {
         return box(x);

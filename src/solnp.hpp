@@ -220,7 +220,7 @@ namespace cppsolnp {
             }
 
         } else {
-            lagrangian_multipliers = dlib::ones_matrix<double>(1, 1);
+            lagrangian_multipliers = dlib::zeros_matrix<double>(1, 1); // lambda = 0
         }
 
         double mu = number_of_parameters;
@@ -372,6 +372,28 @@ namespace cppsolnp {
                 parameter_data.nr() + inequality_constraint_data.nr());
         return solnp(functor, parameter_data, inequality_constraint_data, hessian_matrix, event_log, rho,
                      maximum_major_iterations, maximum_minor_iterations, delta, tolerance);
+    }
+
+    template<
+            typename functor_model,
+            typename parameter_input>
+    SolveResult solnp(
+            functor_model functor,
+            parameter_input &parameter_data,
+            // Optional input
+            const std::shared_ptr<std::vector<std::string>> &event_log = nullptr,
+            double rho = 1.0, //penalty parameter
+            int maximum_major_iterations = 400,
+            int maximum_minor_iterations = 800,
+            const double &delta = 1e-7, // Step size in forward difference evaluation
+            const double &tolerance = 1e-8
+    ) {
+        COMPILE_TIME_ASSERT(dlib::is_matrix<parameter_input>::value);
+        COMPILE_TIME_ASSERT(parameter_input::NC <= 3 && parameter_input::NC >= 0);
+
+        dlib::matrix<double, 0, 0> inequality_bounds;
+        return solnp(functor, parameter_data, inequality_bounds, event_log, rho, maximum_major_iterations,
+                     maximum_minor_iterations, delta, delta);
     }
 
 }; //namespace cppsolnp
