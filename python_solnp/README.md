@@ -18,9 +18,9 @@ where f(x), g(x) and h(x) are smooth functions.
 
 ## Compatibility
 Precompiled Wheels are available for CPython:
-- Windows: Python 2.7, 3.6+
-- Linux: Python 2.7, 3.5+
-- Mac OS: Python 2.7, 3.5+
+- Windows: Python 3.6+
+- Linux: Python 3.6+
+- Mac OS: Python 3.6+
 
 For other systems, or to have BLAS and LAPACK support, please build the wheels manually.
 Note: For best results, building it from source is recommended, as BLAS and LAPACK will make a difference.

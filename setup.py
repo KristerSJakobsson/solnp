@@ -122,5 +122,5 @@ setup(name='pysolnp',
               'requirements-dev.txt',
           ]
       )],
-      python_requires='>=2.7'
+      python_requires='>=3.6'
       )

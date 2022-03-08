@@ -13,12 +13,11 @@ environment:
         OXK5a0Kcyc7jYfkbpqCSUUGu6dBXpIFV3so6rCCxdoRn/xaJjxdu2Ox4rLw2FzA1YS05o72cojfF/wJIuD9Vfm+VOUJAvxRFcYyI7iZP3nwBBRA2JW2yUX/WpbqCDJqk+8lHlMhgmxmFYGzufpcDemTjc5BrCKs6OvHWWhIde7uW1FXa2szD9wf9+4JXCCdRn238Wg0t44CpRPbcAdg/DAeH6IHuRO6RUZtd+RUiif7BDhcRpJmuHGb2zaZ3ZKWybTHJxW4UmRxlqhpADb5ctw==
 
   matrix:
-    - PYTHON: /Users/appveyor/venv2.7/bin
-    - PYTHON: /Users/appveyor/venv3.5/bin
     - PYTHON: /Users/appveyor/venv3.6/bin
     - PYTHON: /Users/appveyor/venv3.7/bin
     - PYTHON: /Users/appveyor/venv3.8/bin
     - PYTHON: /Users/appveyor/venv3.9/bin
+    - PYTHON: /Users/appveyor/venv3.10/bin
 
 # For the release branch we deploy to real pypi
 for:
