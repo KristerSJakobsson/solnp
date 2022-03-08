@@ -5,9 +5,9 @@ yum install -y cmake
 yum install -y openssl-devel
 
 # Compile wheels
-for PYBIN in /opt/python/*/bin; do
-    "${PYBIN}/pip" wheel /io/ -w wheelhouse/
-    "${PYBIN}/python" /io/setup.py sdist -d /io/wheelhouse/
+for PYBIN in /opt/python/cp*/bin; do
+    "cp${PYBIN}/pip" wheel /io/ -w wheelhouse/
+    "cp${PYBIN}/python" /io/setup.py sdist -d /io/wheelhouse/
 done
 
 # Bundle external shared libraries into the wheels
@@ -16,10 +16,10 @@ for WHEEL in wheelhouse/*.whl; do
 done
 
 # Test
-for PYBIN in /opt/python/*/bin; do
-    "${PYBIN}/pip" install -r /io/requirements-dev.txt
-    "${PYBIN}/pip" install --no-index -f /io/wheelhouse pysolnp
-    (cd "$HOME"; "${PYBIN}/pytest" /io/python_solnp/test/test.py)
+for PYBIN in /opt/python/cp*/bin; do
+    "cp${PYBIN}/pip" install -r /io/requirements-dev.txt
+    "cp${PYBIN}/pip" install --no-index -f /io/wheelhouse pysolnp
+    (cd "$HOME"; "cp${PYBIN}/pytest" /io/python_solnp/test/test.py)
 done
 
 #  Upload
