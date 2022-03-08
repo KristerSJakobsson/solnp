@@ -16,7 +16,7 @@ SOLNP solves the general nonlinear optimization problem on the form:
 ```
 where f(x), g(x) and h(x) are smooth functions.
 
-## Compatability
+## Compatibility
 Precompiled Wheels are available for CPython:
 - Windows: Python 2.7, 3.6+
 - Linux: Python 2.7, 3.5+

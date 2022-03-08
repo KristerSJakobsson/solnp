@@ -109,7 +109,7 @@ namespace pysolver {
 
     template<typename T>
     inline
-    py::list dlib_2d_matrix_to_py_nester_list(
+    py::list dlib_2d_matrix_to_py_nested_list(
             const dlib::matrix<T> &matrix
     ) {
         py::list list(matrix.nc());

@@ -263,13 +263,13 @@ namespace pysolver {
                 tolerance);
 
         if (result.log) {
-            for (const auto& val : *result.log) {
+            for (const auto val : *result.log) {
                 std::cout << val << std::endl;
             }
         }
 
         const py::object &return_optimum = pysolver::dlib_1d_matrix_to_py_list<double>(result.optimum);
-        const py::object &return_hessian_matrix = pysolver::dlib_2d_matrix_to_py_nester_list<double>(result.hessian_matrix);
+        const py::object &return_hessian_matrix = pysolver::dlib_2d_matrix_to_py_nested_list<double>(result.hessian_matrix);
 
         pysolver::Result return_value(result.solve_value, return_optimum, result.callbacks, result.converged, return_hessian_matrix);
         return return_value;

@@ -1,5 +1,5 @@
 # Note: This script builds pysolnp, for building the C++ code, see test/CMakeLists
-# Note2: Version 2.8.12 is needed for compatability with anylinux docker
+# Note2: Version 2.8.12 is needed for compatibility with anylinux docker
 cmake_minimum_required(VERSION 2.8.12)
 project(solnp)
 
