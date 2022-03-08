@@ -263,7 +263,7 @@ namespace pysolver {
                 tolerance);
 
         if (result.log) {
-            for (const auto val : *result.log) {
+            for (const auto& val : *result.log) {
                 std::cout << val << std::endl;
             }
         }

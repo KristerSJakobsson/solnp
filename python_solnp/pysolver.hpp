@@ -24,7 +24,7 @@ namespace pysolver {
     std::vector <T> py_list_to_std_vector(const py::list &list) {
         std::vector <T> result(list.size());
         int index = 0;
-        for (auto &value : list) {
+        for (auto value : list) {
             result[index] = py::cast<T>(value);
             index++;
         }
