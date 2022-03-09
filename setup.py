@@ -107,12 +107,18 @@ setup(name='pysolnp',
       packages=find_packages(),
       include_package_data=True,
       classifiers=[
-          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3.6",
+          "Programming Language :: Python :: 3.7",
+          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
           "Programming Language :: C++",
           "License :: OSI Approved :: Boost Software License 1.0 (BSL-1.0)",
           "Operating System :: MacOS :: MacOS X",
           "Operating System :: Microsoft :: Windows",
-          "Operating System :: POSIX :: Linux"
+          "Operating System :: POSIX :: Linux",
+          "Development Status :: 6 - Mature"
       ],
       extras_require={
           'dev': requirements_dev,

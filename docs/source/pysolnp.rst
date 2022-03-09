@@ -4,8 +4,8 @@ Python SOLNP (pysolnp)
 .. image:: https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/KristerSJakobsson/solnp
    :alt: Codecov Status pysolnp
-.. image:: https://img.shields.io/pypi/pyversions/pytest.svg
-    :target: https://pypi.org/project/pytest/
+.. image:: https://img.shields.io/pypi/pyversions/pysolnp.svg
+    :target: https://pypi.org/project/pysolnp/
 
 pysolnp provides Python with the power of the SOLNP algorithm explained in :ref:`Introduction<Introduction>` section.
 It is simply a Python wrapper for :ref:`C++ solnp<C++ solnp>`.

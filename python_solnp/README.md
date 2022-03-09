@@ -1,8 +1,6 @@
 [![codecov](https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg)](https://codecov.io/gh/KristerSJakobsson/solnp)
 [![Documentation Status](https://readthedocs.org/projects/solnp/badge/?version=latest)](https://solnp.readthedocs.io/en/latest/?badge=latest)
-
-.. image:: https://img.shields.io/pypi/pyversions/pytest.svg
-:target: https://pypi.org/project/pytest/
+[![Python Versions](https://img.shields.io/pypi/pyversions/pysolnp.svg)](https://pypi.org/project/pysolnp/)
 
 See full documentation on [http://solnp.readthedocs.io](https://solnp.readthedocs.io/en/latest/).
 
