@@ -1,5 +1,7 @@
 # vim ft=yaml
 
+# Use this tool to validate Yaml before deploying: https://ci.appveyor.com/tools/validate-yaml
+
 image:
   - macos-mojave
   - macos-catalina
