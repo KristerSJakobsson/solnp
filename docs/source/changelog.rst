@@ -1,10 +1,10 @@
 Changelog
 =========
 
-pysolnp 2022.3.08
+pysolnp 2022.3.9
 -------------------
-Fixed bug that would give incorrect results for completely unconstrained problems.
-Also removed support for Python 2.7 and 3.5, and added support for Python 3.10.
+- Fixed bug that would give incorrect results for completely unconstrained problems.
+- Removed precompiled wheels (binaries) for Python 2.7 and 3.5, and added wheels for Python 3.10.
 
 pysolnp 2021.4.30
 -------------------
