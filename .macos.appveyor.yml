@@ -22,6 +22,7 @@ environment:
     - PYTHON: /Users/appveyor/venv3.10/bin
 
 # Exclude version as per current support for MacOS images on AppVeyor: https://www.appveyor.com/docs/macos-images-software/
+matrix:
   exclude:
     - image: macos-mojave
       PYTHON: /Users/appveyor/venv3.10/bin
