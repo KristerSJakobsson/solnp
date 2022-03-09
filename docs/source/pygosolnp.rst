@@ -3,6 +3,8 @@ Python GOSOLNP (pygosolnp)
 .. image:: https://codecov.io/gh/KristerSJakobsson/pygosolnp/branch/main/graph/badge.svg
    :target: https://codecov.io/gh/KristerSJakobsson/pygosolnp
    :alt: Codecov Status pygosolnp
+.. image:: https://img.shields.io/pypi/pyversions/pytest.svg
+    :target: https://pypi.org/project/pytest/
 
 pysolnp provides Python with the power of the GOSOLNP algorithm explained in :ref:`Introduction<Introduction>` section.
 It works as an extension on top of pysolnp by solving the problem multiple times from a randomized set of starting points. This library is implemented purely in Python.
