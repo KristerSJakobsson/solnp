@@ -22,17 +22,16 @@ environment:
     - PYTHON: /Users/appveyor/venv3.10/bin
 
 # Exclude version as per current support for MacOS images on AppVeyor: https://www.appveyor.com/docs/macos-images-software/
-matrix:
   exclude:
-    - environment: macos-mojave
+    - image: macos-mojave
       PYTHON: /Users/appveyor/venv3.10/bin
-    - environment: macos-bigsur
+    - image: macos-bigsur
       PYTHON: /Users/appveyor/venv3.6/bin
-    - environment: macos-bigsur
+    - image: macos-bigsur
       PYTHON: /Users/appveyor/venv3.7/bin
-    - environment: macos-monterey
+    - image: macos-monterey
       PYTHON: /Users/appveyor/venv3.6/bin
-    - environment: macos-monterey
+    - image: macos-monterey
       PYTHON: /Users/appveyor/venv3.7/bin
 
 # For the release branch we deploy to real pypi
