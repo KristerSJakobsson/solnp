@@ -40,7 +40,7 @@ repair-wheel-command = "auditwheel repair -w {dest_dir} {wheel}"
 # Build `universal2` and `arm64` wheels on an Intel runner.
 # Note that the `arm64` wheel and the `arm64` part of the `universal2`
 # wheel cannot be tested in this configuration.
-archs = ["x86_64"]
+archs = ["x86_64", "arm64", "universal2"]
 
 # Skip trying to test arm64 builds on Intel Macs
 test-skip = "*-macosx_arm64 *-macosx_universal2:arm64"
