@@ -44,7 +44,7 @@ jobs:
           submodules: recursive
 
       - name: Pip upgrade
-        run: python -m pip install --upgrade pip
+        run: python3 -m pip install --upgrade pip
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.3.1
