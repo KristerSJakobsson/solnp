@@ -13,7 +13,7 @@ on: [push, pull_request]
 env:
   # Run the package tests using `pytest` after each build
   CIBW_TEST_REQUIRES: pytest
-  CIBW_TEST_COMMAND: "pytest {package}/python_solnp/test"
+  CIBW_TEST_COMMAND: "pytest {package}/python_solnp/test/test.py"
 
 jobs:
   build_wheels:
