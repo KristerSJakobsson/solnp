@@ -10,11 +10,6 @@ on: [push, pull_request]
 #     types:
 #       - published
 
-env:
-  # Run the package tests using `pytest` after each build
-  CIBW_TEST_REQUIRES: pytest
-  CIBW_TEST_COMMAND: "pytest {package}/python_solnp/test/test.py"
-
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
