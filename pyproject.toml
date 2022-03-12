@@ -18,7 +18,6 @@ repair-wheel-command = ""
 before-test = ""
 test-requires = "pytest"
 test-command = "pytest {package}/python_solnp/test/test.py"
-[tool.cibuildwheel]
 
 manylinux-x86_64-image = "manylinux2014"
 manylinux-i686-image = "manylinux2014"
