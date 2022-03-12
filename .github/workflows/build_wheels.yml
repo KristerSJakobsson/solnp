@@ -30,8 +30,8 @@ jobs:
         with:
           path: ./wheelhouse/*.whl
 
-  # Note: Separate job for Apple Silicon wheels
-  build_wheels_macos:
+  # Note: Separate job for Apple wheels due to issue with cibuildwheel
+  build_wheels_macos_arm64:
     name: Build Wheels on Macos Apple Silicon
     runs-on: macos-10.15
     steps:
@@ -43,7 +43,23 @@ jobs:
         uses: pypa/cibuildwheel@v2.3.1
         env:
           CIBW_ARCHS_MACOS: arm64
-      # , "universal2", "arm64"
+
+      - uses: actions/upload-artifact@v2
+        with:
+          path: ./wheelhouse/*.whl
+
+  build_wheels_macos_universal2:
+    name: Build Wheels on Macos Apple Universal
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.3.1
+        env:
+          CIBW_ARCHS_MACOS: universal2
 
       - uses: actions/upload-artifact@v2
         with:
