@@ -1,14 +1,16 @@
 """
 To test this algorithm, then:
-1) Install this package, for example through pip or by running "pip install ." from the cpp_solnp folder.
+1) Install this package, for example through pip or by running "pip install ." from the root folder.
 2) Run this file with Python
 """
 
 import pysolnp
 import math
 
+
 def powell_objective_function(x):
-    result = pow(math.e, x[0]*x[1]*x[2]*x[3]*x[4])
+    math.exp()
+    result = pow(math.e, x[0] * x[1] * x[2] * x[3] * x[4])
     return result
 
 
@@ -27,8 +29,8 @@ def solve_powell():
     result = pysolnp.solve(
         obj_func=powell_objective_function,
         par_start_value=starting_point)
-        # eq_func=powell_equality_function,
-        # eq_values=equality_values)
+    # eq_func=powell_equality_function,
+    # eq_values=equality_values)
     return result
 
 

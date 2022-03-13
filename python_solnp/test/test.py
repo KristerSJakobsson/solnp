@@ -6,8 +6,7 @@ from math import sqrt
 class TestExtension(unittest.TestCase):
 
     def test_solve_simple_quadratic(self):
-        def simple_quadratic(x):
-            return x[0] * x[0]
+        simple_quadratic = lambda x: x[0] * x[0]
 
         starting_points = [1]
 

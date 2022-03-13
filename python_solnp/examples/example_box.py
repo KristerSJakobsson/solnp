@@ -1,6 +1,6 @@
 """
 To test this algorithm, then:
-1) Install this package, for example through pip or by running "pip install ." from the cpp_solnp folder.
+1) Install this package, for example through pip or by running "pip install ." from the root folder.
 2) Run this file with Python
 """
 
@@ -60,7 +60,8 @@ if __name__ == "__main__":
     for index, value in enumerate(final_parameters):
         distance_to_lower = value - lower_bound[index]
         distance_to_over = upper_bound[index] - value
-        print("Distance for Parameter Constraint index %s: lower %s upper %s" % (index, distance_to_lower, distance_to_over))
+        print("Distance for Parameter Constraint index %s: lower %s upper %s" % (
+        index, distance_to_lower, distance_to_over))
 
     for index, value in enumerate(equality_constaints):
         distance_equality_constraint = value - equality_values[index]
