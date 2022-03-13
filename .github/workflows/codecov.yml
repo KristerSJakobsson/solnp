@@ -6,6 +6,7 @@ jobs:
   run_codecov:
     name: Run Codecov using CMake
     runs-on: ubuntu-20.04
+    if: github.ref == 'refs/heads/release'
 
     steps:
       - uses: actions/checkout@v2
