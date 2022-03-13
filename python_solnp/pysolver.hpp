@@ -24,7 +24,7 @@ namespace pysolver {
     std::vector <T> py_list_to_std_vector(const py::list &list) {
         std::vector <T> result(list.size());
         int index = 0;
-        for (auto &value : list) {
+        for (auto value : list) {
             result[index] = py::cast<T>(value);
             index++;
         }
@@ -109,7 +109,7 @@ namespace pysolver {
 
     template<typename T>
     inline
-    py::list dlib_2d_matrix_to_py_nester_list(
+    py::list dlib_2d_matrix_to_py_nested_list(
             const dlib::matrix<T> &matrix
     ) {
         py::list list(matrix.nc());

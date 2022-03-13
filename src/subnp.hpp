@@ -23,7 +23,7 @@ namespace cppsolnp {
                 number_of_total_constraints_(number_of_inequality_constraints + number_of_equality_constraints),
                 number_of_parameters_and_inequality_constraints_(
                         number_of_parameter_data + number_of_inequality_constraints),
-                lagrangian_parameters_bounded_(lagrangian_parameters_bounded){
+                lagrangian_parameters_bounded_(lagrangian_parameters_bounded) {
             /* Here we put subnp initialization data, like function declarations or constant parameter_data. */
         }
 
@@ -347,7 +347,7 @@ namespace cppsolnp {
                                                                                                                    1,
                                                                                                                    number_of_total_constraints_)) +
                                         rho * std::pow<double>(euclidean_norm(
-                                                dlib::rowm(cost_vector, dlib::range(1, number_of_total_constraints_))),
+                                                                       dlib::rowm(cost_vector, dlib::range(1, number_of_total_constraints_))),
                                                                2);
 
 
@@ -399,11 +399,13 @@ namespace cppsolnp {
                                                              dlib::rowm(modified_cost_vector,
                                                                         dlib::range(1, number_of_total_constraints_)) +
                                                              rho * std::pow<double>(euclidean_norm(
-                                                                     dlib::rowm(modified_cost_vector, dlib::range(1,
-                                                                                                                  number_of_total_constraints_))),
+                                                                                            dlib::rowm(modified_cost_vector, dlib::range(1,
+                                                                                                                                         number_of_total_constraints_))),
                                                                                     2);
 
 
+                        } else {
+                            modified_object_function_value = modified_cost_vector(0);
                         }
 
                         gradient(number_of_inequality_constraints_ + i) =
@@ -477,7 +479,7 @@ namespace cppsolnp {
                     } else {
                         // We solve the equation system using QR factorization
                         dlib::qr_decomposition<dlib::matrix<double>> qr(trans(cholesky) * dlib::trans(a));
-                            lagrangian_multipliers = qr.solve(temporary_gradient);
+                        lagrangian_multipliers = qr.solve(temporary_gradient);
 
                         u = -1 * cholesky *
                             (temporary_gradient - (dlib::trans(cholesky) * dlib::trans(a)) * lagrangian_multipliers);

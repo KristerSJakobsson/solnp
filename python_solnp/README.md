@@ -1,5 +1,6 @@
 [![codecov](https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg)](https://codecov.io/gh/KristerSJakobsson/solnp)
 [![Documentation Status](https://readthedocs.org/projects/solnp/badge/?version=latest)](https://solnp.readthedocs.io/en/latest/?badge=latest)
+[![Python Versions](https://img.shields.io/pypi/pyversions/pysolnp.svg)](https://pypi.org/project/pysolnp/)
 
 See full documentation on [http://solnp.readthedocs.io](https://solnp.readthedocs.io/en/latest/).
 
@@ -16,11 +17,11 @@ SOLNP solves the general nonlinear optimization problem on the form:
 ```
 where f(x), g(x) and h(x) are smooth functions.
 
-## Compatability
+## Compatibility
 Precompiled Wheels are available for CPython:
-- Windows: Python 2.7, 3.6+
-- Linux: Python 2.7, 3.5+
-- Mac OS: Python 2.7, 3.5+
+- Windows: Python 3.6+
+- Linux: Python 3.6+
+- Mac OS: Python 3.6+
 
 For other systems, or to have BLAS and LAPACK support, please build the wheels manually.
 Note: For best results, building it from source is recommended, as BLAS and LAPACK will make a difference.

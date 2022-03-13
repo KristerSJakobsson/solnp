@@ -1,0 +1,28 @@
+name: Run C++ Codecov
+
+# Build on every branch push, tag push, and pull request change:
+on: [push, pull_request]
+jobs:
+  run_codecov:
+    name: Run Codecov using CMake
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: sudo apt-get install -y cmake lcov gfortran
+
+      - name: Run CMake with Codecov settings
+        run: |
+          cmake -DRUN_CODECOV=TRUE .
+          make solnp_tests
+          ./solnp_tests -r junit > solnp_tests_result.xml
+          make utils_tests
+          ./utils_tests -r junit > utils_tests_result.xml
+
+      - uses: codecov/codecov-action@v2
+        with:
+          files: ./solnp_tests_result.xml,./utils_tests_result.xml

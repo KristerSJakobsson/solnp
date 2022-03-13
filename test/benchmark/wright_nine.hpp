@@ -27,7 +27,7 @@ Wright9 function from the original documentation of SOLNP:
 
 struct wright_nine_functor {
 public:
-    wright_nine_functor() = default;;
+    wright_nine_functor() = default;
 
     dlib::matrix<double, 4, 1> operator()(const dlib::matrix<double, 5, 1> &x) {
         return wright_nine(x);

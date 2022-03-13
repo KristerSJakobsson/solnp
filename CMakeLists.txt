@@ -1,5 +1,4 @@
-# Note: This script builds pysolnp, for building the C++ code, see test/CMakeLists
-# Note2: Version 2.8.12 is needed for compatability with anylinux docker
+# Note: Version 2.8.12 is needed for compatibility with anylinux docker
 cmake_minimum_required(VERSION 2.8.12)
 project(solnp)
 
@@ -27,7 +26,7 @@ ELSE()
     IF(${RUN_CODECOV})
         # --- Coverage specific configuration --- start
         # required: Coverage or Debug
-        # (alternativelly via command line option: cmake -DCMAKE_BUILD_TYPE=Coverage ..)
+        # (alternatively via command line option: cmake -DCMAKE_BUILD_TYPE=Coverage ..)
         set(CMAKE_BUILD_TYPE Coverage)
         # add the project specific cmake modules directory to the cmake module path
         # (w.r.t. CI/CD builds this is not the best approach)

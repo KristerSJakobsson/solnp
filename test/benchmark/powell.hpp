@@ -26,7 +26,7 @@ original documentaiton of SOLNP.
 
 struct powell_functor {
 public:
-    powell_functor() = default;;
+    powell_functor() = default;
 
     dlib::matrix<double, 4, 1> operator()(const dlib::matrix<double, 5, 1> &x) {
         return powell(x);

@@ -4,6 +4,8 @@ Python SOLNP (pysolnp)
 .. image:: https://codecov.io/gh/KristerSJakobsson/solnp/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/KristerSJakobsson/solnp
    :alt: Codecov Status pysolnp
+.. image:: https://img.shields.io/pypi/pyversions/pysolnp.svg
+    :target: https://pypi.org/project/pysolnp/
 
 pysolnp provides Python with the power of the SOLNP algorithm explained in :ref:`Introduction<Introduction>` section.
 It is simply a Python wrapper for :ref:`C++ solnp<C++ solnp>`.
@@ -19,9 +21,9 @@ In most situations, installing with the package installer for Python, pip, will 
 
 Precompiled Wheels are available for CPython:
 
-- Windows: Python 2.7, 3.6+
-- Linux: Python 2.7, 3.5+
-- Mac OS: Python 2.7, 3.5+
+- Windows: Python 3.6+
+- Linux: Python 3.6+
+- Mac OS: Python 3.6+
 
 For other systems, or to have BLAS and LAPACK support, please build the wheels manually.
 ::

@@ -4,7 +4,22 @@ from math import sqrt
 
 
 class TestExtension(unittest.TestCase):
-    # This test only verifies that importing pysolnp works and that the function call does not throw an exception
+
+    def test_solve_simple_quadratic(self):
+        def simple_quadratic(x):
+            return x[0] * x[0]
+
+        starting_points = [1]
+
+        result = pysolnp.solve(
+            obj_func=simple_quadratic,
+            par_start_value=starting_points)
+
+        self.assertTrue(result.converged)
+
+        # y=x^2 has minimum for x=0, y=0
+        self.assertAlmostEqual(result.optimum[0], 0.0)
+        self.assertAlmostEqual(result.solve_value, 0.0)
 
     def test_solve_alkyla(self):
         def alkyla_objective_function(x):
@@ -45,7 +60,6 @@ class TestExtension(unittest.TestCase):
             ineq_func=alkyla_inequality_function,
             ineq_lower_bounds=inequality_lower_bounds,
             ineq_upper_bounds=inequality_upper_bounds,
-            debug=True,
             rho=0.0,
             max_major_iter=10,
             max_minor_iter=10,
@@ -145,7 +159,6 @@ class TestExtension(unittest.TestCase):
             ineq_func=rosen_suzuki_inequality_function,
             ineq_lower_bounds=inequality_lower_bounds,
             ineq_upper_bounds=inequality_upper_bounds,
-            debug=True,
             rho=1.0,
             max_major_iter=10,
             max_minor_iter=10,
