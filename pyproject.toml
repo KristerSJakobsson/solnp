@@ -32,8 +32,6 @@ musllinux-ppc64le-image = "musllinux_1_1"
 musllinux-s390x-image = "musllinux_1_1"
 
 [tool.cibuildwheel.linux]
-# On an Linux Intel runner with qemu installed, build Intel and ARM wheels
-archs = ["auto", "aarch64"]
 repair-wheel-command = "auditwheel repair -w {dest_dir} {wheel}"
 
 [tool.cibuildwheel.macos]

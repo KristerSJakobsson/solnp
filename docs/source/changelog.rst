@@ -1,10 +1,12 @@
 Changelog
 =========
 
-pysolnp 2022.3.9
+pysolnp 2022.3.13
 -------------------
 - Fixed bug that would give incorrect results for completely unconstrained problems.
 - Removed precompiled wheels (binaries) for Python 2.7 and 3.5, and added wheels for Python 3.10.
+- Migrated CI to Github Actions from a mix of Appveyor and Travis
+- Started using cibuildwheels package for building wheels
 
 pysolnp 2021.4.30
 -------------------

@@ -61,12 +61,11 @@ $ ./utils_tests -r junit > utils_tests_result.xml
 
 This project uses CI to automatically build wheels for a wide range of distributions.
 Notably currently only builds for CPython are available on PyPi, but one can also manually installing the package from source as explained above.
+Apple Silicon (M1 etc) compiling is not currently available on Github Actions. 
 
-Appveyor CI:
+Github Actions:
   - Windows with Visual Studio
   - Mac OS with Clang
-  
-Travis CI:
   - `manylinux2014` Docker with GCC
   - CodeCov
 
@@ -79,12 +78,12 @@ Libraries:
 * [dlib](http://dlib.net/) - C++ math library
 * [pybind11](https://github.com/pybind/pybind11) - Bindings for building Python Wheels with C++11
 * [manylinux](https://github.com/pypa/manylinux) - Docker images for building Linux wheels
+* [cibuildwheels](https://cibuildwheel.readthedocs.io/en/stable) - Library for building Python Wheels through CI
 
 Tools:
 * [CMake](https://cmake.org/runningcmake/) - Build tools
 * [CLion](https://www.jetbrains.com/clion/) - IDE by JetBrains
-* [Travis CI](https://travis-ci.org/) - Travis CI for building Manylinux Wheels
-* [Appveyor CI](https://www.appveyor.com/) - Appveyor CI for building Windows and Mac OS Wheels
+* [Github Actions](https://github.com/features/actions) - Building binary Wheels
 
 ## Authors
 
