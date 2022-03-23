@@ -293,25 +293,22 @@ See full source code on GitHub `/python_examples/example_truncated_normal.py`_
         par_lower_limit=parameter_lower_bounds,
         par_upper_limit=parameter_upper_bounds,
         number_of_restarts=6,
-        number_of_simulations=20000,
+        number_of_simulations=2000,
         pysolnp_max_major_iter=25,
         pysolnp_tolerance=1E-9,
         start_guess_sampling=sampling)
 
-    print(results.best_solution)
-
-Running this will yield the output:
+Running this will yield:
 
 ::
 
-    Result(
-        parameters=[2.651591117309446, 1.7843343303461394, 3.8557508243271172, 2.601788248290573],
-        obj_value=101.48726054338877,
-        converged=True)
+    # Solution 1: 0.0016119745327847497; Solution 2: 0.005968645850086645; Solution 3: 0.006083292803668321; Solution 4: 0.006629107105976147; Solution 5: 0.005305936314073526; Solution 6: 0.006049589559946693
+    # Best solution: [1.3008954298086124, 3.181786909056148, 1.3814249752478918, 3.9436695447632877]
+    # Objective function value: 0.0016119745327847497
+    # Elapsed time: 8.562503099441528 s
 
-The truncated normal function has generated samples that are mostly close to 0.
-This is not very good for the permutation function, we will see that using Grid Sampling will work better.
-
+With 2000 simulations we got a fairly accurate value in 8.5 seconds.
+Lets compare this with Grid Sampling below.
 
 Example 4: Grid Sampling
 ------------------------
@@ -371,16 +368,13 @@ See full source code on GitHub `/python_examples/example_grid_sampling.py`_
         pysolnp_tolerance=1E-9,
         start_guess_sampling=sampling)
 
-    print(results.best_solution)
-
 
 Running this will yield the output:
 
 ::
+    # Solution 1: 0.0006360327708392506; Solution 2: 0.006239163594915304; Solution 3: 0.006140229082904356; Solution 4: 0.006218870214655177; Solution 5: 0.005963823643719209; Solution 6: 0.13065649880545976
+    # Best solution: [1.1622677695732497, 1.683172007310748, 3.9509962074974956, 3.159134907203731]
+    # Objective function value: 0.0006360327708392506
+    # Elapsed time: 22.986207962036133 s
 
-    Result(
-        parameters=[0.6222222222222218, 2.2222222222222223, 3.822222222222222, 3.2888888888888888],
-        obj_value=9.91928145483169,
-        converged=True)
-
-Not great, but much better than truncated normal and with only one tenth the number of simulations!
+With 2000 simulations Grid Sampling gave a better result than Truncated Normal but it took longer.
