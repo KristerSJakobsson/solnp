@@ -34,6 +34,56 @@ TEST_CASE("Calculate trivial Quadratic function", "[y=x^2]") {
 
 }
 
+TEST_CASE("Throws exception for contradicting equality constraints", "[y=x^2]") {
+    dlib::matrix<double, 1, 1> parameter_data;
+    parameter_data = 1.0;
+
+    auto quadratic_function = [](const dlib::matrix<double, 1, 1> &m) -> dlib::matrix<double, 3, 1> {
+        const double x1 = m(0);
+
+        // compute the box function and return the result, equality constraint results and the equality constraint results
+        dlib::matrix<double, 3, 1> return_values(3);
+        // Function value
+        return_values(0) = x1*x1; // x1^2
+        // Equality constraints
+        return_values(1) = x1 - 1.0; // x1=1
+        return_values(2) = x1 - 2.0; // x1=2
+        return return_values;
+    };
+
+    REQUIRE_THROWS_WITH(cppsolnp::solnp(quadratic_function, parameter_data),
+                        "Encountered Singular matrix when trying to solve. This can happen for example if you have contradicting equality constraints.");
+
+}
+
+TEST_CASE("Fails gracefully for contradicting inequality constraints", "[y=x^2]") {
+    dlib::matrix<double, 1, 1> parameter_data;
+    parameter_data = 1.0;
+
+    auto quadratic_function = [](const dlib::matrix<double, 1, 1> &m) -> dlib::matrix<double, 3, 1> {
+        const double x1 = m(0);
+
+        // compute the box function and return the result, equality constraint results and the equality constraint results
+        dlib::matrix<double, 3, 1> return_values(3);
+        // Function value
+        return_values(0) = x1*x1; // x1^2
+        // Inequality constraints
+        return_values(1) = x1; // x1=1
+        return_values(2) = x1; // x1=2
+        return return_values;
+    };
+
+    dlib::matrix<double, 2, 2> ib;
+    ib =
+            0, 1,
+            3, 4;
+
+    cppsolnp::SolveResult calculate = cppsolnp::solnp(quadratic_function, parameter_data, ib);
+
+    CHECK(calculate.converged == false);
+
+}
+
 /*
  * Below tests compare the scenarios and results from the original SOLNP in Matlab with the results from C++ SOLNP
  * Notably, these differ a bit from what pysolnp will generate due to:

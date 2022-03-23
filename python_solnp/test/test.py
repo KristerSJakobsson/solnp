@@ -20,6 +20,34 @@ class TestExtension(unittest.TestCase):
         self.assertAlmostEqual(result.optimum[0], 0.0)
         self.assertAlmostEqual(result.solve_value, 0.0)
 
+    def test_fail_impossible_problem_with_inequality_constraints(self):
+        # This represents the impossible problem:
+        # min f(x) = x^2
+        #   subject to
+        #   0 < x < 1
+        #   3 < x < 4
+        # Notably, the constraints imply there is no solution.
+
+        simple_quadratic = lambda x: x[0] * x[0]
+
+        starting_points = [1]
+
+        def inequality_constraints(x):
+            result = [
+                x[0],
+                x[0]
+            ]
+            return result
+
+        result = pysolnp.solve(
+            obj_func=simple_quadratic,
+            par_start_value=starting_points,
+            ineq_func=inequality_constraints,
+            ineq_lower_bounds=[0, 3],
+            ineq_upper_bounds=[1, 4])
+
+        self.assertFalse(result.converged)
+
     def test_solve_alkyla(self):
         def alkyla_objective_function(x):
             result = -0.63 * x[3] * x[6] + 50.4 * x[0] + 3.5 * x[1] + x[2] + 33.6 * x[4]

@@ -11,7 +11,7 @@ simple_quadratic = lambda x: x[0] * x[0]
 
 starting_points = [1]
 
-def solve_alkyla():
+def solve_simple_quadratic():
     result = pysolnp.solve(
         obj_func=simple_quadratic,
         par_start_value=starting_points)
@@ -19,9 +19,10 @@ def solve_alkyla():
 
 
 if __name__ == "__main__":
-    result = solve_alkyla()
+    result = solve_simple_quadratic()
 
     final_parameters = result.optimum
     print(final_parameters)
     print(result.solve_value)
     print(result.callbacks)
+    print(result.converged)

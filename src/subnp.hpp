@@ -215,7 +215,9 @@ namespace cppsolnp {
                     positive_change = true;
                     if (!lagrangian_parameters_bounded_.second) {
                         dlib::qr_decomposition<dlib::matrix<double>> qr_temp(a * trans(a));
-
+                        if (!qr_temp.is_full_rank()) {
+                            throw std::domain_error("Encountered Singular matrix when trying to solve. This can happen for example if you have contradicting equality constraints.");
+                        }
                         parameter0 = parameter0 - trans(a) * (qr_temp.solve(constraints));
                         alpha_(0) = 1;
                     }
@@ -313,17 +315,19 @@ namespace cppsolnp {
             lagrangian_multipliers = 0;
 
             if (positive_change) {
+
+                dlib::matrix<double, 0, 0> scaled_function_values = dlib::pointwise_multiply(
+                        dlib::rowm(parameter, dlib::range(number_of_inequality_constraints_,
+                                                          number_of_parameters_and_inequality_constraints_ -
+                                                          1)),
+                        dlib::rowm(scale, dlib::range(number_of_total_constraints_ + 1,
+                                                      number_of_total_constraints_ +
+                number_of_parameters_)));
+
                 cost_vector = pointwise_divide(
-                        objective_function_(
-                                dlib::pointwise_multiply(
-                                        dlib::rowm(parameter, dlib::range(number_of_inequality_constraints_,
-                                                                          number_of_parameters_and_inequality_constraints_ -
-                                                                          1)),
-                                        dlib::rowm(scale, dlib::range(number_of_total_constraints_ + 1,
-                                                                      number_of_total_constraints_ +
-                                                                      number_of_parameters_)))),
+                        objective_function_(scaled_function_values),
                         dlib::rowm(scale, dlib::range(0, number_of_total_constraints_))
-                );
+                        );
             }
 
             object_function_value = cost_vector(0);

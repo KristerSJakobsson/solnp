@@ -9,7 +9,6 @@ import math
 
 
 def powell_objective_function(x):
-    math.exp()
     result = pow(math.e, x[0] * x[1] * x[2] * x[3] * x[4])
     return result
 
