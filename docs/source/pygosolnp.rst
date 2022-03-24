@@ -248,7 +248,7 @@ Furthermore, the execution time is around one third of the single-processed one.
 
 Example 3: Truncated Normal Distribution
 ----------------------------------------
-PYGOSOLNP does not depend on any large-scale library (pandas, numpy, scipy etc.) out of box.
+pygosolnp does not depend on any large-scale library (pandas, numpy, scipy etc.) out of box.
 This example shows how to overrides the logic for generating starting points by using Scipy and the Truncated Normal distribution.
 It is fairly trivial to modify this example to use other `Scipy Distributions`_, for example Beta Distribution sampling etc.
 
@@ -312,7 +312,7 @@ Lets compare this with Grid Sampling below.
 
 Example 4: Grid Sampling
 ------------------------
-PYGOSOLNP does not depend on any large-scale library (pandas, numpy, scipy etc.) out of box.
+pygosolnp does not depend on any large-scale library (pandas, numpy, scipy etc.) out of box.
 This example overrides the logic for generating starting points by using Scikit-optimize Grid Sampling.
 It is fairly trivial to modify this example to use other `Scikit-optimize Sampling Methods`_, for example Sobol, Latin hypercube sampling etc.
 
