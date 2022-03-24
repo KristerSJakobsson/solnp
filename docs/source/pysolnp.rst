@@ -30,7 +30,7 @@ For other systems, or to have BLAS and LAPACK support, please build the wheels m
 
     $ pip install --no-binary :all: pysolnp
 
-Note that this require CMake.
+Note that this requires CMake.
 
 Method
 ------
