@@ -39,7 +39,7 @@ GOSOLNP
 -------
 
 GOSOLNP tries to find the global optimum for the given problem above.
-This algorithm was originally implemented in R through `RSOLNP`_.
+This algorithm was originally implemented in R through `RSOLNP`_, but has been made available in Python through the library pygosolnp.
 
 This is done by:
 
