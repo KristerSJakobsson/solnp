@@ -35,12 +35,10 @@ musllinux-s390x-image = "musllinux_1_1"
 repair-wheel-command = "auditwheel repair -w {dest_dir} {wheel}"
 
 [tool.cibuildwheel.macos]
-archs = ["x86_64"] # TODO: Try to get arm64 wheels working once Github Actions hosts arm64 servers
-
 # Build `universal2` and `arm64` wheels on an Intel runner.
 # Note that the `arm64` wheel and the `arm64` part of the `universal2`
 # wheel cannot be tested in this configuration.
-# archs = ["x86_64", "arm64", "universal2"]
+ archs = ["x86_64", "arm64", "universal2"]
 
 # Skip trying to test arm64 builds on Intel Macs
 # test-skip = "*-macosx_arm64 *-macosx_universal2:arm64"
