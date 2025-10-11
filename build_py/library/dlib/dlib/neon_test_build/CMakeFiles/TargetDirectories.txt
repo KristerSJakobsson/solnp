@@ -1,3 +1,0 @@
-/home/runner/work/solnp/solnp/build_py/library/dlib/dlib/neon_test_build/CMakeFiles/neon_test.dir
-/home/runner/work/solnp/solnp/build_py/library/dlib/dlib/neon_test_build/CMakeFiles/edit_cache.dir
-/home/runner/work/solnp/solnp/build_py/library/dlib/dlib/neon_test_build/CMakeFiles/rebuild_cache.dir

@@ -66,4 +66,5 @@ cmake-build-*/
 # Compiled files
 dist
 build
+build_py
 pysolnp.egg-info

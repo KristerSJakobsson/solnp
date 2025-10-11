@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -O3 -DNDEBUG -flto=auto -Wl,--dependency-file=CMakeFiles/pysolnp.dir/link.d -shared  -o pysolnp.cpython-312-x86_64-linux-gnu.so CMakeFiles/pysolnp.dir/python_solnp/pysolver.cpp.o  library/dlib/dlib/libdlib.a /usr/lib/x86_64-linux-gnu/libsqlite3.so
