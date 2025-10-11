@@ -30,6 +30,7 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(dlib)
+set_target_properties(dlib PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 IF(${BUILD_PYSOLNP})
     set(CMAKE_BUILD_TYPE Release)
