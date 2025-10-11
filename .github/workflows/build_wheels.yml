@@ -13,6 +13,9 @@ jobs:
       matrix:
         os: [ubuntu-22.04, windows-2022, macos-13]
 
+    env:
+      MACOSX_DEPLOYMENT_TARGET: ${{ matrix.os == 'macos-13' && '13.0' || '' }}
+
     steps:
       - uses: actions/checkout@v4
         with:
