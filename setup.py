@@ -9,7 +9,7 @@ from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
 from distutils.version import LooseVersion
 
-__version__ = "2022.3.13"
+__version__ = "2025.10.11"
 
 
 # Get requirements from requirements-dev.txt file
@@ -114,7 +114,6 @@ setup(name='pysolnp',
           "Programming Language :: Python :: 3.9",
           "Programming Language :: Python :: 3.10",
           "Programming Language :: C++",
-          "License :: OSI Approved :: Boost Software License 1.0 (BSL-1.0)",
           "Operating System :: MacOS :: MacOS X",
           "Operating System :: Microsoft :: Windows",
           "Operating System :: POSIX :: Linux",
