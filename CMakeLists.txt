@@ -2,7 +2,9 @@
 cmake_minimum_required(VERSION 3.12)
 project(solnp)
 
-set(CMAKE_CXX_STANDARD 17)
+# Default to C++11 for compatibility with old Catch2 version in tests
+# Python bindings will use C++17
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -24,10 +26,24 @@ IF(${BUILD_PYSOLNP})
     endif()
     
     # Try to find pybind11, fallback to subdirectory if not found
-    find_package(pybind11 QUIET)
+    find_package(pybind11 2.10.0 QUIET CONFIG)
     if(NOT pybind11_FOUND)
-        message(STATUS "pybind11 not found, using subdirectory")
-        add_subdirectory(library/pybind11)
+        message(STATUS "pybind11 >= 2.10.0 not found, trying subdirectory")
+        # Try to find Python-installed pybind11 first
+        execute_process(
+            COMMAND "${Python3_EXECUTABLE}" -m pybind11 --cmakedir
+            OUTPUT_VARIABLE PYBIND11_CMAKE_DIR
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_QUIET
+        )
+        if(PYBIND11_CMAKE_DIR)
+            list(APPEND CMAKE_PREFIX_PATH "${PYBIND11_CMAKE_DIR}")
+            find_package(pybind11 2.10.0 QUIET CONFIG)
+        endif()
+        if(NOT pybind11_FOUND)
+            message(STATUS "Using pybind11 from subdirectory (may not support Python 3.12+)")
+            add_subdirectory(library/pybind11)
+        endif()
     endif()
     
     pybind11_add_module(pysolnp "${PYSOLNP_SOURCES}")
@@ -37,6 +53,11 @@ IF(${BUILD_PYSOLNP})
         ${Python3_NumPy_INCLUDE_DIRS}
     )
     target_link_libraries(pysolnp PRIVATE dlib::dlib Python3::NumPy)
+    # Use C++17 for Python bindings
+    set_target_properties(pysolnp PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED ON
+    )
 ELSE()
     IF(${RUN_CODECOV})
         # --- Coverage specific configuration --- start
@@ -79,6 +100,14 @@ ELSE()
     
     add_executable(utils_tests test/test_utils.cpp)
     target_include_directories(utils_tests PRIVATE src library/Catch2/single_include)
+    
+    # Workaround for SIGSTKSZ issue with old Catch2 and newer glibc
+    # Disable POSIX signals in Catch2 on Linux
+    if(UNIX AND NOT APPLE)
+        target_compile_definitions(catch2_main PRIVATE CATCH_CONFIG_NO_POSIX_SIGNALS)
+        target_compile_definitions(solnp_tests PRIVATE CATCH_CONFIG_NO_POSIX_SIGNALS)
+        target_compile_definitions(utils_tests PRIVATE CATCH_CONFIG_NO_POSIX_SIGNALS)
+    endif()
     
     target_link_libraries(
             solnp_tests

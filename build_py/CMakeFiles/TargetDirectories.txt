@@ -1,0 +1,8 @@
+/home/runner/work/solnp/solnp/build_py/CMakeFiles/pysolnp.dir
+/home/runner/work/solnp/solnp/build_py/CMakeFiles/edit_cache.dir
+/home/runner/work/solnp/solnp/build_py/CMakeFiles/rebuild_cache.dir
+/home/runner/work/solnp/solnp/build_py/library/dlib/CMakeFiles/edit_cache.dir
+/home/runner/work/solnp/solnp/build_py/library/dlib/CMakeFiles/rebuild_cache.dir
+/home/runner/work/solnp/solnp/build_py/library/dlib/dlib/CMakeFiles/dlib.dir
+/home/runner/work/solnp/solnp/build_py/library/dlib/dlib/CMakeFiles/edit_cache.dir
+/home/runner/work/solnp/solnp/build_py/library/dlib/dlib/CMakeFiles/rebuild_cache.dir
