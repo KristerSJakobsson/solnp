@@ -1,9 +1,10 @@
-# Note: Version 2.8.12 is needed for compatibility with anylinux docker
-cmake_minimum_required(VERSION 2.8.12)
+# Note: CMake 3.12 is required for manylinux2010 compatibility
+cmake_minimum_required(VERSION 3.12)
 project(solnp)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 
 IF(${BUILD_PYSOLNP})
@@ -12,16 +13,30 @@ IF(${BUILD_PYSOLNP})
 
     file(GLOB_RECURSE PYSOLNP_SOURCES "python_solnp/*.cpp")
 
-    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/python_solnp)
-
-    set(PYBIND11_CPP_STANDARD -std=c++1y)
-    add_subdirectory(library/pybind11)
+    # Find Python3 and NumPy
+    find_package(Python3 COMPONENTS Interpreter Development NumPy REQUIRED)
+    
+    # Try to find dlib, fallback to subdirectory if not found
+    find_package(dlib QUIET)
+    if(NOT dlib_FOUND)
+        message(STATUS "dlib not found, using subdirectory")
+        add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/library/dlib)
+    endif()
+    
+    # Try to find pybind11, fallback to subdirectory if not found
+    find_package(pybind11 QUIET)
+    if(NOT pybind11_FOUND)
+        message(STATUS "pybind11 not found, using subdirectory")
+        add_subdirectory(library/pybind11)
+    endif()
+    
     pybind11_add_module(pysolnp "${PYSOLNP_SOURCES}")
-    target_link_libraries(pysolnp PRIVATE dlib::dlib)
+    target_include_directories(pysolnp PRIVATE 
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/python_solnp
+        ${Python3_NumPy_INCLUDE_DIRS}
+    )
+    target_link_libraries(pysolnp PRIVATE dlib::dlib Python3::NumPy)
 ELSE()
     IF(${RUN_CODECOV})
         # --- Coverage specific configuration --- start
@@ -45,18 +60,26 @@ ELSE()
     file(GLOB_RECURSE sources_test test/*.cpp)
     file(GLOB_RECURSE sources_test test/*.hpp)
 
-    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-    add_subdirectory(library/dlib)
-    include_directories(src)
-    include_directories(library/Catch2/single_include)
+    # Try to find dlib, fallback to subdirectory if not found
+    find_package(dlib QUIET)
+    if(NOT dlib_FOUND)
+        message(STATUS "dlib not found, using subdirectory")
+        add_subdirectory(library/dlib)
+    endif()
 
     add_library(solnp_lib STATIC src/solnp.hpp src/stdafx.h src/subnp.hpp src/utils.hpp)
     set_target_properties(solnp_lib PROPERTIES LINKER_LANGUAGE CXX)
+    target_include_directories(solnp_lib PUBLIC src)
 
     add_library(catch2_main STATIC test/test_main.cpp)
+    target_include_directories(catch2_main PUBLIC library/Catch2/single_include)
+    
     add_executable(solnp_tests test/test_solnp.cpp)
+    target_include_directories(solnp_tests PRIVATE src library/Catch2/single_include)
+    
     add_executable(utils_tests test/test_utils.cpp)
+    target_include_directories(utils_tests PRIVATE src library/Catch2/single_include)
+    
     target_link_libraries(
             solnp_tests
             PUBLIC catch2_main
