@@ -30,7 +30,7 @@ jobs:
       # (Optional) Install webp for arm64 if you manage system deps
       - name: Install webp for arm64 (macOS only)
         if: matrix.os == 'macos-13'
-        run: arch -arm64 brew reinstall webp
+        run: brew reinstall webp
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.2.0
