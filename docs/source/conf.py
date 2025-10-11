@@ -5,7 +5,7 @@ import sphinx_rtd_theme
 # -- Project information -----------------------------------------------------
 
 project = 'solnp'
-copyright = '2020, Krister S. Jakobsson'
+copyright = '2025, Krister S. Jakobsson'
 master_doc = 'index'
 title = 'Python/C++ SOLNP'
 subtitle = 'Thesis'
