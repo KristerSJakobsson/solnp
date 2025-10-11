@@ -11,7 +11,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-22.04, windows-2022, macos-13]
+        # macos-15-intel is an Intel runner, macos-14 is Apple silicon
+        os: [ubuntu-22.04, ubuntu-24.04-arm, windows-2022, windows-11-arm, macos-15-intel, macos-14]
 
     env:
       MACOSX_DEPLOYMENT_TARGET: ${{ matrix.os == 'macos-13' && '13.0' || '' }}

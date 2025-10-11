@@ -39,7 +39,7 @@ repair-wheel-command = "auditwheel repair -w {dest_dir} {wheel}"
     "brew install webp",
  ]
 
-# Skip trying to test arm64 builds on Intel Macs
+ # Skip trying to test arm64 builds on Intel Macs
  test-skip = "*-macosx_arm64 *-macosx_universal2:arm64"
 
 repair-wheel-command = [
