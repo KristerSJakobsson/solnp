@@ -71,6 +71,10 @@ class CMakeBuild(build_ext):
             else:
                 cmake_args += ['-A', 'Win32']
             build_args += ['--', '/m']
+        elif platform.system() == "Darwin":
+            arch = os.environ.get("CIBW_ARCHS_MACOS")
+            if arch:
+                cmake_args.append(f"-DCMAKE_OSX_ARCHITECTURES={arch}")
         else:
             cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
             build_args += ['--', '-j2']
