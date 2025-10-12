@@ -59,6 +59,7 @@ IF(${BUILD_PYSOLNP})
     # Make pybind11 available when building Python bindings
     FetchContent_MakeAvailable(pybind11)
 
+    set(PYBIND11_HAS_INTERNALS_WITH_SMART_HOLDER_SUPPORT ON)
     set(PYBIND11_CPP_STANDARD -std=c++14) # Updated to C++14
     pybind11_add_module(pysolnp "${PYSOLNP_SOURCES}")
     target_link_libraries(pysolnp PRIVATE dlib::dlib)
