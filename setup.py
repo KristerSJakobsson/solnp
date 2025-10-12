@@ -85,19 +85,6 @@ class CMakeBuild(build_ext):
         )
         if not os.path.exists(self.build_temp):
             os.makedirs(self.build_temp)
-        #
-        # if platform.system() == "Windows":
-        #     import sysconfig
-        #     python_lib = sysconfig.get_config_var('LIBDIR')
-        #     python_lib_name = sysconfig.get_config_var('LDLIBRARY')
-        #     python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
-        #     print("Found python version:", python_version)
-        #     # Add these flags for the correct Python lib location
-        #     if python_lib and python_lib_name:
-        #         cmake_args += [
-        #             f'-DPYTHON_LIBRARY={os.path.join(python_lib, python_lib_name)}',
-        #             f'-DPYTHON_INCLUDE_DIR={sysconfig.get_path("include")}',
-        #         ]
 
         if platform.system() == "Darwin":
             arch = os.environ.get("CIBW_ARCHS_MACOS")
