@@ -22,11 +22,12 @@ jobs:
       - name: Run CMake with Codecov settings
         run: |
           mkdir build
-          cmake -DRUN_CODECOV=TRUE .
+          cd build
+          cmake -DRUN_CODECOV=TRUE ..
           make solnp_tests
-          ./solnp_tests -r junit > build/solnp_tests_result.xml
+          ./solnp_tests -r junit > solnp_tests_result.xml
           make utils_tests
-          ./utils_tests -r junit > build/utils_tests_result.xml
+          ./utils_tests -r junit > utils_tests_result.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
