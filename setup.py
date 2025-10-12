@@ -74,6 +74,20 @@ class CMakeBuild(build_ext):
         else:
             cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
             build_args += ['--', '-j2']
+        if platform.system() == "Windows":
+            import sysconfig
+            python_lib = sysconfig.get_config_var('LIBDIR')
+            python_lib_name = sysconfig.get_config_var('LDLIBRARY')
+            python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
+            # Add these flags for the correct Python lib location
+            if python_lib and python_lib_name:
+                cmake_args += [
+                    f'-DPYTHON_LIBRARY={os.path.join(python_lib, python_lib_name)}',
+                    f'-DPYTHON_INCLUDE_DIR={sysconfig.get_path("include")}',
+                ]
+            # For ARM64 builds, set the architecture accordingly
+            if platform.machine().lower() == "arm64":
+                cmake_args += ['-A', 'ARM64']
 
         if platform.system() == "Darwin":
             arch = os.environ.get("CIBW_ARCHS_MACOS")
