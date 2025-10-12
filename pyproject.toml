@@ -28,6 +28,3 @@ manylinux-s390x-image = "manylinux2014"
 
 [tool.cibuildwheel.linux]
 repair-wheel-command = "auditwheel repair -w {dest_dir} {wheel}"
-
-[project]
-requires-python = ">=3.8"
