@@ -4,6 +4,7 @@ project(solnp)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(DLIB_USE_CUDA OFF)
 
 # Use FetchContent to manage dependencies
 include(FetchContent)
