@@ -15,7 +15,6 @@ jobs:
           - os: ubuntu-22.04  # manylinux x86
           - os: ubuntu-24.04-arm  # manylinux ARM
           - os: windows-2022  # Windows x86
-          - os: windows-11-arm   # Windows on ARM
           - os: macos-15-intel  # Apple x86
           - os: macos-15  # Apple Silicon
 
