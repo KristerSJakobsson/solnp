@@ -65,11 +65,21 @@ ELSE()
         append_coverage_compiler_flags()
         # test coverage build configuration for C++: debug build, no optimization, profiling enabled
         set(CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
-        set(COVERAGE_EXCLUDES '${PROJECT_SOURCE_DIR}/test/*')
 
-        # cmake code coverage module target
-        setup_target_for_coverage(solnp_tests_coverage solnp_tests coverage)
-        setup_target_for_coverage(utils_tests_coverage utils_tests coverage)
+        setup_target_for_coverage_lcov(
+                NAME solnp_tests_coverage
+                EXECUTABLE solnp_tests
+                DEPENDENCIES solnp_tests
+                EXCLUDE '${PROJECT_SOURCE_DIR}/test/*'
+        )
+
+        setup_target_for_coverage_lcov(
+                NAME utils_tests_coverage
+                EXECUTABLE utils_tests
+                DEPENDENCIES utils_tests
+                EXCLUDE '${PROJECT_SOURCE_DIR}/test/*'
+        )
+
         # --- Coverage specific configuration --- end
     ENDIF()
 
