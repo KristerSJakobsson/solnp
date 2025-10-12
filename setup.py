@@ -71,13 +71,14 @@ class CMakeBuild(build_ext):
             else:
                 cmake_args += ['-A', 'Win32']
             build_args += ['--', '/m']
-        elif platform.system() == "Darwin":
-            arch = os.environ.get("CIBW_ARCHS_MACOS")
-            if arch:
-                cmake_args.append(f"-DCMAKE_OSX_ARCHITECTURES={arch}")
         else:
             cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
             build_args += ['--', '-j2']
+
+        if platform.system() == "Darwin":
+            arch = os.environ.get("CIBW_ARCHS_MACOS")
+            if arch:
+                cmake_args.append(f"-DCMAKE_OSX_ARCHITECTURES={arch}")
 
         env = os.environ.copy()
         env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(
@@ -112,11 +113,13 @@ setup(name='pysolnp',
       include_package_data=True,
       classifiers=[
           "Programming Language :: Python :: 3",
-          "Programming Language :: Python :: 3.6",
-          "Programming Language :: Python :: 3.7",
           "Programming Language :: Python :: 3.8",
           "Programming Language :: Python :: 3.9",
           "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
           "Programming Language :: C++",
           "Operating System :: MacOS :: MacOS X",
           "Operating System :: Microsoft :: Windows",
@@ -131,5 +134,5 @@ setup(name='pysolnp',
               'requirements-dev.txt',
           ]
       )],
-      python_requires='>=3.6'
+      python_requires='>=3.8'
       )
