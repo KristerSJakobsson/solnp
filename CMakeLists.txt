@@ -50,6 +50,28 @@ IF(${BUILD_PYSOLNP})
     pybind11_add_module(pysolnp "${PYSOLNP_SOURCES}")
     target_link_libraries(pysolnp PRIVATE dlib::dlib)
 ELSE()
+
+    IF(${RUN_CODECOV})
+        # --- Coverage specific configuration --- start
+        # required: Coverage or Debug
+        # (alternatively via command line option: cmake -DCMAKE_BUILD_TYPE=Coverage ..)
+        set(CMAKE_BUILD_TYPE Coverage)
+        # add the project specific cmake modules directory to the cmake module path
+        # (w.r.t. CI/CD builds this is not the best approach)
+        set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+        # include the cmake code coverage module
+        include(CodeCoverage)
+        APPEND_COVERAGE_COMPILER_FLAGS()
+        # test coverage build configuration for C++: debug build, no optimization, profiling enabled
+        set(CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
+        # exclude /test and external libraries from coverage analysis
+        set(LCOV_REMOVE_EXTRA "'test/*'" "'${catch2_SOURCE_DIR}/*'" "'${dlib_SOURCE_DIR}/*'")
+        # cmake code coverage module target
+        setup_target_for_coverage(solnp_tests_coverage solnp_tests coverage)
+        setup_target_for_coverage(utils_tests_coverage utils_tests coverage)
+        # --- Coverage specific configuration --- end
+    ENDIF()
+
     file(GLOB_RECURSE sources_test test/*.cpp)
     file(GLOB_RECURSE sources_test test/*.hpp)
 
@@ -83,26 +105,5 @@ ELSE()
             PUBLIC catch2_main
             PUBLIC solnp_lib
             PRIVATE dlib::dlib)
-
-    IF(${RUN_CODECOV})
-        # --- Coverage specific configuration --- start
-        # required: Coverage or Debug
-        # (alternatively via command line option: cmake -DCMAKE_BUILD_TYPE=Coverage ..)
-        set(CMAKE_BUILD_TYPE Coverage)
-        # add the project specific cmake modules directory to the cmake module path
-        # (w.r.t. CI/CD builds this is not the best approach)
-        set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
-        # include the cmake code coverage module
-        include(CodeCoverage)
-        APPEND_COVERAGE_COMPILER_FLAGS()
-        # test coverage build configuration for C++: debug build, no optimization, profiling enabled
-        set(CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
-        # exclude /test and external libraries from coverage analysis
-        set(LCOV_REMOVE_EXTRA "'test/*'" "'${catch2_SOURCE_DIR}/*'" "'${dlib_SOURCE_DIR}/*'")
-        # cmake code coverage module target
-        setup_target_for_coverage(solnp_tests_coverage solnp_tests coverage)
-        setup_target_for_coverage(utils_tests_coverage utils_tests coverage)
-        # --- Coverage specific configuration --- end
-    ENDIF()
 
 ENDIF()
