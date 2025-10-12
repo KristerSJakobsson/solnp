@@ -3,11 +3,11 @@ Changelog
 
 pysolnp 2025.10.12
 -------------------
-- Remove support for Python 3.6 and 3.7
+- Add support for Python 3.11, 3.12, 3.13 and 3.14, remove support for Python 3.6 and 3.7
 - Update version of CMake to 3.14.0 and migrate from git submodules to FetchContent for C++ dependencies
-- Add support for Python 3.11 to 3.14
--
+- Fix Github Actions CI to use latest versions of cibuildwheels etc.
 - Fix Github Actions CI to work with CodeCov
+- Fix ReadTheDocs wiring
 
 pysolnp 2022.3.13
 -------------------

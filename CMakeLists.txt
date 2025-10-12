@@ -4,7 +4,7 @@ project(solnp)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(DLIB_ISO_CPP_ONLY OFF)
+set(DLIB_ISO_CPP_ONLY ON)
 
 # Use FetchContent to manage dependencies
 include(FetchContent)
