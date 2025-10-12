@@ -4,7 +4,19 @@ project(solnp)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(DLIB_ISO_CPP_ONLY ON)
+
+# DLIB has various configuration, we care about BLAS and LAPACK but not most image formats
+set(DLIB_JPEG_SUPPORT       OFF)
+set(DLIB_LINK_WITH_SQLITE3  OFF)
+set(DLIB_USE_BLAS           ON)
+set(DLIB_USE_LAPACK         ON)
+set(DLIB_USE_CUDA           OFF)
+set(DLIB_PNG_SUPPORT        OFF)
+set(DLIB_GIF_SUPPORT        OFF)
+set(DLIB_WEBP_SUPPORT       OFF)
+set(DLIB_JXL_SUPPORT        OFF)
+set(DLIB_USE_MKL_FFT        OFF)
+set(DLIB_USE_FFMPEG         OFF)
 
 # Use FetchContent to manage dependencies
 include(FetchContent)
