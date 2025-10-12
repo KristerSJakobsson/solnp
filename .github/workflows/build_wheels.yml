@@ -12,13 +12,12 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-22.04
-          - os: ubuntu-24.04-arm
-          - os: windows-2022
-          - os: macos-15-intel
-            macosx_deployment_target: '15.0'
-          - os: macos-15
-            macosx_deployment_target: '15.0'
+          - os: ubuntu-22.04  # manylinux x86
+          - os: ubuntu-24.04-arm  # manylinux ARM
+          - os: windows-2022  # Windows x86
+          - os: windows-11-arm   # Windows on ARM
+          - os: macos-15-intel  # Apple x86
+          - os: macos-15  # Apple Silicon
 
     steps:
       - uses: actions/checkout@v4
@@ -32,13 +31,11 @@ jobs:
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.2.0
-        env:
-          MACOSX_DEPLOYMENT_TARGET: ${{ matrix.macosx_deployment_target }}
 
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: build-artifact-${{ github.run_id }}  # Unique name to avoid issues where they clash
           path: ./wheelhouse/*.whl
 
   build_sdist:
