@@ -17,8 +17,8 @@ jobs:
           - os: windows-2022
           - os: macos-15-intel
             macosx_deployment_target: '15.0'
-          - os: macos-14
-            macosx_deployment_target: '14.0'
+          - os: macos-15
+            macosx_deployment_target: '15.0'
 
     steps:
       - uses: actions/checkout@v4
