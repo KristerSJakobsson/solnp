@@ -58,9 +58,9 @@ ELSE()
         set(CMAKE_BUILD_TYPE "Coverage")
         # add the project specific cmake modules directory to the cmake module path
         # (w.r.t. CI/CD builds this is not the best approach)
-#        set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+        set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
         # include the cmake code coverage module
-        include(cmake/CodeCoverage.cmake)
+        include(CodeCoverage)
         append_coverage_compiler_flags()
         # test coverage build configuration for C++: debug build, no optimization, profiling enabled
         set(CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
