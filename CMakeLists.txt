@@ -68,8 +68,8 @@ ELSE()
         set(COVERAGE_EXCLUDES '${PROJECT_SOURCE_DIR}/test/*')
 
         # cmake code coverage module target
-        setup_target_for_coverage_gcovr_html(solnp_tests_coverage solnp_tests coverage)
-        setup_target_for_coverage_gcovr_html(utils_tests_coverage utils_tests coverage)
+        setup_target_for_coverage(solnp_tests_coverage solnp_tests coverage)
+        setup_target_for_coverage(utils_tests_coverage utils_tests coverage)
         # --- Coverage specific configuration --- end
     ENDIF()
 
