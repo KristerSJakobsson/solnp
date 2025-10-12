@@ -94,6 +94,7 @@ ELSE()
         set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
         # include the cmake code coverage module
         include(CodeCoverage)
+        APPEND_COVERAGE_COMPILER_FLAGS()
         # test coverage build configuration for C++: debug build, no optimization, profiling enabled
         set(CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
         # exclude /test and external libraries from coverage analysis
