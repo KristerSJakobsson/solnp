@@ -74,11 +74,21 @@ class CMakeBuild(build_ext):
         else:
             cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
             build_args += ['--', '-j2']
+
+        env = os.environ.copy()
+        env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(
+            env.get('CXXFLAGS', ''),
+            self.distribution.get_version()
+        )
+        if not os.path.exists(self.build_temp):
+            os.makedirs(self.build_temp)
+
         if platform.system() == "Windows":
             import sysconfig
             python_lib = sysconfig.get_config_var('LIBDIR')
             python_lib_name = sysconfig.get_config_var('LDLIBRARY')
             python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
+            print("Found python version:", python_version)
             # Add these flags for the correct Python lib location
             if python_lib and python_lib_name:
                 cmake_args += [
@@ -94,13 +104,6 @@ class CMakeBuild(build_ext):
             if arch:
                 cmake_args.append(f"-DCMAKE_OSX_ARCHITECTURES={arch}")
 
-        env = os.environ.copy()
-        env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(
-            env.get('CXXFLAGS', ''),
-            self.distribution.get_version()
-        )
-        if not os.path.exists(self.build_temp):
-            os.makedirs(self.build_temp)
         subprocess.check_call(
             ['cmake', ext.sourcedir] + cmake_args,
             cwd=self.build_temp, env=env
