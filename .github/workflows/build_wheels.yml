@@ -34,7 +34,7 @@ jobs:
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: build-artifact-${{ github.run_id }}-${{ github.job_id }}  # Unique name to avoid issues where they clash
+          name: build-artifact-${{ github.run_id }}-${{ matrix.os }}  # Unique name to avoid issues where they clash
           path: ./wheelhouse/*.whl
 
   build_sdist:
