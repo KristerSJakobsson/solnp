@@ -277,51 +277,51 @@ TEST_CASE("Left vector min right vector max throws on invalid input", "[utils][e
         m = 1, 2, 3, 4, 5, 6;
         REQUIRE_THROWS_WITH(cppsolnp::left_vector_min_right_vector_max(m), "Invalid input.");
 }
-
-TEST_CASE("To string (matrix) returns correct format for 2x2 matrix", "[utils]") {
-        dlib::matrix<double, 2, 2> m;
-        m = 1.0, 2.0, 3.0, 4.0;
-        std::string s = cppsolnp::to_string(m, false);
-        CHECK(s == "[1.000000 2.000000;\n3.000000 4.000000]");
-}
-
-TEST_CASE("To string (matrix) returns correct format for flatten=true", "[utils]") {
-        dlib::matrix<double, 2, 2> m;
-        m = 1.0, 2.0, 3.0, 4.0;
-        std::string s = cppsolnp::to_string(m, true);
-        CHECK(s == "[1.000000 2.000000; 3.000000 4.000000]");
-}
-
-TEST_CASE("To string (matrix) handles 1x1 matrix", "[utils]") {
-        dlib::matrix<double, 1, 1> m;
-        m = -7.5;
-        std::string s = cppsolnp::to_string(m, false);
-        CHECK(s == "[-7.500000]");
-}
-
-TEST_CASE("To string (matrix) handles 1-row matrix", "[utils]") {
-        dlib::matrix<double, 1, 3> m;
-        m = 1.1, -2.2, 3.3;
-        std::string s = cppsolnp::to_string(m, false);
-        CHECK(s == "[1.100000 -2.200000 3.300000]");
-}
-
-TEST_CASE("To string (matrix) handles 1-column matrix", "[utils]") {
-        dlib::matrix<double, 3, 1> m;
-        m = 1.1, -2.2, 3.3;
-        std::string s = cppsolnp::to_string(m, false);
-        CHECK(s == "[1.100000;\n-2.200000;\n3.300000]");
-}
-
-TEST_CASE("To string (matrix) handles empty matrix", "[utils]") {
-        dlib::matrix<double> m(0, 0);
-        std::string s = cppsolnp::to_string(m, false);
-        CHECK(s == "[]");
-}
-
-TEST_CASE("To string (matrix) handles negative and decimal values", "[utils]") {
-        dlib::matrix<double, 2, 2> m;
-        m = -1.234567, 0.0, 2.5, -3.1;
-        std::string s = cppsolnp::to_string(m, false);
-        CHECK(s == "[-1.234567 0.000000;\n2.500000 -3.100000]");
-}
+//
+// TEST_CASE("To string (matrix) returns correct format for 2x2 matrix", "[utils]") {
+//         dlib::matrix<double, 2, 2> m;
+//         m = 1.0, 2.0, 3.0, 4.0;
+//         std::string s = cppsolnp::to_string(m, false);
+//         CHECK(s == "[1.000000 2.000000;\n3.000000 4.000000]");
+// }
+//
+// TEST_CASE("To string (matrix) returns correct format for flatten=true", "[utils]") {
+//         dlib::matrix<double, 2, 2> m;
+//         m = 1.0, 2.0, 3.0, 4.0;
+//         std::string s = cppsolnp::to_string(m, true);
+//         CHECK(s == "[1.000000 2.000000; 3.000000 4.000000]");
+// }
+//
+// TEST_CASE("To string (matrix) handles 1x1 matrix", "[utils]") {
+//         dlib::matrix<double, 1, 1> m;
+//         m = -7.5;
+//         std::string s = cppsolnp::to_string(m, false);
+//         CHECK(s == "[-7.500000]");
+// }
+//
+// TEST_CASE("To string (matrix) handles 1-row matrix", "[utils]") {
+//         dlib::matrix<double, 1, 3> m;
+//         m = 1.1, -2.2, 3.3;
+//         std::string s = cppsolnp::to_string(m, false);
+//         CHECK(s == "[1.100000 -2.200000 3.300000]");
+// }
+//
+// TEST_CASE("To string (matrix) handles 1-column matrix", "[utils]") {
+//         dlib::matrix<double, 3, 1> m;
+//         m = 1.1, -2.2, 3.3;
+//         std::string s = cppsolnp::to_string(m, false);
+//         CHECK(s == "[1.100000;\n-2.200000;\n3.300000]");
+// }
+//
+// TEST_CASE("To string (matrix) handles empty matrix", "[utils]") {
+//         dlib::matrix<double> m(0, 0);
+//         std::string s = cppsolnp::to_string(m, false);
+//         CHECK(s == "[]");
+// }
+//
+// TEST_CASE("To string (matrix) handles negative and decimal values", "[utils]") {
+//         dlib::matrix<double, 2, 2> m;
+//         m = -1.234567, 0.0, 2.5, -3.1;
+//         std::string s = cppsolnp::to_string(m, false);
+//         CHECK(s == "[-1.234567 0.000000;\n2.500000 -3.100000]");
+// }

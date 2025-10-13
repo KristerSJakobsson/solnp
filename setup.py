@@ -64,7 +64,8 @@ class CMakeBuild(build_ext):
             cmake_args += [
                 '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{}={}'.format(
                     cfg.upper(), extdir
-                )
+                ),
+                '-DPYBIND3=TRUE'
             ]
             if platform.machine().lower() == "arm64":
                 # For ARM64 builds, set the architecture accordingly
