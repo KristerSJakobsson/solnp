@@ -25,6 +25,9 @@ manylinux-aarch64-image = "manylinux2014"
 manylinux-ppc64le-image = "manylinux2014"
 manylinux-s390x-image = "manylinux2014"
 
+[tool.cibuildwheel]
+test-skip = ["*-win_arm64"]  # Skip tests on arm64 windows as the runner won't work with them
 
 [tool.cibuildwheel.linux]
 repair-wheel-command = "auditwheel repair -w {dest_dir} {wheel}"
+
