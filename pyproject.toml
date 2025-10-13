@@ -1,8 +1,8 @@
 [tool.cibuildwheel]
 build = "*"
-# Disable building PyPy wheels on all platforms
-skip = "pp*"
-test-skip = ""
+
+skip = ""
+test-skip = ["*-win_arm64"]  # Skip tests on arm64 windows as the runner won't work with them
 
 archs = ["auto"]
 build-frontend = "pip"
@@ -24,8 +24,6 @@ manylinux-i686-image = "manylinux2014"
 manylinux-aarch64-image = "manylinux2014"
 manylinux-ppc64le-image = "manylinux2014"
 manylinux-s390x-image = "manylinux2014"
-
-test-skip = ["*-win_arm64"]  # Skip tests on arm64 windows as the runner won't work with them
 
 [tool.cibuildwheel.linux]
 repair-wheel-command = "auditwheel repair -w {dest_dir} {wheel}"
