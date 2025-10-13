@@ -41,16 +41,10 @@ TEST_CASE("Throws when tolerance is not finite", "[solnp][exception]") {
     param = 1.0, 2.0;
     auto functor = [](const dlib::matrix<double>& x) {
         dlib::matrix<double, 2, 1> y;
-        y = x(0) + x(1), 0.0;
         return y;
     };
-    // double nan_tol = std::numeric_limits<double>::quiet_NaN();
     double inf_tol = std::numeric_limits<double>::infinity();
 
-    // REQUIRE_THROWS_AS(
-    //     cppsolnp::solnp(functor, param, nullptr, 1.0, 400, 800, 1e-7, nan_tol),
-    //     std::invalid_argument
-    // );
     REQUIRE_THROWS_AS(
         cppsolnp::solnp(functor, param, nullptr, 1.0, 400, 800, 1e-7, inf_tol),
         std::invalid_argument

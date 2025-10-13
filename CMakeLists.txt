@@ -94,14 +94,14 @@ ELSE ()
                 NAME solnp_tests_coverage
                 EXECUTABLE solnp_tests
                 DEPENDENCIES solnp_tests
-                EXCLUDE '${PROJECT_SOURCE_DIR}/test/*'
+                EXCLUDE 'test/*'
         )
 
         setup_target_for_coverage_lcov(
                 NAME utils_tests_coverage
                 EXECUTABLE utils_tests
                 DEPENDENCIES utils_tests
-                EXCLUDE '${PROJECT_SOURCE_DIR}/test/*'
+                EXCLUDE 'test/*'
         )
 
         # --- Coverage specific configuration --- end
