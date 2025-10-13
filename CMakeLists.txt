@@ -1,5 +1,5 @@
 # Updated for manylinux2014 compatibility
-cmake_minimum_required(VERSION 3.15.0)
+cmake_minimum_required(VERSION 3.14.0)
 project(solnp)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -39,7 +39,7 @@ FetchContent_Declare(
 FetchContent_Declare(
         pybind11
         GIT_REPOSITORY https://github.com/pybind/pybind11.git
-        GIT_TAG v3.0.1
+        GIT_TAG v2.13.6
 )
 
 FetchContent_MakeAvailable(dlib)
@@ -59,7 +59,6 @@ IF(${BUILD_PYSOLNP})
     # Make pybind11 available when building Python bindings
     FetchContent_MakeAvailable(pybind11)
 
-    set(PYBIND11_HAS_INTERNALS_WITH_SMART_HOLDER_SUPPORT ON)
     set(PYBIND11_CPP_STANDARD -std=c++14) # Updated to C++14
     pybind11_add_module(pysolnp "${PYSOLNP_SOURCES}")
     target_link_libraries(pysolnp PRIVATE dlib::dlib)
