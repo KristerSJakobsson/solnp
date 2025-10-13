@@ -81,12 +81,24 @@ namespace cppsolnp {
         }
 
         if (lagrangian_parameters_bounded.first) {
-            if (dlib::min(dlib::colm(parameter_data, 2) - dlib::colm(parameter_data, 1)) <= 0) {
-                throw std::invalid_argument(
-                        "The lower bounds of the parameter constraints must be strictly less than the upper bounds.");
-            } else if (dlib::min(parameters - dlib::colm(parameter_data, 1)) <= 0 ||
-                       dlib::min(dlib::colm(parameter_data, 2) - parameters) <= 0) {
-                throw std::invalid_argument("Initial parameter values must be within the bounds.");
+            if (parameter_vector_width == 2)
+            {
+                if (dlib::min(dlib::colm(parameter_data, 1) - dlib::colm(parameter_data, 0)) <= 0) {
+                    throw std::invalid_argument(
+                            "The lower bounds of the parameter constraints must be strictly less than the upper bounds.");
+                }
+            }
+            else if (parameter_vector_width == 3)
+            {
+                if (dlib::min(dlib::colm(parameter_data, 2) - dlib::colm(parameter_data, 1)) <= 0) {
+                    throw std::invalid_argument(
+                            "The lower bounds of the parameter constraints must be strictly less than the upper bounds.");
+                }
+                if (dlib::min(parameters - dlib::colm(parameter_data, 1)) <= 0 ||
+                    dlib::min(dlib::colm(parameter_data, 2) - parameters) <= 0)
+                {
+                    throw std::invalid_argument("Initial parameter values must be within the bounds.");
+                }
             }
         }
         /* Assume inequality constraints exist for now.

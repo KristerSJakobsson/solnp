@@ -82,10 +82,10 @@ namespace cppsolnp {
         double denom;
         for (int row = 0; row < max_row; ++row) {
             for (int col = 0; col < max_col; ++col) {
-
-                if ((denom = denominator_matrix(row, col)) == 0.0) {
+                // Use std::signbit to handle negative zero case.
+                if ((denom = denominator_matrix(row, col)) == 0.0 && std::signbit(denom) == false) {
                     result(row, col) = std::numeric_limits<double>::infinity();
-                } else if (denom == -0.0) {
+                } else if (denom == 0.0 && std::signbit(denom) == true) {
                     result(row, col) = -std::numeric_limits<double>::infinity();
                 } else {
                     result(row, col) = numerator_matrix(row, col) / denom;
@@ -153,27 +153,31 @@ namespace cppsolnp {
 
     /* Saves a matrix to a string. If flatten is true, no row breaks will be included.*/
     template<typename M>
-    std::string to_string(M matrix, bool flatten = false) {
+std::string to_string(M matrix, bool flatten = false) {
         COMPILE_TIME_ASSERT(dlib::is_matrix<M>::value);
+        if (matrix.nr() == 0 || matrix.nc() == 0) {
+            return "[]";
+        }
+
         std::string return_value = "[";
         for (auto row = 0L; row < matrix.nr(); ++row) {
             for (auto col = 0L; col < matrix.nc(); ++col) {
-                return_value += std::to_string(matrix(row, col)) + " ";
-                if (col < matrix.nc() - 1 && row < matrix.nr() - 1) {
+                return_value += std::to_string(matrix(row, col));
+                if (col < matrix.nc() - 1) {
                     return_value += " ";
-                } else if (col == matrix.nc() - 1 && row < matrix.nr() - 1) {
-                    return_value += ";";
                 }
             }
-            if (row < matrix.nr() - 1 && !flatten) {
-                return_value += "\n";
-            } else if (row < matrix.nr() - 1 && flatten) {
-                return_value += " ";
+            if (row < matrix.nr() - 1) {
+                return_value += ";";
+                if (!flatten) {
+                    return_value += "\n";
+                } else {
+                    return_value += " ";
+                }
             } else {
                 return_value += "]";
             }
         }
-
         return return_value;
     }
 

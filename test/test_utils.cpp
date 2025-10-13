@@ -4,9 +4,11 @@
 
 #include "stdafx.h"
 #include "utils.hpp"
+#include "catch2/matchers/catch_matchers.hpp"
 
 
-TEST_CASE("Conditional number statically sized", "[utils]") {
+TEST_CASE("Conditional number statically sized", "[utils]")
+{
     dlib::matrix<double, 3, 3> A;
     A =
             2.0, 1.0, 3.0,
@@ -32,6 +34,12 @@ TEST_CASE("Conditional number dynamically sized", "[utils]") {
 
     CHECK(cond == Catch::Approx(25.003922978899976));
 
+}
+
+TEST_CASE("Conditional number throws on SVD failure (e.g. 0 size)", "[utils][exception]") {
+        dlib::matrix<double> m(2, 2);
+        m = 1, std::numeric_limits<double>::infinity(), 3, 4;
+        REQUIRE_THROWS_WITH(cppsolnp::conditional_number(m), "Singular value decomposition failed.");
 }
 
 TEST_CASE("Euclidean norm statically sized", "[utils]") {
@@ -118,6 +126,23 @@ TEST_CASE("Pointwise divide dynamically sized", "[utils]") {
 
 }
 
+TEST_CASE("Pointwise divide throws on size mismatch", "[utils][exception]") {
+        dlib::matrix<double, 2, 2> a;
+        a = 1, 2, 3, 4;
+        dlib::matrix<double, 2, 1> b;
+        b = 1, 2;
+        REQUIRE_THROWS_WITH(cppsolnp::pointwise_divide(a, b), "Tried to divide two matrixes of different size.");
+}
+
+TEST_CASE("Pointwise divide returns infinity for zero denominator", "[utils]") {
+        dlib::matrix<double, 2, 1> a, b;
+        a = 1.0, -2.0;
+        b = 0.0, -0.0;
+        auto result = cppsolnp::pointwise_divide(a, b);
+        CHECK(result(0) == std::numeric_limits<double>::infinity());
+        CHECK(result(1) == -std::numeric_limits<double>::infinity());
+}
+
 TEST_CASE("Elementwise max statically sized", "[utils]") {
     dlib::matrix<double, 6, 1> x;
     x =
@@ -154,6 +179,13 @@ TEST_CASE("Elementwise max dynamically sized", "[utils]") {
 
 }
 
+TEST_CASE("Elementwise max handles empty matrix", "[utils]") {
+        dlib::matrix<double> x(0, 0);
+        auto y = cppsolnp::elementwise_max(x, 2.0);
+        CHECK(y.size() == 0);
+}
+
+
 TEST_CASE("Elementwise min statically sized", "[utils]") {
     dlib::matrix<double, 6, 1> x;
     x =
@@ -188,6 +220,12 @@ TEST_CASE("Elementwise min dynamically sized", "[utils]") {
     CHECK(y(4) == Catch::Approx(std::min(x(4), 2.0)));
     CHECK(y(5) == Catch::Approx(std::min(x(5), 2.0)));
 
+}
+
+TEST_CASE("Elementwise min handles empty matrix", "[utils]") {
+        dlib::matrix<double> x(0, 0);
+        auto y = cppsolnp::elementwise_min(x, 2.0);
+        CHECK(y.size() == 0);
 }
 
 TEST_CASE("Left vector min right vector max statically sized", "[utils]") {
@@ -232,4 +270,58 @@ TEST_CASE("Left vector min right vector max dynamically sized", "[utils]") {
     CHECK(y(2, 0) == Catch::Approx(std::min(x(2, 0), x(2, 1))));
     CHECK(y(2, 1) == Catch::Approx(std::max(x(2, 0), x(2, 1))));
 
+}
+
+TEST_CASE("Left vector min right vector max throws on invalid input", "[utils][exception]") {
+        dlib::matrix<double, 2, 3> m;
+        m = 1, 2, 3, 4, 5, 6;
+        REQUIRE_THROWS_WITH(cppsolnp::left_vector_min_right_vector_max(m), "Invalid input.");
+}
+
+TEST_CASE("To string (matrix) returns correct format for 2x2 matrix", "[utils]") {
+        dlib::matrix<double, 2, 2> m;
+        m = 1.0, 2.0, 3.0, 4.0;
+        std::string s = cppsolnp::to_string(m, false);
+        CHECK(s == "[1.000000 2.000000;\n3.000000 4.000000]");
+}
+
+TEST_CASE("To string (matrix) returns correct format for flatten=true", "[utils]") {
+        dlib::matrix<double, 2, 2> m;
+        m = 1.0, 2.0, 3.0, 4.0;
+        std::string s = cppsolnp::to_string(m, true);
+        CHECK(s == "[1.000000 2.000000; 3.000000 4.000000]");
+}
+
+TEST_CASE("To string (matrix) handles 1x1 matrix", "[utils]") {
+        dlib::matrix<double, 1, 1> m;
+        m = -7.5;
+        std::string s = cppsolnp::to_string(m, false);
+        CHECK(s == "[-7.500000]");
+}
+
+TEST_CASE("To string (matrix) handles 1-row matrix", "[utils]") {
+        dlib::matrix<double, 1, 3> m;
+        m = 1.1, -2.2, 3.3;
+        std::string s = cppsolnp::to_string(m, false);
+        CHECK(s == "[1.100000 -2.200000 3.300000]");
+}
+
+TEST_CASE("To string (matrix) handles 1-column matrix", "[utils]") {
+        dlib::matrix<double, 3, 1> m;
+        m = 1.1, -2.2, 3.3;
+        std::string s = cppsolnp::to_string(m, false);
+        CHECK(s == "[1.100000;\n-2.200000;\n3.300000]");
+}
+
+TEST_CASE("To string (matrix) handles empty matrix", "[utils]") {
+        dlib::matrix<double> m(0, 0);
+        std::string s = cppsolnp::to_string(m, false);
+        CHECK(s == "[]");
+}
+
+TEST_CASE("To string (matrix) handles negative and decimal values", "[utils]") {
+        dlib::matrix<double, 2, 2> m;
+        m = -1.234567, 0.0, 2.5, -3.1;
+        std::string s = cppsolnp::to_string(m, false);
+        CHECK(s == "[-1.234567 0.000000;\n2.500000 -3.100000]");
 }

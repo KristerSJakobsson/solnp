@@ -2,9 +2,9 @@ name: Run C++ Codecov
 
 on:
   push:
-    branches: [release]
+    branches: [master, release]
   pull_request:
-    branches: [release]
+    branches: [master, release]
 
 jobs:
   run_codecov:
