@@ -120,20 +120,28 @@ TEST_CASE("Pointwise divide dynamically sized", "[utils]") {
 }
 
 TEST_CASE("Pointwise divide throws on size mismatch", "[utils][exception]") {
-        dlib::matrix<double, 2, 2> a;
-        a = 1, 2, 3, 4;
-        dlib::matrix<double, 2, 1> b;
-        b = 1, 2;
-        REQUIRE_THROWS_WITH(cppsolnp::pointwise_divide(a, b), "Tried to divide two matrixes of different size.");
+        dlib::matrix<double, 2, 2> matrix_a;
+        matrix_a = 1, 2, 3, 4;
+        dlib::matrix<double, 2, 1> matrix_b;
+        matrix_b = 1, 2;
+        REQUIRE_THROWS_WITH(cppsolnp::pointwise_divide(matrix_a, matrix_b), "Tried to divide two matrixes of different size.");
+
+        dlib::matrix<double, 2, 2> matrix_c;
+        matrix_a = 1, 2, 3, 4;
+        dlib::matrix<double, 1, 2> matrix_d;
+        matrix_b = 1, 2;
+        REQUIRE_THROWS_WITH(cppsolnp::pointwise_divide(matrix_c, matrix_d), "Tried to divide two matrixes of different size.");
 }
 
 TEST_CASE("Pointwise divide returns infinity for zero denominator", "[utils]") {
-        dlib::matrix<double, 2, 1> a, b;
-        a = 1.0, -2.0;
-        b = 0.0, -0.0;
-        auto result = cppsolnp::pointwise_divide(a, b);
+        dlib::matrix<double, 4, 1> denominator, numerator;
+        numerator = 2.0, -2.0, 2.0, -2.0;
+        denominator = 0.0, 0.0, -0.0, -0.0;
+        auto result = cppsolnp::pointwise_divide( numerator,denominator);
         CHECK(result(0) == std::numeric_limits<double>::infinity());
         CHECK(result(1) == -std::numeric_limits<double>::infinity());
+        CHECK(result(2) == -std::numeric_limits<double>::infinity());
+        CHECK(result(3) == std::numeric_limits<double>::infinity());
 }
 
 TEST_CASE("Elementwise max statically sized", "[utils]") {

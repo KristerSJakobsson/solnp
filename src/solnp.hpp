@@ -405,7 +405,7 @@ namespace cppsolnp {
 
         dlib::matrix<double, 0, 0> inequality_bounds;
         return solnp(functor, parameter_data, inequality_bounds, event_log, rho, maximum_major_iterations,
-                     maximum_minor_iterations, delta, delta);
+                     maximum_minor_iterations, delta, tolerance);
     }
 
 }; //namespace cppsolnp

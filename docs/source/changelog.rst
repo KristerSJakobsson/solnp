@@ -6,8 +6,9 @@ pysolnp 2025.10.12
 Bugs
 - Fixed bug where "1/-1.0" would incorrectly be calculated as infinity instead of -infinity
 - Fixed bug where it would reject functions with upper and lower parameter when you did not supply any starting guess
+- Fixed bug where tolerance was not wired up with all callbacks
 - Fixed minor bugs where matrixes would be incorrect stringified with warnings/errors in some edge cases
-- Added unit tests and improved unit test coverage (however due to differnces in how the coverage is derived the actual value is lower than before)
+- Added unit tests and improved unit test coverage (however due to differences in how the coverage is derived the actual value is lower than before)
 
 Other
 - Add support for Python 3.11, 3.12, 3.13 and 3.14, remove support for Python 3.6 and 3.7
