@@ -36,6 +36,27 @@ TEST_CASE("Calculate trivial Quadratic function", "[y=x^2][solnp][sanity]")
     REQUIRE(calculate.solve_value <= Catch::Approx(0.0).margin(1e-3));
 }
 
+TEST_CASE("Throws when tolerance is not finite", "[solnp][exception]") {
+    dlib::matrix<double, 2, 1> param;
+    param = 1.0, 2.0;
+    auto functor = [](const dlib::matrix<double>& x) {
+        dlib::matrix<double, 2, 1> y;
+        y = x(0) + x(1), 0.0;
+        return y;
+    };
+    double nan_tol = std::numeric_limits<double>::quiet_NaN();
+    double inf_tol = std::numeric_limits<double>::infinity();
+
+    REQUIRE_THROWS_AS(
+        cppsolnp::solnp(functor, param, nullptr, 1.0, 400, 800, 1e-7, nan_tol),
+        std::invalid_argument
+    );
+    REQUIRE_THROWS_AS(
+        cppsolnp::solnp(functor, param, nullptr, 1.0, 400, 800, 1e-7, inf_tol),
+        std::invalid_argument
+    );
+}
+
 TEST_CASE("Throws exception for contradicting equality constraints", "[y=x^2][solnp][exception]")
 {
     dlib::matrix<double, 1, 1> parameter_data;
@@ -94,6 +115,10 @@ TEST_CASE("Throws exception for initial parameter out of bounds (3 columns)", "[
     auto functor = [](const dlib::matrix<double, 2, 1>& m) { return dlib::mat(m(0) + m(1)); };
     REQUIRE_THROWS_WITH(cppsolnp::solnp(functor, parameter_data),
                         "Initial parameter values must be within the bounds.");
+
+    parameter_data = -1.0, 0.0, 2.0, -1.0, 0.0, 2.0;
+    REQUIRE_THROWS_WITH(cppsolnp::solnp(functor, parameter_data),
+                        "Initial parameter values must be within the bounds.");
 }
 
 TEST_CASE("Throws exception for initial inequalities out of bounds", "[solnp][exception]")
@@ -103,6 +128,10 @@ TEST_CASE("Throws exception for initial inequalities out of bounds", "[solnp][ex
     dlib::matrix<double> ib(2, 3); // Intentionally set size on runtime to bypass template checks
     ib = 5.0, 0.0, 2.0, 5.0, 0.0, 2.0;
     auto functor = [](const dlib::matrix<double>& m) { return dlib::mat(m(0) + m(1)); };
+    REQUIRE_THROWS_WITH(cppsolnp::solnp(functor, parameter_data, ib),
+                        "Initial inequalities must be within bounds.");
+
+    ib = -1.0, 0.0, 2.0, -1.0, 0.0, 2.0;
     REQUIRE_THROWS_WITH(cppsolnp::solnp(functor, parameter_data, ib),
                         "Initial inequalities must be within bounds.");
 }

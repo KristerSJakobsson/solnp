@@ -35,12 +35,6 @@ TEST_CASE("Conditional number dynamically sized", "[utils]") {
 
 }
 
-// TEST_CASE("Conditional number throws on SVD failure (e.g. 0 size)", "[utils][exception]") {
-//         dlib::matrix<double> m(2, 2);
-//         m = 1, std::numeric_limits<double>::infinity(), 3, 4;
-//         REQUIRE_THROWS_WITH(cppsolnp::conditional_number(m), "Singular value decomposition failed.");
-// }
-
 TEST_CASE("Euclidean norm statically sized", "[utils]") {
     dlib::matrix<double, 4, 1> x;
     x =

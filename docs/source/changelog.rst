@@ -3,8 +3,16 @@ Changelog
 
 pysolnp 2025.10.12
 -------------------
+Bugs
+- Fixed bug where "1/-1.0" would incorrectly be calculated as infinity instead of -infinity
+- Fixed bug where it would reject functions with upper and lower parameter when you did not supply any starting guess
+- Fixed minor bugs where matrixes would be incorrect stringified with warnings/errors in some edge cases
+- Added unit tests and improved unit test coverage (however due to differnces in how the coverage is derived the actual value is lower than before)
+
+Other
 - Add support for Python 3.11, 3.12, 3.13 and 3.14, remove support for Python 3.6 and 3.7
-- Update version of CMake to 3.14.0 and migrate from git submodules to FetchContent for C++ dependencies
+- Add Apple Silicon binary builds to pipeline
+- Update version of CMake and migrate from git submodules to FetchContent for C++ dependencies
 - Fix Github Actions CI to use latest versions of cibuildwheels etc.
 - Fix Github Actions CI to work with CodeCov
 - Fix ReadTheDocs wiring
@@ -16,13 +24,12 @@ pysolnp 2022.3.13
 - Migrated CI to Github Actions from a mix of Appveyor and Travis
 - Started using cibuildwheels package for building wheels
 
-pysolnp 2021.4.30
--------------------
-Serious issue found in releases 2021.3.8, 2021.4.25 and 2021.4.26 that caused incorrect output.
-This has been fixed in this release and previous releases have been deprecated.
-
 Older Releases
 -------------------
+**pysolnp 2021.4.30**
+
+Issue found in releases 2021.3.8, 2021.4.25 and 2021.4.26 that caused incorrect output.
+This has been fixed in this release and previous releases have been deprecated.
 
 **pysolnp 2021.4.26** [Deprecated due to bug in output]
 

@@ -65,7 +65,7 @@ class CMakeBuild(build_ext):
                 '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{}={}'.format(
                     cfg.upper(), extdir
                 ),
-                '-DPYBIND3=TRUE'
+                '-DPYBIND3=TRUE'  # Python 3.14t only builds with latest pybind on windows, but changing it breaks Macosx builds, so this is the workaround
             ]
             if platform.machine().lower() == "arm64":
                 # For ARM64 builds, set the architecture accordingly
