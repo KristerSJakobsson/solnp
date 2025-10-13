@@ -1,5 +1,5 @@
 # Updated for manylinux2014 compatibility
-cmake_minimum_required(VERSION 3.14.0)
+cmake_minimum_required(VERSION 3.15.0)
 project(solnp)
 
 set(CMAKE_CXX_STANDARD 14)
