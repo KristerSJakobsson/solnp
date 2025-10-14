@@ -1,7 +1,7 @@
 Changelog
 =========
 
-pysolnp 2025.10.12
+pysolnp 2025.10.14
 -------------------
 Bugs
 - Fixed bug where "1/-1.0" would incorrectly be calculated as infinity instead of -infinity
