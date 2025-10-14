@@ -2,7 +2,7 @@
 build = "*"
 
 skip = ""
-test-skip = ["*-win_amd64"]  # Skip tests on amd64 windows as the runner won't work with them
+test-skip = []  # Skip tests on amd64 windows as the runner won't work with them
 
 archs = ["auto"]
 build-frontend = "pip"

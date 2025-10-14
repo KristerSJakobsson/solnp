@@ -12,21 +12,21 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-22.04  # manylinux x86
-          - os: ubuntu-24.04-arm  # manylinux ARM
+#          - os: ubuntu-22.04  # manylinux x86
+#          - os: ubuntu-24.04-arm  # manylinux ARM
           - os: windows-2022  # Windows x86
-          - os: macos-15-intel  # Apple x86
-          - os: macos-15  # Apple Silicon
+#          - os: macos-15-intel  # Apple x86
+#          - os: macos-15  # Apple Silicon
 
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
+#      - name: Set up Python
+#        uses: actions/setup-python@v5
+#        with:
+#          python-version: "3.13"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.2.0
