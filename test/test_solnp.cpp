@@ -184,6 +184,18 @@ TEST_CASE("Throws exception for cost function with too few constraints", "[solnp
                         "sqp_min the number of constraints in the cost function does not match the call to sqp_min.");
 }
 
+TEST_CASE("Fails to reach convergence", "[solnp][exception]")
+{
+    dlib::matrix<double, 2, 1> parameter_data;
+    parameter_data = 1.0, 2.0;
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
+    auto functor = [](const dlib::matrix<double, 2, 1>& m) { return m; };
+    cppsolnp::SolveResult calculate =  cppsolnp::solnp(functor, parameter_data, logger, 1.0, 0, 0, 1e-7, 0);
+
+    // Expect this to not converge since 0 iterations are allowed and tolerance is 0
+    CHECK(calculate.converged == false);
+}
+
 TEST_CASE("Fails gracefully for contradicting inequality constraints", "[y=x^2]")
 {
     dlib::matrix<double, 1, 1> parameter_data;

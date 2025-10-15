@@ -29,4 +29,4 @@ manylinux-s390x-image = "manylinux2014"
 repair-wheel-command = "auditwheel repair -w {dest_dir} {wheel}"
 
 [build-system]
-requires = ["setuptools==75.3.2"]  # metadata-version = "2.2"
+requires = ["setuptools==75.3.2"]  # metadata-version = "2.1"
