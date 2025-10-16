@@ -75,6 +75,24 @@ TEST_CASE("Throws exception for contradicting equality constraints", "[y=x^2][so
     ;
 }
 
+TEST_CASE("Throws exception for zero tolerance", "[solnp][exception]")
+{
+    dlib::matrix<double, 1, 1> parameter_data;
+    parameter_data = 1.0;
+    dlib::matrix<double> hessian_matrix = dlib::zeros_matrix<double>(1, 4);
+    auto functor = [](const dlib::matrix<double, 1, 1>& m) -> dlib::matrix<double, 2, 1>
+    {
+        dlib::matrix<double, 2, 1> return_values(2);
+        return_values(0) = dlib::mat(m(0) * m(0));
+        return_values(1) = m(0) * 5 - 5;
+        return return_values;
+    };
+    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
+    REQUIRE_THROWS_WITH(cppsolnp::solnp(functor, parameter_data,  logger, 1.0, 400, 800, 1E-07, 0),
+                        "Encountered Singular matrix when trying to solve. This can happen for example if you have contradicting equality constraints.");
+
+}
+
 TEST_CASE("Throws exception for too many parameter columns", "[solnp][exception]")
 {
     dlib::matrix<double> parameter_data(2, 4); // Intentionally set size on runtime to bypass template checks
@@ -158,9 +176,13 @@ TEST_CASE("Throws exception for invalid hessian matrix size", "[solnp][exception
     parameter_data = 1.0, 2.0;
     dlib::matrix<double, 2, 2> ib;
     ib = 0.0, 1.0, 0.0, 1.0;
-    dlib::matrix<double> hessian_matrix = dlib::identity_matrix<double>(1);
+    dlib::matrix<double> hessian_matrix = dlib::zeros_matrix<double>(1, 4);
     auto functor = [](const dlib::matrix<double, 2, 1>& m) { return dlib::mat(m(0) + m(1)); };
     REQUIRE_THROWS_WITH(cppsolnp::solnp(functor, parameter_data, ib, hessian_matrix),
+                        "The provided hessian matrix override was of invalid dimension.");
+
+    dlib::matrix<double> hessian_matrix2 = dlib::zeros_matrix<double>(4, 1);
+    REQUIRE_THROWS_WITH(cppsolnp::solnp(functor, parameter_data, ib, hessian_matrix2),
                         "The provided hessian matrix override was of invalid dimension.");
 }
 
@@ -246,6 +268,40 @@ TEST_CASE("Solves function with lower and upper bounds", "[f(x,y) = (x-1.5)^2  +
     CHECK(result.converged == true);
     CHECK(result.optimum(0) == Catch::Approx(1.0));
     CHECK(result.optimum(1) == Catch::Approx(1.5));
+}
+
+TEST_CASE("One-column inequality matrix is treated as no inequalities", "[solnp][inequality][edge]")
+{
+    dlib::matrix<double, 2, 1> parameter_data;
+    parameter_data = 3.0, -1.0;
+
+    // One-column inequality matrix (should be treated as no inequalities)
+    dlib::matrix<double> ib(2, 1);
+    ib = 0.5, 1.5;
+
+    // Provide explicit hessian matching expected size when inequalities are ignored (2 parameters + 0 inequalities)
+    dlib::matrix<double> hessian = dlib::identity_matrix<double>(parameter_data.nr());
+
+    auto functor = [](const dlib::matrix<double, 2, 1>& m) -> dlib::matrix<double, 1, 1>
+    {
+        dlib::matrix<double, 1, 1> out;
+        out(0) = std::pow(m(0) - 1.0, 2) + std::pow(m(1) - 2.0, 2);
+        return out;
+    };
+
+    // Result without providing inequality matrix
+    cppsolnp::SolveResult res_no_ib = cppsolnp::solnp(functor, parameter_data);
+
+    // Result with one-column inequality matrix and explicit hessian
+    cppsolnp::SolveResult res_with_ib = cppsolnp::solnp(functor, parameter_data, ib, hessian);
+
+    // Both should behave the same (inequality column treated as no inequalities)
+    CHECK(res_with_ib.converged == res_no_ib.converged);
+    REQUIRE(res_with_ib.optimum.nr() == res_no_ib.optimum.nr());
+    for (long i = 0; i < res_no_ib.optimum.nr(); ++i) {
+        CHECK(res_with_ib.optimum(i) == Catch::Approx(res_no_ib.optimum(i)).margin(1e-6));
+    }
+    CHECK(res_with_ib.solve_value == Catch::Approx(res_no_ib.solve_value).margin(1e-6));
 }
 
 /*
