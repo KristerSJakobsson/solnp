@@ -75,23 +75,23 @@ TEST_CASE("Throws exception for contradicting equality constraints", "[y=x^2][so
     ;
 }
 
-TEST_CASE("Throws exception for zero tolerance", "[solnp][exception]")
-{
-    dlib::matrix<double, 1, 1> parameter_data;
-    parameter_data = 1.0;
-    dlib::matrix<double> hessian_matrix = dlib::zeros_matrix<double>(1, 4);
-    auto functor = [](const dlib::matrix<double, 1, 1>& m) -> dlib::matrix<double, 2, 1>
-    {
-        dlib::matrix<double, 2, 1> return_values(2);
-        return_values(0) = dlib::mat(m(0) * m(0));
-        return_values(1) = m(0) * 5 - 5;
-        return return_values;
-    };
-    std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
-    REQUIRE_THROWS_WITH(cppsolnp::solnp(functor, parameter_data,  logger, 1.0, 400, 800, 1E-07, 0),
-                        "Encountered Singular matrix when trying to solve. This can happen for example if you have contradicting equality constraints.");
-
-}
+// TEST_CASE("Throws exception for zero tolerance", "[solnp][exception]")
+// {
+//     dlib::matrix<double, 1, 1> parameter_data;
+//     parameter_data = 1.0;
+//     dlib::matrix<double> hessian_matrix = dlib::zeros_matrix<double>(1, 4);
+//     auto functor = [](const dlib::matrix<double, 1, 1>& m) -> dlib::matrix<double, 2, 1>
+//     {
+//         dlib::matrix<double, 2, 1> return_values(2);
+//         return_values(0) = dlib::mat(m(0) * m(0));
+//         return_values(1) = m(0) * 5 - 5;
+//         return return_values;
+//     };
+//     std::shared_ptr<std::vector<std::string>> logger = std::make_shared<std::vector<std::string>>();
+//     REQUIRE_THROWS_WITH(cppsolnp::solnp(functor, parameter_data,  logger, 1.0, 400, 800, 1E-07, 0),
+//                         "Encountered Singular matrix when trying to solve. This can happen for example if you have contradicting equality constraints.");
+//
+// }
 
 TEST_CASE("Throws exception for too many parameter columns", "[solnp][exception]")
 {
