@@ -11,7 +11,7 @@ It works as an extension on top of pysolnp by solving the problem multiple times
 
 Installation
 ------------
-Works on any environment that supports pysolnp and has Python 3.6+ installed.
+Works on any environment that supports pysolnp and has Python 3.8+ installed.
 
 Method
 ------

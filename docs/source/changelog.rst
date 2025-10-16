@@ -59,7 +59,7 @@ Add wheel to Python 3.9 for all platforms and fix below issues:
 **pygosolnp 2021.1.24**
 
 Initial release of the PYGOSOLNP library to PyPi.
-Pure Python 3.6+ library so no precompiled binaries released.
+Pure Python 3.8+ library so no precompiled binaries released.
 
 **pysolnp 2020.4.11**
 

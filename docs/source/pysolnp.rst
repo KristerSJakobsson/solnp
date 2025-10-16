@@ -21,9 +21,9 @@ In most situations, installing with the package installer for Python, pip, will 
 
 Precompiled Wheels are available for CPython:
 
-- Windows: Python 3.6+
-- Linux: Python 3.6+
-- Mac OS: Python 3.6+
+- Windows: Python 3.8+
+- Linux: Python 3.8+
+- Mac OS: Python 3.8+
 
 For other systems, or to have BLAS and LAPACK support, please build the wheels manually.
 ::
