@@ -84,6 +84,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: dist
+          merge-multiple: true
       - uses: actions/download-artifact@v4
         with:
           name: sdist
