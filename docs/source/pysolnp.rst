@@ -160,7 +160,7 @@ Running this will yield the output:
 
 Use-cases and Applications
 --------------------------
-* NMPC - Nonlinear model predictive controls-case studies using Matlab, REXYGEN and pysolnp NLP solver under Python environment by Štěpán Ožana. [`NMPC Overhead Crane (PDF)`_] [`GitHub Source Code`_] [`Štěpán's Homepage`_]
+* NMPC - Nonlinear model predictive controls-case studies using Matlab, REXYGEN and pysolnp NLP solver under Python environment by Štěpán Ožana. [`NMPC Overhead Crane (PDF)`_] [`GitHub Source Code`_]
 
 .. _`NMPC Overhead Crane (PDF)`: https://github.com/StepanOzana/NMPC/raw/main/NMPC_Overhead_Crane/NMPC_overhead_crane_description.pdf
 .. _`GitHub Source Code`: https://github.com/StepanOzana/NMPC
